@@ -1,0 +1,106 @@
+module.exports = {
+  extends: [
+    'eslint-config-standard'
+    // 'plugin:eslint-plugin-sonarjs/recommended' // Disabled globally, for now, because it is a much higher standard than Tree's existing code currently adheres to. Enable on a case-by-case basis, if you wish.
+  ],
+  env: {
+    'browser': true,
+    'mocha': true
+  },
+  /**
+   * @property globals - Tree set of typical global variables, to avoid numerous `no-undef` errors.
+   */
+  globals: {
+    '__services__': true,
+    'assert': true,
+    'axe': true,
+    'customElements': true,
+    'CustomEvent': true,
+    'Event': true,
+    'expect': true,
+    'fixture': true,
+    'FS': true,
+    'FsBehaviors': true,
+    'Headers': true,
+    'HTMLElement': true,
+    'indexedDB': true,
+    'location': true,
+    'Polymer': true,
+    'ResettablePropertiesBehavior': true,
+    'sessionStorage': true,
+    'sinon': true,
+    'WCI18n': true,
+    'WCT': true
+  },
+  parser: 'babel-eslint',
+  /**
+   * @property plugins - Tree additional linter plugins.
+   */
+  plugins: [
+    'eslint-plugin-deprecate',
+    'eslint-plugin-html',
+    'eslint-plugin-jsdoc',
+    'eslint-plugin-json',
+    'eslint-plugin-sonarjs'
+  ],
+  /**
+   * @property rules - Tree custom rule and additional linter configuration.
+   */
+  rules: {
+    'jsdoc/check-alignment': 'warn',
+    'jsdoc/check-examples': 'warn',
+    'jsdoc/check-indentation': 'off',
+    'jsdoc/check-param-names': 'warn',
+    'jsdoc/check-syntax': 'warn',
+    'jsdoc/check-tag-names': 'warn',
+    'jsdoc/check-types': 'warn',
+    'jsdoc/implements-on-classes': 'warn',
+    'jsdoc/match-description': 'warn',
+    'jsdoc/newline-after-description': 'off',
+    'jsdoc/no-types': 'off',
+    'jsdoc/no-undefined-types': 'warn',
+    'jsdoc/require-description-complete-sentence': 'warn',
+    'jsdoc/require-description': 'warn',
+    'jsdoc/require-example': 'off',
+    'jsdoc/require-hyphen-before-param-description': 'warn',
+    'jsdoc/require-jsdoc': 'warn',
+    'jsdoc/require-param-description': 'warn',
+    'jsdoc/require-param-name': 'warn',
+    'jsdoc/require-param-type': 'warn',
+    'jsdoc/require-param': 'warn',
+    'jsdoc/require-returns-check': 'warn',
+    'jsdoc/require-returns-description': 'warn',
+    'jsdoc/require-returns-type': 'warn',
+    'jsdoc/require-returns': 'warn',
+    'jsdoc/valid-types': 'warn',
+
+    'no-extra-semi': 'error',
+    'no-warning-comments': ['warn', { 'terms': ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], 'location': 'anywhere' }],
+    'no-undefined': 'warn',
+    'object-curly-spacing': 'off',
+    'semi': ['error', 'always'],
+
+    'sonarjs/cognitive-complexity': 'warn',
+    'sonarjs/max-switch-cases': 'warn',
+    'sonarjs/no-all-duplicated-branches': 'warn',
+    'sonarjs/no-duplicate-string': 'warn',
+    'sonarjs/no-duplicated-branches': 'warn',
+    'sonarjs/no-element-overwrite': 'warn',
+    'sonarjs/no-extra-arguments': 'warn',
+    'sonarjs/no-identical-conditions': 'warn',
+    'sonarjs/no-identical-functions': 'warn',
+    'sonarjs/no-identical-expressions': 'warn',
+    'sonarjs/no-inverted-boolean-check': 'warn',
+    'sonarjs/no-one-iteration-loop': 'warn',
+    'sonarjs/no-redundant-boolean': 'warn',
+    'sonarjs/no-small-switch': 'warn',
+    'sonarjs/no-use-of-empty-return-value': 'warn',
+    'sonarjs/no-useless-catch': 'warn',
+    'sonarjs/prefer-immediate-return': 'warn',
+    'sonarjs/prefer-object-literal': 'warn',
+    'sonarjs/prefer-single-boolean-return': 'warn',
+    'sonarjs/prefer-while': 'warn'
+
+    // See eslint-config-tree/.eslintrc.js for example deprecation rules.
+  }
+};

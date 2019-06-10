@@ -1,0 +1,8 @@
+/* Example of a broken JSON file that should trigger the additional rules contained in ./index.js */
+{
+"": {
+    'key' : Array,
+    "key" "value"
+    "key": "value",
+  }
+};

@@ -1,0 +1,41 @@
+{
+  "name": "eslint-config-tree",
+  "version": "0.0.0",
+  "description": "Shared Tree configuration that contains overrides and enhancements on top of the base frontier configuration.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fs-webdev/eslint-config-tree.git"
+  },
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "eslint-config-tree"
+  ],
+  "homepage": "https://github.com/fs-webdev/eslint-config-tree#readme",
+  "dependencies": {
+    "babel-eslint": "^8",
+    "eslint": "^5",
+    "eslint-config-standard": "^12",
+    "eslint-plugin-deprecate": "^0.5",
+    "eslint-plugin-html": "^4",
+    "eslint-plugin-import": "^2",
+    "eslint-plugin-jsdoc": "^7",
+    "eslint-plugin-json": "^1",
+    "eslint-plugin-node": "^9",
+    "eslint-plugin-promise": "^4",
+    "eslint-plugin-sonarjs": "^0.3",
+    "eslint-plugin-standard": "^4"
+  },
+  "devDependencies": {
+    "eslint-config-frontier": "github:fs-webdev/eslint-config-frontier"
+  },
+  "scripts": {
+    "lint": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json' '**/*.html'",
+    "lint-fix": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json' '**/*.html' --fix",
+    "lint-report": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json' '**/*.html' --format html --output-file ./reports/linter/lintresults.html & eslint --ignore-pattern '.*' '**/*.js' '**/*.json' '**/*.html' --format json --output-file ./reports/linter/lintresults.json",
+    "preinstall": "git config --global url.https://github.com/.insteadOf git://github.com/",
+    "pretest": "npm run lint-fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

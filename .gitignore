@@ -1,0 +1,13 @@
+**/.DS_Store
+*.esproj
+*.iml
+*.ipr
+*.iws
+*.orig
+.idea
+.monitor
+.vscode/*
+**/node_modules
+/reports/**
+analysis.json
+npm-debug.log
