@@ -13,3 +13,6 @@ Utilizes the following plugins:
  - [eslint-plugin-promise](https://github.com/xjamundx/eslint-plugin-promise)
  - [eslint-plugin-sonarjs](https://github.com/SonarSource/eslint-plugin-sonarjs)
  - [eslint-config-standard](https://github.com/standard/eslint-config-standard)
+
+
+![alt text](demo/example-eslint-results.png "Example linting infractions for things the Tree team cares about")
