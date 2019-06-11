@@ -35,13 +35,14 @@ module.exports = {
   parser: 'babel-eslint',
   /**
    * @property plugins - Tree additional linter plugins.
+   * @note - Code Climate does not support deprecate and sonarjs, and breaks if they are present. You will need to add these plugins individually in your .eslintrc.js file.
    */
   plugins: [
-    'eslint-plugin-deprecate',
+    // 'eslint-plugin-deprecate',
     'eslint-plugin-html',
     'eslint-plugin-jsdoc',
-    'eslint-plugin-json',
-    'eslint-plugin-sonarjs'
+    'eslint-plugin-json'
+    // 'eslint-plugin-sonarjs'
   ],
   /**
    * @property rules - Tree custom rule and additional linter configuration.
