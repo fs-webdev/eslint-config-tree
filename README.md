@@ -16,3 +16,27 @@ Utilizes the following plugins:
 
 
 ![alt text](demo/example-eslint-results.png "Example linting infractions for things the Tree team cares about")
+
+## Usage:
+
+ 1. Add either `eslint-config-tree` or `eslint-config-frontier-react` as a devDependency.
+
+ 1. Add this repository as a package devDependency:
+    
+    > "eslint-config-tree": "github:fs-webdev/eslint-config-tree#semver:^1",
+
+ 1. In your `eslintrc.js` file, put the following:
+<pre><code>module.exports = {
+  extends: [
+    'frontier',
+    'tree'
+  ],
+  plugins: [
+    'eslint-plugin-deprecate',
+    'eslint-plugin-sonarjs'
+  ]
+}</code></pre>
+
+ 1. Add both `tree` and the frontier eslint configuration of your choice as Code Climate `prepare` resources (see: [extended eslint docs](https://www.familysearch.org/frontier/legacy/ui-components/eslint-config-frontier/)).
+
+ 1. Enjoy.
