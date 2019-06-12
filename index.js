@@ -60,7 +60,7 @@ module.exports = {
     'jsdoc/newline-after-description': 'off',
     'jsdoc/no-types': 'off',
     'jsdoc/no-undefined-types': 'warn',
-    'jsdoc/require-description-complete-sentence': 'warn',
+    'jsdoc/require-description-complete-sentence': 'off',
     'jsdoc/require-description': 'warn',
     'jsdoc/require-example': 'off',
     'jsdoc/require-hyphen-before-param-description': 'warn',

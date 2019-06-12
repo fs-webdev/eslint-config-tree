@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-tree",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shared Tree configuration that contains overrides and enhancements on top of the base frontier configuration.",
   "main": "index.js",
   "repository": {
@@ -13,6 +13,9 @@
     "eslint-config-tree"
   ],
   "homepage": "https://github.com/fs-webdev/eslint-config-tree#readme",
+  "githubAutomatorOptions": {
+    "disableSlackNotifications": true
+  },
   "dependencies": {
     "babel-eslint": "^8",
     "eslint": "^5",
