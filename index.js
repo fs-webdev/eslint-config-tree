@@ -75,6 +75,8 @@ module.exports = {
     'jsdoc/require-returns': 'warn',
     'jsdoc/valid-types': 'warn',
 
+    'jsx-quotes': 'off',
+
     'no-extra-semi': 'error',
     'no-warning-comments': ['warn', { 'terms': ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], 'location': 'anywhere' }],
     'no-undefined': 'warn',
