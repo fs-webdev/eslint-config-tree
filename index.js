@@ -24,6 +24,7 @@ module.exports = {
     'FsBehaviors': true,
     'FSTreeCommonRoutingService': true,
     'Headers': true,
+    'HF': true,
     'HTMLElement': true,
     'indexedDB': true,
     'location': true,
@@ -84,6 +85,7 @@ module.exports = {
     'no-invalid-this': 'off',
     'no-warning-comments': ['warn', { 'terms': ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], 'location': 'anywhere' }],
     'no-undefined': 'warn',
+    'no-case-declarations': 'off',
     'object-curly-spacing': 'off',
     'semi': ['error', 'always'],
 
