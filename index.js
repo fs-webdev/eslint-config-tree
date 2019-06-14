@@ -21,6 +21,7 @@ module.exports = {
     'fixture': true,
     'FS': true,
     'FsBehaviors': true,
+    'FSTreeCommonRoutingService': true,
     'Headers': true,
     'HTMLElement': true,
     'indexedDB': true,
