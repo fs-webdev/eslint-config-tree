@@ -20,6 +20,7 @@ module.exports = {
     'Event': true,
     'expect': true,
     'fixture': true,
+    'google': true, // Used for google.maps API
     'FS': true,
     'FsBehaviors': true,
     'FSTreeCommonRoutingService': true,
