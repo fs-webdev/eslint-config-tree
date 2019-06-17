@@ -84,6 +84,7 @@ module.exports = {
 
     'no-else-return': 'off',
     'no-extra-semi': 'error',
+    'no-shadow': 'warn',
     'no-invalid-this': 'off',
     'no-warning-comments': ['warn', { 'terms': ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], 'location': 'anywhere' }],
     'no-undefined': 'warn',
