@@ -23,6 +23,7 @@ module.exports = {
     'google': true, // Used for google.maps API
     'FS': true,
     'FsBehaviors': true,
+    'FSResearchHelpService': true,
     'FSTreeCommonRoutingService': true,
     'Headers': true,
     'HF': true,
