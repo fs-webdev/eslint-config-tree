@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-tree",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Shared Tree configuration that contains overrides and enhancements on top of the base frontier configuration.",
   "main": "index.js",
   "repository": {
@@ -24,8 +24,8 @@
     "eslint-plugin-deprecate": "^0.5",
     "eslint-plugin-html": "^4",
     "eslint-plugin-import": "^2",
-    "eslint-plugin-jsdoc": "^7",
-    "eslint-plugin-json": "^1",
+    "eslint-plugin-jsdoc": "8.3.0",
+    "eslint-plugin-json": "^1"
     "eslint-plugin-node": "^9",
     "eslint-plugin-promise": "^4",
     "eslint-plugin-sonarjs": "^0.3",
