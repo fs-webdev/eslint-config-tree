@@ -15,7 +15,8 @@ no-undefined
 
 /**
  * @function _fetchPreferences - Fetch a user's tree-view-options preference so that we know what options to call the tree-data endpoint with.
- * @param a
+ * @param {hobject} a
+ * @param b
  * @returns
  */
 function ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM (params) {

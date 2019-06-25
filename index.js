@@ -64,7 +64,7 @@ module.exports = {
     'jsdoc/match-description': 'warn',
     'jsdoc/newline-after-description': 'off',
     'jsdoc/no-types': 'off',
-    'jsdoc/no-undefined-types': 'warn',
+    'jsdoc/no-undefined-types': 'off', // This was broken in eslint-plugin-jsdoc#8 in 2019-06. Disabled, for now. Check back later.
     'jsdoc/require-description-complete-sentence': 'off',
     'jsdoc/require-description': 'warn',
     'jsdoc/require-example': 'off',

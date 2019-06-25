@@ -5,6 +5,11 @@ module.exports = {
     './index.js',
     'plugin:eslint-plugin-sonarjs/recommended'
   ],
+  plugins: [
+    // Enable plugins that are not natively supported by Code Climate. Otherwise results in build errors.
+    'eslint-plugin-deprecate',
+    'eslint-plugin-sonarjs'
+  ],
   rules: {
     'deprecate/function': ['error',
       {'name': 'deprecatedFunction', 'use': 'function x from package y'}
