@@ -102,7 +102,7 @@ module.exports = {
     'sonarjs/no-identical-conditions': 'warn',
     'sonarjs/no-identical-functions': 'warn',
     'sonarjs/no-identical-expressions': 'warn',
-    'sonarjs/no-inverted-boolean-check': 'warn',
+    'sonarjs/no-inverted-boolean-check': 'off',
     'sonarjs/no-one-iteration-loop': 'warn',
     'sonarjs/no-redundant-boolean': 'warn',
     'sonarjs/no-small-switch': 'warn',
