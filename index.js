@@ -43,6 +43,7 @@ module.exports = {
    * @note - Code Climate does not support deprecate and sonarjs, and breaks if they are present. You will need to add these plugins individually in your .eslintrc.js file.
    */
   plugins: [
+    // 'eslint-plugin-bestpractices',
     // 'eslint-plugin-deprecate',
     'eslint-plugin-html',
     'eslint-plugin-jsdoc',
@@ -91,6 +92,8 @@ module.exports = {
     'no-case-declarations': 'off',
     'object-curly-spacing': 'off',
     'semi': ['error', 'always'],
+
+    'bestpractices/no-eslint-disable': 'warn',
 
     'sonarjs/cognitive-complexity': 'warn',
     'sonarjs/max-switch-cases': 'warn',

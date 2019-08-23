@@ -1,5 +1,10 @@
 /* Example of a broken JSON file that should trigger the additional rules contained in ./index.js */
 
+/*
+ * Since developers have the ability to disable linting in-line, we keep track of the times where this is done.
+ */
+// eslint-disable-next
+
 // fixMe: Actually make this work
 // todo: Add documentation
 // Hack: Note that these work, regardless of case

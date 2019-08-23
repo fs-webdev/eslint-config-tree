@@ -4,6 +4,7 @@ This is a shared configuration for all Tree repositories. Contains overrides and
 
 Utilizes the following plugins:
 
+ - [eslint-plugin-bestpractices](https://github.com/skye2k2/eslint-plugin-bestpractices)
  - [eslint-plugin-deprecate](https://github.com/AlexMost/eslint-plugin-deprecate)
  - [eslint-plugin-html](https://github.com/BenoitZugmeyer/eslint-plugin-html)
  - [eslint-plugin-import](https://github.com/benmosher/eslint-plugin-import)
@@ -32,6 +33,7 @@ Utilizes the following plugins:
     'tree'
   ],
   plugins: [
+    'eslint-plugin-bestpractices',
     'eslint-plugin-deprecate',
     'eslint-plugin-sonarjs'
   ]
