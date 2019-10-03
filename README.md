@@ -23,7 +23,7 @@ Utilizes the following plugins:
  1. Add either `eslint-config-tree` or `eslint-config-frontier-react` as a devDependency.
 
  1. Add this repository as a package devDependency:
-    
+
     > "eslint-config-tree": "github:fs-webdev/eslint-config-tree#semver:^1",
 
  1. In your `eslintrc.js` file, put the following:
@@ -42,3 +42,9 @@ Utilizes the following plugins:
  1. Add both `tree` and the frontier eslint configuration of your choice as Code Climate `prepare` resources (see: [extended eslint docs](https://www.familysearch.org/frontier/legacy/ui-components/eslint-config-frontier/)).
 
  1. Enjoy.
+
+## Testing/Updating:
+
+Occasionally, there may be an update which breaks a rule in particular or linting in general. To this end, when running `npm test`, we output the current linting results to a text file, clean it up a little, and employ ava to run a snapshot comparison unit test to determine if our linting output has changed from the previous run.
+
+If there has been a change (say you added a new rule, or there is a new valid violation triggered), you can update the snapshot via `npm run test:update`.

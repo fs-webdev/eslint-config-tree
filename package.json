@@ -16,6 +16,11 @@
   "githubAutomatorOptions": {
     "disableSlackNotifications": true
   },
+  "ava": {
+    "files": [
+      "demo/test/*.js"
+    ]
+  },
   "dependencies": {
     "babel-eslint": "^8",
     "eslint": "^5",
@@ -33,14 +38,18 @@
     "eslint-plugin-standard": "^4"
   },
   "devDependencies": {
-    "eslint-config-frontier": "github:fs-webdev/eslint-config-frontier"
+    "ava": "^2.4.0",
+    "eslint-config-frontier": "github:fs-webdev/eslint-config-frontier",
+    "file-manager-js": "^3.1.6"
   },
   "scripts": {
-    "lint": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json' '**/*.html'",
-    "lint-fix": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json' '**/*.html' --fix",
-    "lint-report": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json' '**/*.html' --format html --output-file ./reports/linter/lintresults.html & eslint --ignore-pattern '.*' '**/*.js' '**/*.json' '**/*.html' --format json --output-file ./reports/linter/lintresults.json",
+    "lint": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json'",
+    "lint:fix": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json' --fix",
+    "lint:report": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json' '**/*.html' --format html --output-file ./reports/linter/lintresults.html & eslint --ignore-pattern '.*' '**/*.js' '**/*.json' --format json --output-file ./reports/linter/lintresults.json",
+    "lint:snapshot": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json' --no-color --output-file ./demo/test/snapshots/new-lint-results.txt; npm run test:format",
     "preinstall": "git config --global url.https://github.com/.insteadOf git://github.com/",
-    "pretest": "npm run lint-fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run lint:snapshot; ava",
+    "test:format": "sed -i '' 's|^.*eslint-config-tree/demo/||g' demo/test/snapshots/new-lint-results.txt",
+    "test:update": "npm run lint:snapshot; ava --update-snapshots"
   }
 }
