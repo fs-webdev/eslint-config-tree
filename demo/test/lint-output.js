@@ -6,10 +6,10 @@ test('Should have consistent rule output', async t => {
   return fileManager.readFile('./demo/test/snapshots/new-lint-results.txt')
     .then((content) => {
       const eslintOutput = content.toString(); // content is instance of Buffer, so it needs to be parsed
-      t.snapshot(eslintOutput);
+      return t.snapshot(eslintOutput);
     })
     .catch((err) => {
       console.log(err);
-      t.fail();
+      return t.fail();
     });
 });

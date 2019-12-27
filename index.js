@@ -1,6 +1,7 @@
 module.exports = {
   extends: [
-    'eslint-config-standard'
+    'eslint-config-standard',
+    'plugin:promise/recommended'
     // 'plugin:eslint-plugin-sonarjs/recommended' // Disabled globally, for now, because it is a much higher standard than Tree's existing code currently adheres to. Enable on a case-by-case basis, if you wish.
   ],
   env: {
@@ -48,7 +49,10 @@ module.exports = {
     'eslint-plugin-html',
     'eslint-plugin-jsdoc',
     'eslint-plugin-json'
-    // 'eslint-plugin-sonarjs'
+    // 'eslint-plugin-no-only-tests',
+    // 'eslint-plugin-no-skip-tests',
+    // 'eslint-plugin-sonarjs',
+    // 'eslint-plugin-test-selectors' // NOTE: Only runs against JSX
   ],
   /**
    * @property rules - Tree custom rule and additional linter configuration.
@@ -95,6 +99,9 @@ module.exports = {
 
     'bestpractices/no-eslint-disable': 'warn',
 
+    'no-only-tests/no-only-tests': 'error',
+    'no-skip-tests/no-skip-tests': 'warn',
+
     'sonarjs/cognitive-complexity': 'warn',
     'sonarjs/max-switch-cases': 'warn',
     'sonarjs/no-all-duplicated-branches': 'warn',
@@ -114,7 +121,15 @@ module.exports = {
     'sonarjs/prefer-immediate-return': 'warn',
     'sonarjs/prefer-object-literal': 'warn',
     'sonarjs/prefer-single-boolean-return': 'warn',
-    'sonarjs/prefer-while': 'warn'
+    'sonarjs/prefer-while': 'warn',
+
+    'test-selectors/anchor': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }],
+    'test-selectors/button': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }],
+    'test-selectors/input': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }],
+    'test-selectors/onChange': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }],
+    'test-selectors/onClick': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }],
+    'test-selectors/onKeyDown': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }],
+    'test-selectors/onKeyUp': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }]
 
     // See eslint-config-tree/.eslintrc.js for example deprecation rules.
   }

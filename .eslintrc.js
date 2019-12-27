@@ -1,15 +1,19 @@
 // Basic .eslintrc.js file that loads the the frontier shared eslint configuration, and then the extension/override provided by the configuration in index.js just for local demonstration purposes. Also contains example `deprecate` rules.
 module.exports = {
   extends: [
-    'frontier',
-    './index.js',
-    'plugin:eslint-plugin-sonarjs/recommended'
+    'eslint-config-frontier',
+    'plugin:eslint-plugin-sonarjs/recommended',
+    'plugin:promise/recommended',
+    './index.js'
   ],
   plugins: [
     // Enable plugins that are not natively supported by Code Climate. Otherwise results in build errors.
     'eslint-plugin-bestpractices',
     'eslint-plugin-deprecate',
-    'eslint-plugin-sonarjs'
+    'eslint-plugin-no-only-tests',
+    'eslint-plugin-no-skip-tests',
+    'eslint-plugin-sonarjs',
+    'eslint-plugin-test-selectors' // NOTE: Only runs against JSX
   ],
   rules: {
     'deprecate/function': ['error',

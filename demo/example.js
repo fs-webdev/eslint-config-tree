@@ -29,7 +29,7 @@ function ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM (params) {
 
 let variable = (true) ? true : true;
 
-if (window === undefined && window === undefined) {
+if (window === undefined && window === undefined && true === params) {
   ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM('a', 'b');
   const deprecatedImport = require('path/to/legacyModule');
   deprecatedImport.execute();
