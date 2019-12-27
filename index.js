@@ -1,7 +1,7 @@
 module.exports = {
   extends: [
-    'eslint-config-standard',
-    'plugin:promise/recommended'
+    'eslint-config-standard'
+    // 'plugin:promise/recommended' // Disabled, because Code Climate does not support promise.
     // 'plugin:eslint-plugin-sonarjs/recommended' // Disabled globally, for now, because it is a much higher standard than Tree's existing code currently adheres to. Enable on a case-by-case basis, if you wish.
   ],
   env: {
@@ -41,7 +41,7 @@ module.exports = {
   parser: 'babel-eslint',
   /**
    * @property plugins - Tree additional linter plugins.
-   * @note - Code Climate does not support deprecate and sonarjs, and breaks if they are present. You will need to add these plugins individually in your .eslintrc.js file.
+   * @note - Code Climate does not support bestpractices, deprecate, no-only-tests, no-skip-tests, sonarjs, and test-selectors, and breaks if they are present. You will need to add these plugins individually in your .eslintrc.js file.
    */
   plugins: [
     // 'eslint-plugin-bestpractices',
@@ -51,6 +51,7 @@ module.exports = {
     'eslint-plugin-json'
     // 'eslint-plugin-no-only-tests',
     // 'eslint-plugin-no-skip-tests',
+    // 'eslint-plugin-promise',
     // 'eslint-plugin-sonarjs',
     // 'eslint-plugin-test-selectors' // NOTE: Only runs against JSX
   ],
@@ -101,6 +102,19 @@ module.exports = {
 
     'no-only-tests/no-only-tests': 'error',
     'no-skip-tests/no-skip-tests': 'warn',
+
+    'promise/always-return': 'warn',
+    'promise/no-return-wrap': 'warn',
+    'promise/param-names': 'warn',
+    'promise/catch-or-return': 'warn',
+    'promise/no-native': 'off',
+    'promise/no-nesting': 'warn',
+    'promise/no-promise-in-callback': 'warn',
+    'promise/no-callback-in-promise': 'warn',
+    'promise/avoid-new': 'warn',
+    'promise/no-new-statics': 'warn',
+    'promise/no-return-in-finally': 'warn',
+    'promise/valid-params': 'warn',
 
     'sonarjs/cognitive-complexity': 'warn',
     'sonarjs/max-switch-cases': 'warn',

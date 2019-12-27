@@ -1,4 +1,4 @@
-/* Example of a broken JSON file that should trigger the additional rules contained in ./index.js */
+/* Example of a broken JS file that should trigger the additional rules contained in ./index.js */
 
 /*
  * Since developers have the ability to disable linting in-line, we keep track of the times where this is done.
@@ -26,6 +26,16 @@ no-undefined
  */
 function ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM (params) {
 }
+
+let myPromise = new Promise();
+
+myPromise.then((a) => {
+  if (a) {
+    return Promise.resolve()
+  } else {
+    forgotToReturn()
+  }
+})
 
 let variable = (true) ? true : true;
 

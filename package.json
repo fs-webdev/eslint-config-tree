@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-tree",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Shared Tree configuration that contains overrides and enhancements on top of the base frontier configuration.",
   "main": "index.js",
   "repository": {
