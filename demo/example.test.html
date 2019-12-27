@@ -1,0 +1,14 @@
+<script>
+  var chai = require('chai');
+  var assert = chai.assert;
+
+  describe.only('example.test.js', () => {
+    it.only('should pass', () => {
+      assert.true(true);
+    });
+
+    it.skip('should pass', () => {
+      assert.true(true);
+    });
+  });
+</script>

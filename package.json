@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-tree",
-  "version": "1.0.15",
+  "version": "2.0.0",
   "description": "Shared Tree configuration that contains overrides and enhancements on top of the base frontier configuration.",
   "main": "index.js",
   "repository": {
@@ -23,30 +23,37 @@
   },
   "dependencies": {
     "babel-eslint": "^8",
-    "eslint": "^5",
-    "eslint-config-standard": "^12",
+    "eslint": "^6",
     "eslint-config-standard-react": "^7",
+    "eslint-config-standard": "^12",
     "eslint-plugin-bestpractices": "git+https://github.com/skye2k2/eslint-plugin-bestpractices.git",
     "eslint-plugin-deprecate": "^0.5",
     "eslint-plugin-html": "^6",
     "eslint-plugin-import": "^2",
     "eslint-plugin-jsdoc": "8.3.0",
     "eslint-plugin-json": "^1",
+    "eslint-plugin-no-only-tests": "^2",
+    "eslint-plugin-no-skip-tests": "^1",
     "eslint-plugin-node": "^9",
     "eslint-plugin-promise": "^4",
     "eslint-plugin-sonarjs": "^0.3",
-    "eslint-plugin-standard": "^4"
+    "eslint-plugin-standard": "^4",
+    "eslint-plugin-test-selectors": "^1"
   },
   "devDependencies": {
     "ava": "^2.4.0",
     "eslint-config-frontier": "github:fs-webdev/eslint-config-frontier",
     "file-manager-js": "^3.1.6"
   },
+  "resolutions": {
+    "eslint": "^6"
+  },
   "scripts": {
-    "lint": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json'",
-    "lint:fix": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json' --fix",
-    "lint:report": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json' '**/*.html' --format html --output-file ./reports/linter/lintresults.html & eslint --ignore-pattern '.*' '**/*.js' '**/*.json' --format json --output-file ./reports/linter/lintresults.json",
-    "lint:snapshot": "eslint --ignore-pattern '.*' '**/*.js' '**/*.json' --no-color --output-file ./demo/test/snapshots/new-lint-results.txt; npm run test:format",
+    "lint": "eslint --ignore-pattern '.*' '**/*.html' '**/*.js' '**/*.json'",
+    "lint:fix": "eslint --ignore-pattern '.*' '**/*.html' '**/*.js' '**/*.json' --fix",
+    "lint:quiet": "eslint --ignore-pattern '.*' '**/*.html' '**/*.js' '**/*.json' --quiet",
+    "lint:report": "eslint --ignore-pattern '.*' '**/*.html' '**/*.js' '**/*.json' '**/*.html' --format html --output-file ./reports/linter/lintresults.html & eslint --ignore-pattern '.*' '**/*.js' '**/*.json' --format json --output-file ./reports/linter/lintresults.json",
+    "lint:snapshot": "eslint --ignore-pattern '.*' '**/*.html' '**/*.js' '**/*.json' --no-color --output-file ./demo/test/snapshots/new-lint-results.txt; npm run test:format",
     "preinstall": "git config --global url.https://github.com/.insteadOf git://github.com/",
     "test": "npm run lint:snapshot; ava",
     "test:format": "sed -i '' 's|^.*eslint-config-tree/demo/||g' demo/test/snapshots/new-lint-results.txt",
