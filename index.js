@@ -123,6 +123,7 @@ module.exports = {
     'no-undefined': 'warn',
     'no-case-declarations': 'off',
     'object-curly-spacing': 'off',
+    'prefer-const': 'warn',
     'quote-props': 'off',
     'semi': ['error', 'always'],
 
