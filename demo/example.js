@@ -19,7 +19,7 @@ no-undefined
 */
 
 /**
- * @function _fetchPreferences - Fetch a user's tree-view-options preference so that we know what options to call the tree-data endpoint with.
+ * @description a somewhat valid description
  * @param {hobject} a
  * @param b
  * @returns

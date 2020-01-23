@@ -2,7 +2,8 @@
 module.exports = {
   extends: [
     'eslint-config-frontier',
-    'plugin:eslint-plugin-sonarjs/recommended',
+    'eslint-config-standard',
+    // 'plugin:eslint-plugin-sonarjs/recommended' // Disabled globally, for now, because it is a much higher standard than Tree's existing code currently adheres to. Enable on a case-by-case basis, if you wish.
     'plugin:promise/recommended',
     './index.js'
   ],

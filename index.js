@@ -1,15 +1,20 @@
 module.exports = {
+
+  // NOTE: See .eslintrc.js for example `extends` and `plugins` sections, which have to be done individually by each repository because of Code Climate not supporting everything we use.
+
   extends: [
     'eslint-config-standard'
-    // 'plugin:promise/recommended' // Disabled, because Code Climate does not support promise.
-    // 'plugin:eslint-plugin-sonarjs/recommended' // Disabled globally, for now, because it is a much higher standard than Tree's existing code currently adheres to. Enable on a case-by-case basis, if you wish.
   ],
+
+  /**
+   * @property {object} env - Base environments to enable associated globals.
+   */
   env: {
     'browser': true,
     'mocha': true
   },
   /**
-   * @property globals - Tree set of typical global variables, to avoid numerous `no-undef` errors.
+   * @property {object} globals - Tree set of typical global variables, to avoid numerous `no-undef` errors.
    */
   globals: {
     '__services__': true,
@@ -40,7 +45,7 @@ module.exports = {
   },
   parser: 'babel-eslint',
   /**
-   * @property plugins - Tree additional linter plugins.
+   * @property {object} plugins - Tree additional linter plugins.
    * @note - Code Climate does not support bestpractices, deprecate, no-only-tests, no-skip-tests, sonarjs, and test-selectors, and breaks if they are present. You will need to add these plugins individually in your .eslintrc.js file.
    */
   plugins: [
@@ -56,35 +61,64 @@ module.exports = {
     // 'eslint-plugin-test-selectors' // NOTE: Only runs against JSX
   ],
   /**
-   * @property rules - Tree custom rule and additional linter configuration.
+   * @property {object} rules - Tree custom rule and additional linter configuration.
    */
   rules: {
+    'jsdoc/check-access': 'warn',
     'jsdoc/check-alignment': 'warn',
     'jsdoc/check-examples': 'warn',
     'jsdoc/check-indentation': 'off',
     'jsdoc/check-param-names': 'warn',
+    'jsdoc/check-property-names': 'warn',
     'jsdoc/check-syntax': 'warn',
     'jsdoc/check-tag-names': 'warn',
     'jsdoc/check-types': 'warn',
+    'jsdoc/check-values': 'warn',
+    'jsdoc/empty-tags': 'warn',
     'jsdoc/implements-on-classes': 'warn',
     'jsdoc/match-description': 'warn',
     'jsdoc/newline-after-description': 'off',
     'jsdoc/no-types': 'off',
-    'jsdoc/no-undefined-types': 'off', // This was broken in eslint-plugin-jsdoc#8 in 2019-06. Disabled, for now. Check back later.
+    'jsdoc/no-undefined-types': 'warn',
     'jsdoc/require-description-complete-sentence': 'off',
     'jsdoc/require-description': 'warn',
     'jsdoc/require-example': 'off',
+    'jsdoc/require-file-overview': 'off',
     'jsdoc/require-hyphen-before-param-description': 'warn',
     'jsdoc/require-jsdoc': 'warn',
     'jsdoc/require-param-description': 'warn',
     'jsdoc/require-param-name': 'warn',
     'jsdoc/require-param-type': 'warn',
     'jsdoc/require-param': 'warn',
+    'jsdoc/require-property': 'warn',
+    'jsdoc/require-property-description': 'warn',
+    'jsdoc/require-property-name': 'warn',
+    'jsdoc/require-property-type': 'warn',
     'jsdoc/require-returns-check': 'warn',
     'jsdoc/require-returns-description': 'warn',
     'jsdoc/require-returns-type': 'warn',
     'jsdoc/require-returns': 'warn',
     'jsdoc/valid-types': 'warn',
+
+    'json/undefined': 'error',
+    'json/enum-value-mismatch': 'error',
+    'json/unexpected-end-of-comment': 'error',
+    'json/unexpected-end-of-string': 'error',
+    'json/unexpected-end-of-number': 'error',
+    'json/invalid-unicode': 'error',
+    'json/invalid-escape-character': 'error',
+    'json/invalid-character': 'error',
+    'json/property-expected': 'error',
+    'json/comma-expected': 'error',
+    'json/colon-expected': 'error',
+    'json/value-expected': 'error',
+    'json/comma-or-close-backet-expected': 'error',
+    'json/comma-or-close-brace-expected': 'error',
+    'json/trailing-comma': 'error',
+    'json/duplicate-key': 'error',
+    'json/comment-not-permitted': 'error',
+    'json/schema-resolve-error': 'error',
+    'json/unknown': 'error',
 
     'jsx-quotes': 'off',
 
@@ -96,6 +130,7 @@ module.exports = {
     'no-undefined': 'warn',
     'no-case-declarations': 'off',
     'object-curly-spacing': 'off',
+    'quote-props': 'off',
     'semi': ['error', 'always'],
 
     'bestpractices/no-eslint-disable': 'warn',
