@@ -115,6 +115,8 @@ module.exports = {
 
     'jsx-quotes': 'off',
 
+    'array-bracket-spacing': 'warn',
+    'lines-between-class-members': 'warn',
     'no-else-return': 'off',
     'no-extra-semi': 'error',
     'no-shadow': 'warn',
@@ -122,9 +124,12 @@ module.exports = {
     'no-warning-comments': ['warn', { 'terms': ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], 'location': 'anywhere' }],
     'no-undefined': 'warn',
     'no-case-declarations': 'off',
+    'no-prototype-builtins': 'warn',
+    'object-curly-newline': 'warn',
     'object-curly-spacing': 'off',
     'prefer-const': 'warn',
     'quote-props': 'off',
+    'quotes': 'off',
     'semi': ['error', 'always'],
 
     'bestpractices/no-eslint-disable': 'warn',
