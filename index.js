@@ -115,16 +115,18 @@ module.exports = {
 
     'jsx-quotes': 'off',
 
+    // These rules went much more strict after updating on 2020-01-23, and are decreased in urgency due to the impact there would be on the existing codebase
     'array-bracket-spacing': 'warn',
+    'import/no-absolute-path': 'warn',
     'lines-between-class-members': 'warn',
+    'no-case-declarations': 'off',
     'no-else-return': 'off',
     'no-extra-semi': 'error',
-    'no-shadow': 'warn',
     'no-invalid-this': 'off',
-    'no-warning-comments': ['warn', { 'terms': ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], 'location': 'anywhere' }],
-    'no-undefined': 'warn',
-    'no-case-declarations': 'off',
     'no-prototype-builtins': 'warn',
+    'no-shadow': 'warn',
+    'no-undefined': 'warn',
+    'no-warning-comments': ['warn', { 'terms': ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], 'location': 'anywhere' }],
     'object-curly-newline': 'warn',
     'object-curly-spacing': 'off',
     'prefer-const': 'warn',
