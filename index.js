@@ -1,3 +1,6 @@
+// We use `data-testid` instead of `data-test-id`, in order to match React Native and Testing Library https://testing-library.com/docs/dom-testing-library/api-queries#bytestid
+const dataTestId = 'data-testid';
+
 module.exports = {
 
   // NOTE: See .eslintrc.js for example `extends` and `plugins` sections, which have to be done individually by each repository because of Code Climate not supporting everything we use.
@@ -173,13 +176,13 @@ module.exports = {
     'sonarjs/prefer-single-boolean-return': 'warn',
     'sonarjs/prefer-while': 'warn',
 
-    'test-selectors/anchor': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }],
-    'test-selectors/button': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }],
-    'test-selectors/input': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }],
-    'test-selectors/onChange': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }],
-    'test-selectors/onClick': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }],
-    'test-selectors/onKeyDown': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }],
-    'test-selectors/onKeyUp': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false }]
+    'test-selectors/anchor': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false, "testAttribute": dataTestId }],
+    'test-selectors/button': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false, "testAttribute": dataTestId }],
+    'test-selectors/input': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false, "testAttribute": dataTestId }],
+    'test-selectors/onChange': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false, "testAttribute": dataTestId }],
+    'test-selectors/onClick': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false, "testAttribute": dataTestId }],
+    'test-selectors/onKeyDown': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false, "testAttribute": dataTestId }],
+    'test-selectors/onKeyUp': ['warn', 'always', { 'ignoreDisabled': false, 'ignoreReadonly': false, "testAttribute": dataTestId }]
 
     // See eslint-config-tree/.eslintrc.js for example deprecation rules.
   }
