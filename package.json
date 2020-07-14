@@ -30,7 +30,6 @@
     "eslint-plugin-deprecate": "^0.5",
     "eslint-plugin-html": "^6",
     "eslint-plugin-import": "^2",
-    "eslint-plugin-jsdoc": "^20",
     "eslint-plugin-json": "^2",
     "eslint-plugin-no-only-tests": "^2",
     "eslint-plugin-no-skip-tests": "^1",
