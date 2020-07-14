@@ -66,6 +66,35 @@ module.exports = {
    * @property {object} rules - Tree custom rule and additional linter configuration.
    */
   rules: {
+    'jsdoc/check-alignment': 'warn',
+    'jsdoc/check-examples': 'warn',
+    'jsdoc/check-indentation': 'off',
+    'jsdoc/check-param-names': 'warn',
+    'jsdoc/check-syntax': 'warn',
+    'jsdoc/check-tag-names': 'warn',
+    'jsdoc/check-types': 'warn',
+    'jsdoc/implements-on-classes': 'warn',
+    'jsdoc/match-description': 'warn',
+    'jsdoc/newline-after-description': 'off',
+    'jsdoc/no-types': 'off',
+    'jsdoc/no-undefined-types': 'off', // 2020-01-23: This was broken in eslint-plugin-jsdoc#8 in 2019-06, and hasn't gotten much better. Disabled, for now. Check back later.
+
+    'jsdoc/require-description-complete-sentence': 'off',
+    'jsdoc/require-description': 'warn',
+    'jsdoc/require-example': 'off',
+    'jsdoc/require-file-overview': 'off',
+    'jsdoc/require-hyphen-before-param-description': 'warn',
+    'jsdoc/require-jsdoc': 'off',
+    'jsdoc/require-param-description': 'warn',
+    'jsdoc/require-param-name': 'warn',
+    'jsdoc/require-param-type': 'warn',
+    'jsdoc/require-param': 'warn',
+    'jsdoc/require-returns-check': 'warn',
+    'jsdoc/require-returns-description': 'warn',
+    'jsdoc/require-returns-type': 'warn',
+    'jsdoc/require-returns': 'warn',
+    'jsdoc/valid-types': 'warn',
+
     'json/undefined': 'error',
     'json/enum-value-mismatch': 'error',
     'json/unexpected-end-of-comment': 'error',
