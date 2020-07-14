@@ -56,7 +56,8 @@ module.exports = {
     // 'eslint-plugin-deprecate',
     'eslint-plugin-html',
     'eslint-plugin-json',
-    'eslint-plugin-jsdoc' // 'eslint-plugin-no-only-tests',
+    'eslint-plugin-jsdoc'
+    // 'eslint-plugin-no-only-tests',
     // 'eslint-plugin-no-skip-tests',
     // 'eslint-plugin-promise',
     // 'eslint-plugin-sonarjs',
