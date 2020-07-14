@@ -67,13 +67,17 @@ module.exports = {
    * @property {object} rules - Tree custom rule and additional linter configuration.
    */
   rules: {
+    'jsdoc/check-access': 'off',
     'jsdoc/check-alignment': 'warn',
     'jsdoc/check-examples': 'warn',
     'jsdoc/check-indentation': 'off',
     'jsdoc/check-param-names': 'warn',
+    'jsdoc/check-property-names': 'warn',
     'jsdoc/check-syntax': 'warn',
     'jsdoc/check-tag-names': 'warn',
     'jsdoc/check-types': 'warn',
+    'jsdoc/check-values': 'warn',
+    'jsdoc/empty-tags': 'warn',
     'jsdoc/implements-on-classes': 'warn',
     'jsdoc/match-description': 'warn',
     'jsdoc/newline-after-description': 'off',
@@ -90,10 +94,15 @@ module.exports = {
     'jsdoc/require-param-name': 'warn',
     'jsdoc/require-param-type': 'warn',
     'jsdoc/require-param': 'warn',
+    'jsdoc/require-property-description': 'warn',
+    'jsdoc/require-property-name': 'warn',
+    'jsdoc/require-property-type': 'warn',
+    'jsdoc/require-property': 'warn',
     'jsdoc/require-returns-check': 'warn',
     'jsdoc/require-returns-description': 'warn',
     'jsdoc/require-returns-type': 'warn',
     'jsdoc/require-returns': 'warn',
+    'jsdoc/require-throws': 'off',
     'jsdoc/valid-types': 'warn',
 
     'json/undefined': 'error',

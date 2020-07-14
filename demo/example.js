@@ -18,6 +18,9 @@ no-unused-vars
 no-undefined
 */
 
+function functionWithoutJSDocWarningsBecauseTheSectionWasCompletelyExcluded (params) {
+}
+
 /**
  * @description a somewhat valid description
  * @param {hobject} a
@@ -44,6 +47,7 @@ if (window === undefined && window === undefined && true === params) {
   const deprecatedImport = require('path/to/legacyModule');
   deprecatedImport.execute();
   deprecatedFunction();
+  functionWithoutJSDocWarningsBecauseTheSectionWasCompletelyExcluded();
   $.each();
   debugger;// Make sure we get in here to set the value correctly
 }
