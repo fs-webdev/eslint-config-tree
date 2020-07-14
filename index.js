@@ -55,7 +55,6 @@ module.exports = {
     // 'eslint-plugin-bestpractices',
     // 'eslint-plugin-deprecate',
     'eslint-plugin-html',
-    // 'eslint-plugin-jsdoc',
     'eslint-plugin-json'
     // 'eslint-plugin-no-only-tests',
     // 'eslint-plugin-no-skip-tests',
