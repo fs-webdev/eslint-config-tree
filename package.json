@@ -43,7 +43,13 @@
   "devDependencies": {
     "ava": "^2.4.0",
     "eslint-config-frontier": "github:fs-webdev/eslint-config-frontier",
-    "file-manager-js": "^3.1.6"
+    "file-manager-js": "^3.1.6",
+    "husky": "^3.1.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm test"
+    }
   },
   "resolutions": {
     "eslint": "^6"
@@ -55,6 +61,7 @@
     "lint:report": "eslint --ignore-pattern '.*' '**/*.html' '**/*.js' '**/*.json' '**/*.html' --format html --output-file ./reports/linter/lintresults.html & eslint --ignore-pattern '.*' '**/*.js' '**/*.json' --format json --output-file ./reports/linter/lintresults.json",
     "lint:snapshot": "eslint --ignore-pattern '.*' '**/*.html' '**/*.js' '**/*.json' --no-color --output-file ./demo/test/snapshots/new-lint-results.txt; npm run test:format",
     "preinstall": "git config --global url.https://github.com/.insteadOf git://github.com/",
+    "postinstall": "npm rebuild husky",
     "test": "npm run lint:snapshot; ava",
     "test:format": "sed -i '' 's|^.*eslint-config-tree/demo/||g' demo/test/snapshots/new-lint-results.txt",
     "test:update": "npm run lint:snapshot; ava --update-snapshots"
