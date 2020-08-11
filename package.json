@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-tree",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Shared Tree configuration that contains overrides and enhancements on top of the base frontier configuration.",
   "main": "index.js",
   "repository": {
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "babel-eslint": "^8",
-    "eslint": "^6",
+    "eslint": "^7",
     "eslint-config-standard-react": "^7",
     "eslint-config-standard": "^14",
     "eslint-plugin-bestpractices": "git+https://github.com/skye2k2/eslint-plugin-bestpractices.git",
