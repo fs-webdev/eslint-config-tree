@@ -74,3 +74,19 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 - Because this is a public repository, there are complications in adding references to private services and communications channels, so there is no Travis CI build and no Code Climate integration.
 - Coverage reporting ends up reporting on `lint-output.js`, instead of `index.js`, and so is also not used.
 - As noted in the `Testing/Updating` section, the only validation we do is to run linting against a file with a set of known failures. So we make sure to run `npm test` via a pre-push hook.
+
+## Changelog:
+
+<details>
+<summary>Version 3 - ESLint 7</summary>
+
+- ESLint and dependencies updated to version 7.
+
+</details>
+
+<details>
+<summary>Version 2 - ESLint 6</summary>
+
+- ESLint and dependencies based on version 6.
+
+</details>
