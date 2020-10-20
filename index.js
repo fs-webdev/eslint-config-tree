@@ -148,8 +148,9 @@ module.exports = {
 
     'bestpractices/no-eslint-disable': 'warn',
 
-    'no-only-tests/no-only-tests': 'error',
-    'no-skip-tests/no-skip-tests': 'warn',
+    // Duplicated by recent additions: jest/no-disabled-tests & jest/no-focused-tests
+    // 'no-only-tests/no-only-tests': 'error',
+    // 'no-skip-tests/no-skip-tests': 'warn',
 
     'promise/always-return': 'warn',
     'promise/no-return-wrap': 'warn',

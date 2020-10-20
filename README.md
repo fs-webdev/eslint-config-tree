@@ -9,8 +9,6 @@ Utilizes the following plugins:
  - [eslint-plugin-html](https://github.com/BenoitZugmeyer/eslint-plugin-html)
  - [eslint-plugin-jsdoc](https://github.com/gajus/eslint-plugin-jsdoc)
  - [eslint-plugin-json](https://github.com/azeemba/eslint-plugin-json)
- - [eslint-plugin-no-only-tests](https://github.com/levibuzolic/eslint-plugin-no-only-tests)
- - [eslint-plugin-no-skip-tests](https://github.com/romaingaillardjs/eslint-plugin-no-skip-tests)
  - [eslint-plugin-promise](https://github.com/xjamundx/eslint-plugin-promise)
  - [eslint-plugin-sonarjs](https://github.com/SonarSource/eslint-plugin-sonarjs)
  - [eslint-config-standard](https://github.com/standard/eslint-config-standard)
@@ -30,7 +28,7 @@ Utilizes the following plugins:
 
  1. Add this repository as a package devDependency:
 
-    > "eslint-config-tree": "github:fs-webdev/eslint-config-tree#semver:^2",
+    > "eslint-config-tree": "github:fs-webdev/eslint-config-tree#semver:^4",
 
  1. In your `eslintrc.js` file, put the following:
 <pre><code>module.exports = {
@@ -41,8 +39,6 @@ Utilizes the following plugins:
   plugins: [
     'eslint-plugin-bestpractices',
     'eslint-plugin-deprecate',
-    'eslint-plugin-no-only-tests',
-    'eslint-plugin-no-skip-tests',
     'eslint-plugin-promise',
     'eslint-plugin-sonarjs',
     'eslint-plugin-test-selectors'
@@ -76,6 +72,12 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 - As noted in the `Testing/Updating` section, the only validation we do is to run linting against a file with a set of known failures. So we make sure to run `npm test` via a pre-push hook.
 
 ## Changelog:
+
+<details>
+<summary>Version 4 </summary>
+- `eslint-plugin-no-only-tests` & `eslint-plugin-no-skip-tests` are redundant to to newly-implemented `jest/no-focused-tests` & `jest/no-disabled-tests` and have been removed.
+
+</details>
 
 <details>
 <summary>Version 3 - ESLint 7</summary>
