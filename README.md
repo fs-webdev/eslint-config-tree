@@ -55,7 +55,19 @@ Why? Because we believe in linting, and we have become converted to the addition
 
  1. Add both `tree` and the frontier eslint configuration of your choice as Code Climate `prepare` resources (see: [extended eslint docs](https://www.familysearch.org/frontier/legacy/ui-components/eslint-config-frontier/)).
 
- 1. Set this simplified eslint configuration as the chosen config in your Code Climate's `plugins`: TODO: MAKE THIS MAKE SENSE `eslint`: `config`: `config`.
+ 1. Set this simplified eslint configuration as the chosen config in your Code Climate's `plugins`.
+ <pre><code>plugins:
+		eslint:
+			enabled: true
+			channel: "eslint-6"
+			config:
+				config: .codeclimate.eslintrc.js
+			extensions:
+				- .html
+				- .js
+				- .json
+			ignore_warnings: true
+ </code></pre>
 
  1. Enjoy.
 
