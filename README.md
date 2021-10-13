@@ -2,7 +2,7 @@
 
 This is a shared configuration for all Tree repositories. Contains overrides and enhancements on top of the base configuration located at [https://github.com/fs-webdev/eslint-config-frontier](https://github.com/fs-webdev/eslint-config-frontier).
 
-Utilizes the following plugins:
+Why? Because we believe in linting, and we have become converted to the additional rules enforced by the following plugins:
 
  - [eslint-plugin-bestpractices](https://github.com/skye2k2/eslint-plugin-bestpractices)
  - [eslint-plugin-deprecate](https://github.com/AlexMost/eslint-plugin-deprecate)
@@ -55,9 +55,83 @@ Utilizes the following plugins:
 
  1. Add both `tree` and the frontier eslint configuration of your choice as Code Climate `prepare` resources (see: [extended eslint docs](https://www.familysearch.org/frontier/legacy/ui-components/eslint-config-frontier/)).
 
- 1. Set this simplified eslint configuration as the chosen config in your Code Climate's `plugins`: `eslint`: `config`: `config`.
+ 1. Set this simplified eslint configuration as the chosen config in your Code Climate's `plugins`.
+ <pre><code>plugins:
+		eslint:
+			enabled: true
+			channel: "eslint-6"
+			config:
+				config: .codeclimate.eslintrc.js
+			extensions:
+				- .html
+				- .js
+				- .json
+			ignore_warnings: true
+ </code></pre>
 
  1. Enjoy.
+
+## HOWTOs:
+
+### How to override linting rules for a directory and all of its contents:
+
+Add an `eslintrc.js` file to that directory with the necessary overrides, like so:
+
+```
+module.exports = {
+  rules: {
+    'bestpractices/no-eslint-disable': 'off|warn|error',
+  }
+}
+```
+
+### How to override linting rules for specific files:
+
+Add an `overrides` section to your `eslintrc.js` file to target those files with the necessary overrides, like so:
+
+```
+overrides: [
+	{
+	  files: ['*.stories.js', '*.test.js'],
+	  rules: {
+		// We do not need to enforce selector rules in test/demo files
+	    'test-selectors/button': 'off',
+	    'test-selectors/onChange': 'off',
+	  },
+	},
+],
+```
+
+### How to disable a linting rule inline without triggering the `no-eslint-disable` rule:
+
+Utilize a file linting config modifier like so:
+
+```
+/* eslint no-console: "off" -- node scripts use the console */
+
+```
+
+Note that `--` comments are permitted and a good idea to include.
+
+<!--
+DOES NOT CURRENTLY WORK, AND bestpractices/no-eslint-disable SHOULD PROBABLY BE MODIFIED TO TAKE THIS INTO ACCOUNT.
+Or disable BOTH the desired rule and the no-eslint-disable rule:
+
+```
+// eslint-disable-next-line bestpractices/no-eslint-disable, no-console
+```
+-->
+
+### How to deal with `Definition for rule '{RULE}' was not found.` errors:
+
+This is a known state when submitting a new file to Code Climate for the first time, since they do not support all of the linting extensions we wish to use. If you are seeing these warnings when linting locally, you likely have `eslint` installed globally, but not the additional dependency. We do not recommend running `eslint` globally for this reason (see: https://github.com/eslint/eslint/issues/6732). All Tree repositories should include all dependencies required to be able to run `eslint` locally in their respective directories.
+
+### How to do even trickier things with linting configuration:
+
+Just read the manual: https://eslint.org/docs/7.0.0/user-guide/configuring
+
+<details>
+<summary>Maintenance Notes</summary>
 
 ## Testing/Updating:
 
@@ -67,14 +141,27 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 
 ## Notes
 
+- As noted in the `Testing/Updating` section, the only validation we do is to run linting against a file with a set of known failures. So we make sure to run `npm test` via a pre-push hook, and releases are automatically performed by a GitHub webhook.
 - Because this is a public repository, there are complications in adding references to private services and communications channels, so there is no Travis CI build and no Code Climate integration.
-- Coverage reporting ends up reporting on `lint-output.js`, instead of `index.js`, and so is also not used.
-- As noted in the `Testing/Updating` section, the only validation we do is to run linting against a file with a set of known failures. So we make sure to run `npm test` via a pre-push hook.
+- Coverage reporting ends up reporting on `lint-output.js`, instead of `index.js`, which is unhelpful, and so is also not used, for now.
+
+</details>
 
 ## Changelog:
 
 <details>
+<summary>Version 5 </summary>
+
+- Update all linting subdependencies.
+- Add new rules.
+- Set more reasonable defaults for some rules.
+- Add best practices and examples for managing linting in varying projects.
+
+</details>
+
+<details>
 <summary>Version 4 </summary>
+
 - `eslint-plugin-no-only-tests` & `eslint-plugin-no-skip-tests` are redundant to to newly-implemented `jest/no-focused-tests` & `jest/no-disabled-tests` and have been removed.
 
 </details>
