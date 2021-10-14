@@ -126,6 +126,10 @@ Or disable BOTH the desired rule and the no-eslint-disable rule:
 
 This is a known state when submitting a new file to Code Climate for the first time, since they do not support all of the linting extensions we wish to use. If you are seeing these warnings when linting locally, you likely have `eslint` installed globally, but not the additional dependency. We do not recommend running `eslint` globally for this reason (see: https://github.com/eslint/eslint/issues/6732). All Tree repositories should include all dependencies required to be able to run `eslint` locally in their respective directories.
 
+### How to not have tons of `jsdoc` warnings:
+
+The `jsdoc` warnings are only triggered for functions that have an jsdoc extended comment block (`/** */`) directly above the function declaration. Omit this, or just use a short comment (`//`) or a standard extended comment (`/* */`) to keep from applying `jsdoc` rules to functions not requiring fastidious documentation. Or follow all of the rules.
+
 ### How to do even trickier things with linting configuration:
 
 Just read the manual: https://eslint.org/docs/7.0.0/user-guide/configuring
