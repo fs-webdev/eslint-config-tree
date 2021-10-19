@@ -124,7 +124,9 @@ Or disable BOTH the desired rule and the no-eslint-disable rule:
 
 ### How to deal with `Definition for rule '{RULE}' was not found.` errors:
 
-This is a known state when submitting a new file to Code Climate for the first time, since they do not support all of the linting extensions we wish to use. If you are seeing these warnings when linting locally, you likely have `eslint` installed globally, but not the additional dependency. We do not recommend running `eslint` globally for this reason (see: https://github.com/eslint/eslint/issues/6732). All Tree repositories should include all dependencies required to be able to run `eslint` locally in their respective directories.
+This is a known state when submitting a new file to Code Climate for the first time, since they do not support all of the linting extensions we wish to use. If you are seeing these warnings when linting locally, you may have `eslint` installed globally, but not the additional dependency. We do not recommend running `eslint` globally for this reason (see: https://github.com/eslint/eslint/issues/6732). All Tree repositories should include all dependencies required to be able to run `eslint` locally in their respective directories. 
+
+If you have recently updated dependencies and see this error locally, then there is a possibility that your editor's linting integration is out-of-sync that can be resolved by restarting your editor.
 
 ### How to not have tons of `jsdoc` warnings:
 
