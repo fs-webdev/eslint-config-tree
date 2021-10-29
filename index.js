@@ -166,7 +166,7 @@ module.exports = {
     'promise/no-return-in-finally': 'warn',
     'promise/valid-params': 'warn',
 
-    'sonarjs/cognitive-complexity': ["warn", 15],
+    'sonarjs/cognitive-complexity': ["warn", 25],
     'sonarjs/max-switch-cases': ["warn", 10],
     'sonarjs/no-all-duplicated-branches': 'warn',
     'sonarjs/no-collapsible-if': 'warn',
@@ -206,4 +206,22 @@ module.exports = {
 
     // See eslint-config-tree/.eslintrc.js for example deprecation rules.
   }
+  /**
+   * @property {object} overrides - Linting overrides for matched files.
+   * Sadly, we cannot provide a base `overrides` entry for things like demos, tests, & mocks. Add this with any needed modifications to your own .eslintrc.js files for each project.
+   */
+  // overrides: [
+  //   {
+  //     files: ['*.stories.js', '*.test.js', '**/*mock*/**', '*mock*'],
+  //     rules: {
+  //       'no-alert': 'off',
+  //       'no-console': 'off',
+  //       'no-unused-vars': 'off',
+  //       'sonarjs/no-duplicate-string': 'off',
+  //       'sonarjs/no-identical-functions': 'off',
+  //       'test-selectors/button': 'off',
+  //       'test-selectors/onChange': 'off',
+  //     },
+  //   },
+  // ],
 };
