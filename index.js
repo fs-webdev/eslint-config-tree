@@ -156,7 +156,7 @@ module.exports = {
     'promise/always-return': 'warn',
     'promise/no-return-wrap': 'warn',
     'promise/param-names': 'warn',
-    'promise/catch-or-return': 'warn',
+    'promise/catch-or-return': ['warn', {allowFinally: true}],
     'promise/no-native': 'off',
     'promise/no-nesting': 'warn',
     'promise/no-promise-in-callback': 'warn',
