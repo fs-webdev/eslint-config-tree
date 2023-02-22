@@ -60,7 +60,7 @@
     "preinstall": "git config --global url.https://github.com/.insteadOf git://github.com/",
     "postinstall": "npm rebuild husky",
     "test": "npm run lint:snapshot; ava",
-    "test:format": "sed -i '' 's|^.*/demo/||g' demo/test/snapshots/new-lint-results.txt",
+    "test:format": "sed -i -e 's|^.*/demo/||g' demo/test/snapshots/new-lint-results.txt",
     "test:update": "npm run lint:snapshot; ava --update-snapshots"
   }
 }
