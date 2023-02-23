@@ -5,7 +5,11 @@ module.exports = {
   env: {
     mocha: true, // Do we really need this?
   },
-  extends: ['@fs/eslint-config-frontier-react'],
+  extends: [
+    '@fs/eslint-config-frontier-react',
+    '@fs/eslint-config-frontier-react/typescript',
+    '@fs/eslint-config-frontier-react/prettierSetup',
+  ],
   plugins: ['bestpractices', 'deprecate', 'html', 'import', 'jsdoc', 'promise', 'sonarjs', 'test-selectors'],
   /**
    * @property {object} rules - Tree custom rule and additional linter configuration.
