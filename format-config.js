@@ -1,6 +1,6 @@
 // This sorts the eslint final config rules in an alphabetical order to compare easier
-const finalConfig = require('./demo/test/snapshots/new-lint-final-config.json');
-const FS = require('fs');
+const finalConfig = require('./demo/test/snapshots/new-lint-final-config.json')
+const FS = require('fs')
 
 const formattedRules = Object.fromEntries(
   Object.entries(finalConfig?.rules ?? {}).sort(([ruleNameA], [ruleNameB]) => {
