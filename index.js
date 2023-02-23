@@ -179,7 +179,6 @@ module.exports = {
       rules: {
         'no-alert': 'off',
         'no-console': 'off',
-        'no-unused-vars': 'warn',
         'sonarjs/cognitive-complexity': 'off',
         'sonarjs/no-duplicate-string': 'off',
         'sonarjs/no-identical-functions': 'off',
