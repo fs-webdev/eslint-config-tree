@@ -33,44 +33,7 @@ module.exports = {
 
     'no-shadow': 'warn', // frontier has this as error, tw-blue has this as off
 
-    'valid-jsdoc': ['warn'], // frontier has this as off
     'no-undefined': 'off', // frontier has this as off, we had this as warn. I think it really should be off which means removing this line.
-
-    'jsdoc/check-access': 'off',
-    'jsdoc/check-alignment': 'warn',
-    'jsdoc/check-indentation': 'off',
-    'jsdoc/check-param-names': 'warn',
-    // 'jsdoc/check-property-names': 'warn',
-    'jsdoc/check-syntax': 'warn',
-    'jsdoc/check-tag-names': 'warn',
-    'jsdoc/check-types': 'warn',
-    // 'jsdoc/check-values': 'warn',
-    // 'jsdoc/empty-tags': 'warn',
-    'jsdoc/implements-on-classes': 'warn',
-    'jsdoc/match-description': 'warn',
-    'jsdoc/newline-after-description': 'off',
-    'jsdoc/no-types': 'off',
-    'jsdoc/no-undefined-types': 'off', // 2020-01-23: This was broken in eslint-plugin-jsdoc#8 in 2019-06, and hasn't gotten much better. Disabled, for now. Check back later.
-    'jsdoc/require-description-complete-sentence': 'off',
-    'jsdoc/require-description': 'warn',
-    'jsdoc/require-example': 'off',
-    'jsdoc/require-file-overview': 'off',
-    'jsdoc/require-hyphen-before-param-description': 'warn',
-    'jsdoc/require-jsdoc': 'off',
-    'jsdoc/require-param-description': 'warn',
-    'jsdoc/require-param-name': 'warn',
-    'jsdoc/require-param-type': 'warn',
-    'jsdoc/require-param': 'warn',
-    // 'jsdoc/require-property-description': 'warn',
-    // 'jsdoc/require-property-name': 'warn',
-    // 'jsdoc/require-property-type': 'warn',
-    // 'jsdoc/require-property': 'warn',
-    'jsdoc/require-returns-check': 'warn',
-    'jsdoc/require-returns-description': 'warn',
-    'jsdoc/require-returns-type': 'warn',
-    'jsdoc/require-returns': 'warn',
-    'jsdoc/require-throws': 'off',
-    'jsdoc/valid-types': 'warn',
 
     'import/no-absolute-path': 'warn', // frontier has this as error
 
@@ -167,6 +130,47 @@ module.exports = {
     // ]
   },
   overrides: [
+    {
+      files: ['*.js?(x)', '*.html'],
+      rules: {
+        'valid-jsdoc': ['warn'], // frontier has this as off
+        'jsdoc/check-access': 'off',
+        'jsdoc/check-alignment': 'warn',
+        'jsdoc/check-indentation': 'off',
+        'jsdoc/check-param-names': 'warn',
+        // 'jsdoc/check-property-names': 'warn',
+        'jsdoc/check-syntax': 'warn',
+        'jsdoc/check-tag-names': 'warn',
+        'jsdoc/check-types': 'warn',
+        // 'jsdoc/check-values': 'warn',
+        // 'jsdoc/empty-tags': 'warn',
+        'jsdoc/implements-on-classes': 'warn',
+        'jsdoc/match-description': 'warn',
+        'jsdoc/newline-after-description': 'off',
+        'jsdoc/no-types': 'off',
+        'jsdoc/no-undefined-types': 'off', // 2020-01-23: This was broken in eslint-plugin-jsdoc#8 in 2019-06, and hasn't gotten much better. Disabled, for now. Check back later.
+        'jsdoc/require-description-complete-sentence': 'off',
+        'jsdoc/require-description': 'warn',
+        'jsdoc/require-example': 'off',
+        'jsdoc/require-file-overview': 'off',
+        'jsdoc/require-hyphen-before-param-description': 'warn',
+        'jsdoc/require-jsdoc': 'off',
+        'jsdoc/require-param-description': 'warn',
+        'jsdoc/require-param-name': 'warn',
+        'jsdoc/require-param-type': 'warn',
+        'jsdoc/require-param': 'warn',
+        // 'jsdoc/require-property-description': 'warn',
+        // 'jsdoc/require-property-name': 'warn',
+        // 'jsdoc/require-property-type': 'warn',
+        // 'jsdoc/require-property': 'warn',
+        'jsdoc/require-returns-check': 'warn',
+        'jsdoc/require-returns-description': 'warn',
+        'jsdoc/require-returns-type': 'warn',
+        'jsdoc/require-returns': 'warn',
+        'jsdoc/require-throws': 'off',
+        'jsdoc/valid-types': 'warn',
+      },
+    },
     {
       files: ['*.stories.*', '*.test.*', '**/test/**', '**/*mock*/**', '*mock*'],
       rules: {
