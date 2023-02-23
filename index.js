@@ -15,6 +15,9 @@ module.exports = {
    * @property {object} rules - Tree custom rule and additional linter configuration.
    */
   rules: {
+    'no-template-curly-in-string': 'warn',
+    'no-console': ['warn', { allow: ['warn', 'error', 'trace', 'time'] }], // Allow warn on top of what eslint-config-frontier-react allows
+
     'default-case': ['warn'], // frontier has this as error
     'lines-between-class-members': 'warn', // frontier has this as error
     'no-case-declarations': 'off', // frontier has this as error
@@ -86,7 +89,7 @@ module.exports = {
     'promise/no-return-in-finally': 'warn',
     'promise/valid-params': 'warn',
 
-    'sonarjs/cognitive-complexity': ['warn', 25],
+    'sonarjs/cognitive-complexity': ['warn', 50],
     'sonarjs/max-switch-cases': ['warn', 10],
     'sonarjs/no-all-duplicated-branches': 'warn',
     'sonarjs/no-collapsible-if': 'warn',
@@ -163,19 +166,19 @@ module.exports = {
     //   {'name': '$.each', 'use': 'native forEach'}
     // ]
   },
-
-  // overrides: [
-  //   {
-  //     files: ['*.stories.js', '*.test.js', '**/*mock*/**', '*mock*'],
-  //     rules: {
-  //       'no-alert': 'off',
-  //       'no-console': 'off',
-  //       'no-unused-vars': 'off',
-  //       'sonarjs/no-duplicate-string': 'off',
-  //       'sonarjs/no-identical-functions': 'off',
-  //       'test-selectors/button': 'off',
-  //       'test-selectors/onChange': 'off',
-  //     },
-  //   },
-  // ],
+  overrides: [
+    {
+      files: ['*.stories.*', '*.test.*', '**/test/**', '**/*mock*/**', '*mock*'],
+      rules: {
+        'no-alert': 'off',
+        'no-console': 'off',
+        'no-unused-vars': 'warn',
+        'sonarjs/cognitive-complexity': 'off',
+        'sonarjs/no-duplicate-string': 'off',
+        'sonarjs/no-identical-functions': 'off',
+        'test-selectors/button': 'off',
+        'test-selectors/onChange': 'off',
+      },
+    },
+  ],
 }
