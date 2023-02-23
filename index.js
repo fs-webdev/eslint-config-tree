@@ -6,7 +6,7 @@ module.exports = {
     mocha: true, // Do we really need this?
   },
   extends: ['@fs/eslint-config-frontier-react'],
-  plugins: ['bestpractices', 'deprecate', 'html', 'import', 'jsdoc', 'node', 'promise', 'sonarjs', 'test-selectors'],
+  plugins: ['bestpractices', 'deprecate', 'html', 'import', 'jsdoc', 'promise', 'sonarjs', 'test-selectors'],
   /**
    * @property {object} rules - Tree custom rule and additional linter configuration.
    */
