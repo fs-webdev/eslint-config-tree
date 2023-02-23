@@ -49,7 +49,7 @@ module.exports = {
   parser: 'babel-eslint',
   /**
    * @property {object} plugins - Tree additional linter plugins.
-   * @note - Code Climate does not yet support bestpractices, deprecate, no-only-tests, no-skip-tests, sonarjs, and test-selectors, and breaks if they are present. You will need to add these plugins individually in your .eslintrc.js file. The first time you add a file, Code Climate will complain about not being able to find the definitions for these extra rules once for every new file. Obnoxious, but the best we have, for now.
+   Code Climate does not yet support bestpractices, deprecate, no-only-tests, no-skip-tests, sonarjs, and test-selectors, and breaks if they are present. You will need to add these plugins individually in your .eslintrc.js file. The first time you add a file, Code Climate will complain about not being able to find the definitions for these extra rules once for every new file. Obnoxious, but the best we have, for now.
    */
   plugins: [
     // 'eslint-plugin-bestpractices',

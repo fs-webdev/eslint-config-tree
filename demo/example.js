@@ -29,6 +29,9 @@ function ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM (params) {
 
 const myPromise = new Promise();
 
+/**
+ * @note
+ */
 myPromise.then((a) => {
   if (true === false) {
     return Promise.resolve();
