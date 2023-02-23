@@ -35,7 +35,7 @@ module.exports = {
       { terms: ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], location: 'anywhere' }, // frontier removed HERE BE DRAGONS and TO-DO
     ],
 
-    'no-shadow': 'warn', // frontier has this as error, tw-blue has this as off
+    'no-shadow': 'off', // frontier has this as error, tw-blue has this as off, we had it as warn
 
     'no-undefined': 'off', // frontier has this as off, we had this as warn. I think it really should be off which means removing this line.
 
