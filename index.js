@@ -2,36 +2,32 @@
 const dataTestId = 'data-testid'
 
 module.exports = {
-  env: { es2021: true, browser: true, mocha: true },
-  extends: ['@fs/eslint-config-frontier-react'],
-  parser: '@babel/eslint-parser',
-  parserOptions: {
-    ecmaVersion: 12,
-    sourceType: 'module',
-    requireConfigFile: false,
+  env: {
+    mocha: true, // Do we really need this?
   },
+  extends: ['@fs/eslint-config-frontier-react'],
   plugins: ['bestpractices', 'deprecate', 'html', 'import', 'jsdoc', 'node', 'promise', 'sonarjs', 'test-selectors'],
   /**
    * @property {object} rules - Tree custom rule and additional linter configuration.
    */
   rules: {
-    'default-case': ['warn'],
-    'valid-jsdoc': ['warn'],
-    'no-console': 'warn',
-    'jsx-quotes': 'off',
-    'lines-between-class-members': 'warn',
-    'no-case-declarations': 'off',
-    'no-else-return': 'off',
-    'no-invalid-this': 'off',
-    'no-prototype-builtins': 'warn',
-    'no-shadow': 'warn',
-    'no-undefined': 'warn',
+    'default-case': ['warn'], // frontier has this as error
+    'lines-between-class-members': 'warn', // frontier has this as error
+    'no-case-declarations': 'off', // frontier has this as error
+    'no-else-return': 'off', // frontier has this as error
+    'no-prototype-builtins': 'warn', // frontier has this as error
+    'no-undefined': 'warn', // frontier has this as error
+    'prefer-const': 'warn', // frontier has this as error
+
     'no-warning-comments': [
       'warn',
-      { terms: ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], location: 'anywhere' },
+      // eslint-disable-next-line no-warning-comments -- I don't want a warning here currently
+      { terms: ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], location: 'anywhere' }, // frontier removed HERE BE DRAGONS and TO-DO
     ],
-    'object-curly-spacing': 'off',
-    'prefer-const': 'warn',
+
+    'no-shadow': 'warn', // frontier has this as error, tw-blue has this as off
+
+    'valid-jsdoc': ['warn'], // frontier has this as off
 
     'jsdoc/check-access': 'off',
     'jsdoc/check-alignment': 'warn',
@@ -69,7 +65,7 @@ module.exports = {
     'jsdoc/require-throws': 'off',
     'jsdoc/valid-types': 'warn',
 
-    'import/no-absolute-path': 'warn',
+    'import/no-absolute-path': 'warn', // frontier has this as error
 
     'bestpractices/no-eslint-disable': 'warn',
 
