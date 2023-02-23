@@ -7,7 +7,7 @@ module.exports = {
   },
   extends: [
     '@fs/eslint-config-frontier-react',
-    'standard',
+    'standard-react',
     '@fs/eslint-config-frontier-react/typescript',
     '@fs/eslint-config-frontier-react/prettierSetup',
   ],
