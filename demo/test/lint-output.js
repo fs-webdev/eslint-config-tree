@@ -2,7 +2,7 @@ import test from 'ava'
 
 const fileManager = require('file-manager-js')
 
-function processFile (t, filename) {
+function processFile(t, filename) {
   // Run previously via npm test, save off results, and read output
   return fileManager
     .readFile(`./demo/test/snapshots/${filename}`)

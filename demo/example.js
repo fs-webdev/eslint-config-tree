@@ -12,7 +12,7 @@
 // Hack: Note that these work, regardless of case
 // Here be Dragons
 
-function functionWithoutJSDocWarningsBecauseTheSectionWasCompletelyExcluded () {
+function functionWithoutJSDocWarningsBecauseTheSectionWasCompletelyExcluded() {
   console.log('ASHLDKFJHASKFJSDHFKJSDHFKLSDJHFLJKSDHFLKSDJFHKSDLJFHLSDKJF')
   return true
 }
@@ -24,7 +24,7 @@ function functionWithoutJSDocWarningsBecauseTheSectionWasCompletelyExcluded () {
  * @param b
  * @returns
  */
-function ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM (params) {}
+function ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM(params) {}
 
 const myPromise = new Promise()
 
@@ -38,7 +38,7 @@ myPromise.then((a) => {
 
 const variable = true ? true : true
 
-export function ReturnEarly () {
+export function ReturnEarly() {
   if (window === undefined && window === undefined && params === true) {
     ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM('a', 'b')
     const deprecatedImport = require('path/to/legacyModule')
@@ -53,7 +53,7 @@ export function ReturnEarly () {
 
 /* We value sonarjs rules enough to test them, here. Sorry for the mess. */
 
-function shortFunction (arg) {
+function shortFunction(arg) {
   if (arg) {
     console.log(true)
   }
@@ -61,7 +61,7 @@ function shortFunction (arg) {
 }
 
 // sonarjs/no-identical-functions checks function bodies of three lines and above
-function duplicateFunction (arg) {
+function duplicateFunction(arg) {
   if (arg) {
     console.log(true)
   }
@@ -117,5 +117,5 @@ export const hi = {
   /**
    * @note - This produces Invalid JSDoc tag name "note".eslintjsdoc/check-tag-names
    */
-  rawr: 7
+  rawr: 7,
 }
