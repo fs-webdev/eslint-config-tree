@@ -15,6 +15,10 @@ module.exports = {
    * @property {object} rules - Tree custom rule and additional linter configuration.
    */
   rules: {
+    'consistent-return': 'off', // Annoying in useEffects
+    'promise/always-return': 'off', // This is off in babylon by Rose 2 years ago. I think it should be off too.
+    'promise/avoid-new': 'off', // This has been off in babylon for 15 months already
+
     'no-template-curly-in-string': 'warn',
     'no-console': ['warn', { allow: ['warn', 'error', 'trace', 'time'] }], // Allow warn on top of what eslint-config-frontier-react allows
 
@@ -39,7 +43,7 @@ module.exports = {
 
     'bestpractices/no-eslint-disable': 'warn',
 
-    'promise/always-return': 'warn',
+    
     'promise/no-return-wrap': 'warn',
     'promise/param-names': 'warn',
     'promise/catch-or-return': ['warn', { allowFinally: true }],
@@ -47,7 +51,6 @@ module.exports = {
     'promise/no-nesting': 'warn',
     'promise/no-promise-in-callback': 'warn',
     'promise/no-callback-in-promise': 'warn',
-    'promise/avoid-new': 'warn',
     'promise/no-new-statics': 'warn',
     'promise/no-return-in-finally': 'warn',
     'promise/valid-params': 'warn',
