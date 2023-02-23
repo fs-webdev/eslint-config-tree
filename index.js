@@ -178,6 +178,9 @@ module.exports = {
         'sonarjs/no-identical-functions': 'off',
         'test-selectors/button': 'off',
         'test-selectors/onChange': 'off',
+        'test-selectors/onClick': 'off',
+        'import/prefer-default-export': 'off',
+        'testing-library/no-node-access': 'off', // We will use querySelectors if we want to, since it matches us more closely with our acceptance testing */
       },
     },
   ],
