@@ -3,7 +3,11 @@ const dataTestId = 'data-testid'
 
 module.exports = {
   env: { es2021: true, browser: true, mocha: true },
-  extends: ['@fs/eslint-config-frontier-react/prettierSetup'],
+  extends: [
+    '@fs/eslint-config-frontier-react/react',
+    '@fs/eslint-config-frontier-react/es6',
+    '@fs/eslint-config-frontier-react/prettierSetup',
+  ],
   parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 12,
