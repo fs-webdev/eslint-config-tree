@@ -11,5 +11,4 @@
 /reports/**
 analysis.json
 npm-debug.log
-/demo/test/snapshots/new-lint-results.txt
-/demo/test/snapshots/new-lint-final-config.json
+/demo/test/snapshots/new-lint*
