@@ -3,12 +3,12 @@ const dataTestId = 'data-testid'
 
 module.exports = {
   env: { es2021: true, browser: true, mocha: true },
-  extends: ['standard'],
+  extends: [],
   parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaVersion: 12,
     sourceType: 'module',
-    requireConfigFile: false
+    requireConfigFile: false,
   },
   plugins: [
     'bestpractices',
@@ -20,12 +20,76 @@ module.exports = {
     'node',
     'promise',
     'sonarjs',
-    'test-selectors'
+    'test-selectors',
   ],
   /**
    * @property {object} rules - Tree custom rule and additional linter configuration.
    */
   rules: {
+    // Remove following offs when we extend prettier via @fs/eslint-config-frontier-react/prettierSetup
+    // These are conflicting/unnecessary rules for prettier as found out by npx eslint-config-prettier file.js
+    // 'max-len': 'off',
+    // 'array-bracket-spacing': 'off',
+    // 'arrow-parens': 'off',
+    // 'arrow-spacing': 'off',
+    // 'block-spacing': 'off',
+    // 'brace-style': 'off',
+    // 'comma-dangle': 'off',
+    // 'comma-spacing': 'off',
+    // 'comma-style': 'off',
+    // 'computed-property-spacing': 'off',
+    // 'dot-location': 'off',
+    // 'eol-last': 'off',
+    // 'func-call-spacing': 'off',
+    // 'function-call-argument-newline': 'off',
+    // 'function-paren-newline': 'off',
+    // 'generator-star-spacing': 'off',
+    // 'implicit-arrow-linebreak': 'off',
+    // indent: 'off',
+    // 'key-spacing': 'off',
+    // 'keyword-spacing': 'off',
+    // 'linebreak-style': 'off',
+    // 'new-parens': 'off',
+    // 'newline-per-chained-call': 'off',
+    // 'no-extra-semi': 'off',
+    // 'no-floating-decimal': 'off',
+    // 'no-mixed-spaces-and-tabs': 'off',
+    // 'no-multi-spaces': 'off',
+    // 'no-multiple-empty-lines': 'off',
+    // 'no-spaced-func': 'off',
+    // 'no-trailing-spaces': 'off',
+    // 'no-whitespace-before-property': 'off',
+    // 'nonblock-statement-body-position': 'off',
+    // 'object-curly-newline': 'off',
+    // 'object-property-newline': 'off',
+    // 'one-var-declaration-per-line': 'off',
+    // 'operator-linebreak': 'off',
+    // 'padded-blocks': 'off',
+    // 'quote-props': 'off',
+    // 'rest-spread-spacing': 'off',
+    // semi: 'off',
+    // 'semi-spacing': 'off',
+    // 'semi-style': 'off',
+    // 'space-before-blocks': 'off',
+    // 'space-before-function-paren': 'off',
+    // 'space-in-parens': 'off',
+    // 'space-infix-ops': 'off',
+    // 'space-unary-ops': 'off',
+    // 'switch-colon-spacing': 'off',
+    // 'template-curly-spacing': 'off',
+    // 'template-tag-spacing': 'off',
+    // 'unicode-bom': 'off',
+    // 'wrap-iife': 'off',
+    // 'yield-star-spacing': 'off',
+    // curly: 'off',
+    // 'no-confusing-arrow': 'off',
+    // 'no-tabs': 'off',
+    // 'no-mixed-operators': 'off',
+    // 'no-unexpected-multiline': 'off',
+    // quotes: 'off',
+    // 'arrow-body-style': 'off',
+    // 'prefer-arrow-callback': 'off',
+
     'default-case': ['warn'],
     'valid-jsdoc': ['warn'],
     'no-console': 'warn',
@@ -99,7 +163,7 @@ module.exports = {
     'no-undefined': 'warn',
     'no-warning-comments': [
       'warn',
-      { terms: ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], location: 'anywhere' }
+      { terms: ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], location: 'anywhere' },
     ],
     'object-curly-spacing': 'off',
     'prefer-const': 'warn',
@@ -152,38 +216,38 @@ module.exports = {
     'test-selectors/anchor': [
       'warn',
       'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId }
+      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
     ],
     'test-selectors/button': [
       'warn',
       'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId }
+      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
     ],
     'test-selectors/input': [
       'warn',
       'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId }
+      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
     ],
     'test-selectors/onChange': [
       'warn',
       'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId }
+      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
     ],
     'test-selectors/onClick': [
       'warn',
       'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId }
+      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
     ],
     'test-selectors/onKeyDown': [
       'warn',
       'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId }
+      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
     ],
     'test-selectors/onKeyUp': [
       'warn',
       'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId }
-    ]
+      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
+    ],
 
     // Example deprecation rules:
     // 'deprecate/function': ['error',
@@ -195,7 +259,7 @@ module.exports = {
     // 'deprecate/member-expression': ['error',
     //   {'name': '$.each', 'use': 'native forEach'}
     // ]
-  }
+  },
 
   // overrides: [
   //   {
