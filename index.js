@@ -20,7 +20,6 @@ module.exports = {
     'no-case-declarations': 'off', // frontier has this as error
     'no-else-return': 'off', // frontier has this as error
     'no-prototype-builtins': 'warn', // frontier has this as error
-    'no-undefined': 'warn', // frontier has this as error
     'prefer-const': 'warn', // frontier has this as error
 
     'no-warning-comments': [
@@ -32,6 +31,7 @@ module.exports = {
     'no-shadow': 'warn', // frontier has this as error, tw-blue has this as off
 
     'valid-jsdoc': ['warn'], // frontier has this as off
+    'no-undefined': 'off', // frontier has this as off, we had this as warn. I think it really should be off which means removing this line.
 
     'jsdoc/check-access': 'off',
     'jsdoc/check-alignment': 'warn',
