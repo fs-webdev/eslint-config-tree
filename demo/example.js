@@ -29,6 +29,9 @@ function ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM (params) {
 
 const myPromise = new Promise();
 
+/**
+ * @note
+ */
 myPromise.then((a) => {
   if (true === false) {
     return Promise.resolve();
@@ -111,10 +114,3 @@ switch (1) {
   default:
     break;
 }
-
-export const hi = {
-  /**
-   * @note - This produces Invalid JSDoc tag name "note".eslintjsdoc/check-tag-names
-   */
-  rawr: 7
-};
