@@ -18,6 +18,21 @@ module.exports = {
     'default-case': ['warn'],
     'valid-jsdoc': ['warn'],
     'no-console': 'warn',
+    'jsx-quotes': 'off',
+    'lines-between-class-members': 'warn',
+    'no-case-declarations': 'off',
+    'no-else-return': 'off',
+    'no-invalid-this': 'off',
+    'no-prototype-builtins': 'warn',
+    'no-shadow': 'warn',
+    'no-undefined': 'warn',
+    'no-warning-comments': [
+      'warn',
+      { terms: ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], location: 'anywhere' },
+    ],
+    'object-curly-spacing': 'off',
+    'prefer-const': 'warn',
+
     'jsdoc/check-access': 'off',
     'jsdoc/check-alignment': 'warn',
     'jsdoc/check-indentation': 'off',
@@ -33,7 +48,6 @@ module.exports = {
     'jsdoc/newline-after-description': 'off',
     'jsdoc/no-types': 'off',
     'jsdoc/no-undefined-types': 'off', // 2020-01-23: This was broken in eslint-plugin-jsdoc#8 in 2019-06, and hasn't gotten much better. Disabled, for now. Check back later.
-
     'jsdoc/require-description-complete-sentence': 'off',
     'jsdoc/require-description': 'warn',
     'jsdoc/require-example': 'off',
@@ -55,23 +69,7 @@ module.exports = {
     'jsdoc/require-throws': 'off',
     'jsdoc/valid-types': 'warn',
 
-    'jsx-quotes': 'off',
-
-    // These rules went much more strict after updating on 2020-01-23, and are decreased in urgency due to the impact there would be on the existing codebase
     'import/no-absolute-path': 'warn',
-    'lines-between-class-members': 'warn',
-    'no-case-declarations': 'off',
-    'no-else-return': 'off',
-    'no-invalid-this': 'off',
-    'no-prototype-builtins': 'warn',
-    'no-shadow': 'warn',
-    'no-undefined': 'warn',
-    'no-warning-comments': [
-      'warn',
-      { terms: ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], location: 'anywhere' },
-    ],
-    'object-curly-spacing': 'off',
-    'prefer-const': 'warn',
 
     'bestpractices/no-eslint-disable': 'warn',
 
