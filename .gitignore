@@ -11,4 +11,4 @@
 /reports/**
 analysis.json
 npm-debug.log
-/demo/test/snapshots/new-lint*
+/demo/test/snapshots/local*
