@@ -171,7 +171,10 @@ module.exports = {
         'jsdoc/valid-types': 'warn',
       },
     },
-    { files: ['*.test.*', '**/test/**', '*.spec.*'], extends: ['@fs/eslint-config-frontier-react/jest'] },
+    {
+      files: ['*.test.*', '**/test/**', '*.spec.*', '**/setupTests.*'],
+      extends: ['@fs/eslint-config-frontier-react/jest'],
+    },
     {
       files: ['*.stories.*', '*.test.*', '**/test/**', '**/*mock*/**', '*mock*'],
       rules: {
