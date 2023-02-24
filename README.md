@@ -2,7 +2,22 @@
 
 This is a shared configuration for all Tree repositories. Contains overrides and enhancements on top of the base configuration located at [https://github.com/fs-webdev/eslint-config-frontier](https://github.com/fs-webdev/eslint-config-frontier).
 
-Why? Because we believe in linting, and we have become converted to the additional rules enforced by the following plugins:
+## Unit tests
+
+This central configuration is a potential breaking point for _all_ of our code if we suddenly break our rules, so we have tests in place that verify that our configuration remains consistent between upgrades (primarily that we _know_ what changed), and that the extended cases that we care about are still caught. We do this by utilizing ava's snapshot ability against exported (and slightly modified) linting output and linting configuration. These files are not committed, as they are re-created on each test run, but the resulting snapshot and summary markdown file are part of version control, to make it easier to see changes.
+
+**Process:**
+
+1. Make dependency/configuration updates.
+1. Run `npm test`.
+  - The tests should likely fail. Verify your expectations against the current [snapshot](/demo/test/snapshots/linting-config.test.js.md) file.
+1. After you have your results how you want them, run `npm run test:update`.
+  - The tests should now pass.
+1. If you want see how your changes would impact a codebase, you can either `npm link` or copy+paste the contents of `local-linting-final-config.json` temporarily into the target `.eslintrc` file.
+
+> TODO: Update the documentation below to be current, and not include things like Code Climate
+
+Why extra rules? Because we believe in linting, and we have become converted to the additional rules enforced by the following plugins:
 
  - [eslint-plugin-bestpractices](https://github.com/skye2k2/eslint-plugin-bestpractices)
  - [eslint-plugin-deprecate](https://github.com/AlexMost/eslint-plugin-deprecate)
@@ -124,7 +139,7 @@ Or disable BOTH the desired rule and the no-eslint-disable rule:
 
 ### How to deal with `Definition for rule '{RULE}' was not found.` errors:
 
-This is a known state when submitting a new file to Code Climate for the first time, since they do not support all of the linting extensions we wish to use. If you are seeing these warnings when linting locally, you may have `eslint` installed globally, but not the additional dependency. We do not recommend running `eslint` globally for this reason (see: https://github.com/eslint/eslint/issues/6732). All Tree repositories should include all dependencies required to be able to run `eslint` locally in their respective directories. 
+This is a known state when submitting a new file to Code Climate for the first time, since they do not support all of the linting extensions we wish to use. If you are seeing these warnings when linting locally, you may have `eslint` installed globally, but not the additional dependency. We do not recommend running `eslint` globally for this reason (see: https://github.com/eslint/eslint/issues/6732). All Tree repositories should include all dependencies required to be able to run `eslint` locally in their respective directories.
 
 If you have recently updated dependencies and see this error locally, then there is a possibility that your editor's linting integration is out-of-sync that can be resolved by restarting your editor.
 
