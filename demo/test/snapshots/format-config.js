@@ -1,6 +1,8 @@
-// Process the final eslint config file:
-// Sort rules alphabetically to compare changes easier.
-// Remove any developer-specific directory paths for that and the eslint error/warning output
+// Process the exported linting results and final configuration files:
+// Sort final configuration rules alphabetically to compare changes easier.
+// Remove any developer-specific directory paths for both files.
+
+/* eslint no-console: "off" -- node scripts use the console, so disable for the whole file */
 
 const finalConfig = require('./local-linting-final-config.json');
 
@@ -22,19 +24,19 @@ FS.writeFile(
     2
   ),
   (err) => {
-    if (err) console.log('There was an error writing to local-linting-final-config.json file:', err); // eslint-disable-line no-console -- Node scripts use the console.
+    if (err) console.log('There was an error writing to local-linting-final-config.json file:', err);
   }
 );
 
 FS.readFile('./demo/test/snapshots/local-linting-output.txt', 'utf8', (err, eslintOutput) => {
   if (err) {
-    console.log('There was an error reading local-linting-output.txt', err); // eslint-disable-line no-console -- Node scripts use the console.
+    console.log('There was an error reading local-linting-output.txt', err);
   } else {
     FS.writeFile(
       './demo/test/snapshots/local-linting-output.txt',
-      eslintOutput.replaceAll(/.*demo\//g, ''),
+      eslintOutput.replace(/.*demo\//g, ''),
       (err2) => {
-        if (err2) console.log('There was an error writing to local-linting-output.txt file:', err); // eslint-disable-line no-console -- Node scripts use the console.
+        if (err2) console.log('There was an error writing to local-linting-output.txt file:', err);
       }
     );
   }

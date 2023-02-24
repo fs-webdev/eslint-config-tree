@@ -55,7 +55,7 @@
     "lint": "eslint demo --ext .html,.js,.json",
     "lint:fix": "eslint demo --ext .html,.js,.json --fix",
     "lint:quiet": "eslint demo --ext .html,.js,.json --quiet",
-    "lint:report": "eslint demo --ext .html,.js,.json '**/*.html' --format html --output-file ./reports/linter/lintresults.html & eslint demo --ext .html,.js,.json --format json --output-file ./reports/linter/lintresults.json",
+    "lint:report": "eslint demo --ext .html,.js,.json '**/*.html' --format html --output-file ./reports/linting/linting_report.html & eslint demo --ext .html,.js,.json --format json --output-file ./reports/linting/linting_report.json",
     "lint:snapshot": "eslint demo --ext .html,.js,.json --no-color --output-file ./demo/test/snapshots/local-linting-output.txt; eslint --print-config file.js > ./demo/test/snapshots/local-linting-final-config.json; npm run test:format",
     "preinstall": "git config --global url.https://github.com/.insteadOf git://github.com/",
     "postinstall": "npm rebuild husky",
