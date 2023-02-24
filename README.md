@@ -171,6 +171,16 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 ## Changelog:
 
 <details>
+<summary>Version 6 - ESLint 8</summary>
+
+- Update all linting subdependencies.
+- Remove Code Climate/Polymer-related configurations and documentation.
+- Add new final configuration test.
+- Inherit more configuration from frontier (finally).
+
+</details>
+
+<details>
 <summary>Version 5 </summary>
 
 - Update all linting subdependencies.

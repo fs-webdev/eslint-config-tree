@@ -119,10 +119,3 @@ switch (1) {
   default:
     break
 }
-
-export const hi = {
-  /**
-   * @note - This produces Invalid JSDoc tag name "note".eslintjsdoc/check-tag-names
-   */
-  rawr: 7,
-}
