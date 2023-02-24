@@ -8,7 +8,6 @@ module.exports = {
   extends: [
     '@fs/eslint-config-frontier-react/es6',
     '@fs/eslint-config-frontier-react/json',
-    '@fs/eslint-config-frontier-react/jest',
     '@fs/eslint-config-frontier-react/dont-need-lodash',
     '@fs/eslint-config-frontier-react/typescript',
   ],
@@ -172,6 +171,7 @@ module.exports = {
         'jsdoc/valid-types': 'warn',
       },
     },
+    { files: ['*.test.*', '**/test/**', '*.spec.*'], extends: ['@fs/eslint-config-frontier-react/jest'] },
     {
       files: ['*.stories.*', '*.test.*', '**/test/**', '**/*mock*/**', '*mock*'],
       rules: {
