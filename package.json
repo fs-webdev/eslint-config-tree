@@ -45,15 +45,15 @@
     }
   },
   "scripts": {
-    "lint": "eslint --ignore-pattern '.*' '**/*.html' '**/*.js' '**/*.json'",
-    "lint:fix": "eslint --ignore-pattern '.*' '**/*.html' '**/*.js' '**/*.json' --fix",
-    "lint:quiet": "eslint --ignore-pattern '.*' '**/*.html' '**/*.js' '**/*.json' --quiet",
-    "lint:report": "eslint --ignore-pattern '.*' '**/*.html' '**/*.js' '**/*.json' '**/*.html' --format html --output-file ./reports/linter/lintresults.html & eslint --ignore-pattern '.*' '**/*.js' '**/*.json' --format json --output-file ./reports/linter/lintresults.json",
-    "lint:snapshot": "eslint --ignore-pattern '.*' '**/*.html' '**/*.js' '**/*.json' --no-color --output-file ./demo/test/snapshots/new-lint-results.txt; eslint --print-config file.js > ./demo/test/snapshots/new-lint-final-config.json; npm run test:format",
+    "lint": "eslint demo --ext .html,.js,.json",
+    "lint:fix": "eslint demo --ext .html,.js,.json --fix",
+    "lint:quiet": "eslint demo --ext .html,.js,.json --quiet",
+    "lint:report": "eslint demo --ext .html,.js,.json '**/*.html' --format html --output-file ./reports/linting/linting_report.html & eslint demo --ext .html,.js,.json --format json --output-file ./reports/linting/linting_report.json",
+    "lint:snapshot": "eslint demo --ext .html,.js,.json --no-color --output-file ./demo/test/snapshots/local-linting-output.txt; eslint --print-config file.js > ./demo/test/snapshots/local-linting-final-config.json; npm run test:format",
     "preinstall": "git config --global url.https://github.com/.insteadOf git://github.com/",
     "postinstall": "npm rebuild husky",
     "test": "npm run lint:snapshot; ava",
-    "test:format": "sed -i 's|^.*/demo/||g' demo/test/snapshots/new-lint-results.txt; node format-config.js",
+    "test:format": "node demo/test/snapshots/format-config.js",
     "test:update": "npm run lint:snapshot; ava --update-snapshots"
   }
 }

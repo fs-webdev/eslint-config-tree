@@ -12,6 +12,10 @@
 // Hack: Note that these work, regardless of case
 // Here be Dragons
 
+/**
+ * As long as you separate the comment block from the declaration, JSDOC rules will not be applied. But the comment will still show through many IDE's definition hot-linking.
+ */
+
 function functionWithoutJSDocWarningsBecauseTheSectionWasCompletelyExcluded() {
   console.log('ASHLDKFJHASKFJSDHFKJSDHFKLSDJHFLJKSDHFLKSDJFHKSDLJFHLSDKJF')
   return true
@@ -28,6 +32,9 @@ function ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM(params) {}
 
 const myPromise = new Promise()
 
+/**
+ * @note
+ */
 myPromise.then((a) => {
   if (true === false) {
     return Promise.resolve()
