@@ -172,7 +172,7 @@ module.exports = {
       },
     },
     {
-      files: ['*.stories.*', '*.test.*', '**/test/**', '**/*mock*/**', '*mock*'],
+      files: ['*.stories.*', '*.test.*', '**/test/**', '**/*mock*/**', '*mock*', '**/setupTests.*'],
       extends: ['@fs/eslint-config-frontier-react/jest'],
       rules: {
         'no-alert': 'off',
