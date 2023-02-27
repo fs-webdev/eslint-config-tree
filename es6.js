@@ -26,7 +26,7 @@ module.exports = {
     'promise/no-return-wrap': 'warn',
     'promise/param-names': 'warn',
     'promise/catch-or-return': ['warn', { allowFinally: true }],
-    'promise/no-native': 'off',
+    // promise/no-native
     'promise/no-nesting': 'warn',
     'promise/no-promise-in-callback': 'warn',
     'promise/no-callback-in-promise': 'warn',
@@ -50,7 +50,7 @@ module.exports = {
     'sonarjs/no-identical-expressions': 'warn',
     'sonarjs/no-identical-functions': 'warn',
     // sonarjs/no-ignored-return
-    'sonarjs/no-inverted-boolean-check': 'off',
+    // sonarjs/no-inverted-boolean-check
     'sonarjs/no-nested-switch': 'warn',
     'sonarjs/no-nested-template-literals': 'warn',
     'sonarjs/no-one-iteration-loop': 'warn',
