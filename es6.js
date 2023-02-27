@@ -111,41 +111,55 @@ module.exports = {
     {
       files: ['*.js?(x)', '*.html'],
       rules: {
-        'valid-jsdoc': ['warn'], // frontier has this as off
-        'jsdoc/check-access': 'off',
+        'valid-jsdoc': ['warn'],
+        // jsdoc/check-access
         'jsdoc/check-alignment': 'warn',
-        'jsdoc/check-indentation': 'off',
+        // jsdoc/check-indentation
+        // jsdoc/check-line-alignment
         'jsdoc/check-param-names': 'warn',
-        // 'jsdoc/check-property-names': 'warn',
+        // jsdoc/check-property-names
         'jsdoc/check-syntax': 'warn',
         'jsdoc/check-tag-names': 'warn',
         'jsdoc/check-types': 'warn',
-        // 'jsdoc/check-values': 'warn',
-        // 'jsdoc/empty-tags': 'warn',
+        // jsdoc/check-values
+        // jsdoc/empty-tags
         'jsdoc/implements-on-classes': 'warn',
         'jsdoc/match-description': 'warn',
-        'jsdoc/newline-after-description': 'off',
-        'jsdoc/no-types': 'off',
-        'jsdoc/no-undefined-types': 'off', // 2020-01-23: This was broken in eslint-plugin-jsdoc#8 in 2019-06, and hasn't gotten much better. Disabled, for now. Check back later.
-        'jsdoc/require-description-complete-sentence': 'off',
+        // jsdoc/match-name
+        // jsdoc/multiline-blocks
+        // jsdoc/newline-after-description
+        // jsdoc/no-bad-blocks
+        // jsdoc/no-defaults
+        // jsdoc/no-missing-syntax
+        // jsdoc/no-multi-asterisks
+        // jsdoc/no-restricted-syntax
+        // jsdoc/no-types
+        // jsdoc/no-undefined-types - 2020-01-23: This was broken in eslint-plugin-jsdoc#8 in 2019-06, and hasn't gotten much better. Disabled, for now. Check back later.
+        // jsdoc/require-asterisk-prefix
+        // jsdoc/require-description-complete-sentence
         'jsdoc/require-description': 'warn',
-        'jsdoc/require-example': 'off',
-        'jsdoc/require-file-overview': 'off',
+        // jsdoc/require-example
+        // jsdoc/require-file-overview
         'jsdoc/require-hyphen-before-param-description': 'warn',
-        'jsdoc/require-jsdoc': 'off',
+        // jsdoc/require-jsdoc
         'jsdoc/require-param-description': 'warn',
         'jsdoc/require-param-name': 'warn',
         'jsdoc/require-param-type': 'warn',
         'jsdoc/require-param': 'warn',
+        // 'jsdoc/require-property': 'warn',
         // 'jsdoc/require-property-description': 'warn',
         // 'jsdoc/require-property-name': 'warn',
-        // 'jsdoc/require-property-type': 'warn',
-        // 'jsdoc/require-property': 'warn',
+        // 'jsdoc/require-property-type': 'warn'
         'jsdoc/require-returns-check': 'warn',
         'jsdoc/require-returns-description': 'warn',
         'jsdoc/require-returns-type': 'warn',
         'jsdoc/require-returns': 'warn',
-        'jsdoc/require-throws': 'off',
+        // jsdoc/require-throws
+        // jsdoc/require-yields
+        // jsdoc/require-yields-check
+        // jsdoc/sort-tags
+        // jsdoc/tag-lines
+        // jsdoc/text-escaping
         'jsdoc/valid-types': 'warn',
       },
     },
