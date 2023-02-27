@@ -1,5 +1,9 @@
 // We use `data-testid` instead of `data-test-id`, in order to match React Native and Testing Library https://testing-library.com/docs/dom-testing-library/api-queries#bytestid
-const dataTestId = 'data-testid'
+const testSelectorsValue = [
+  'warn',
+  'always',
+  { ignoreDisabled: false, ignoreReadonly: false, testAttribute: 'data-testid' },
+]
 
 module.exports = {
   env: {
@@ -63,41 +67,13 @@ module.exports = {
     'sonarjs/prefer-single-boolean-return': 'warn',
     'sonarjs/prefer-while': 'warn',
 
-    'test-selectors/anchor': [
-      'warn',
-      'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
-    ],
-    'test-selectors/button': [
-      'warn',
-      'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
-    ],
-    'test-selectors/input': [
-      'warn',
-      'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
-    ],
-    'test-selectors/onChange': [
-      'warn',
-      'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
-    ],
-    'test-selectors/onClick': [
-      'warn',
-      'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
-    ],
-    'test-selectors/onKeyDown': [
-      'warn',
-      'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
-    ],
-    'test-selectors/onKeyUp': [
-      'warn',
-      'always',
-      { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
-    ],
+    'test-selectors/anchor': testSelectorsValue,
+    'test-selectors/button': testSelectorsValue,
+    'test-selectors/input': testSelectorsValue,
+    'test-selectors/onChange': testSelectorsValue,
+    'test-selectors/onClick': testSelectorsValue,
+    'test-selectors/onKeyDown': testSelectorsValue,
+    'test-selectors/onKeyUp': testSelectorsValue,
     // test-selectors/onSubmit
 
     // Example deprecation rules:
