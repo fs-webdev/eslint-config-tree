@@ -15,7 +15,7 @@ module.exports = {
     '@fs/eslint-config-frontier-react/dont-need-lodash',
     '@fs/eslint-config-frontier-react/typescript',
   ],
-  plugins: ['bestpractices', 'deprecate', 'html', 'import', 'jsdoc', 'promise', 'sonarjs', 'test-selectors'],
+  plugins: ['bestpractices', 'deprecate', 'html', 'jsdoc', 'promise', 'sonarjs', 'test-selectors'],
   rules: {
     'no-restrictive-imports': 'off', // We re-export default imports all the time
     'no-console': ['warn', { allow: ['warn', 'error', 'trace', 'time'] }], // Allow warn on top of what eslint-config-frontier-react allows
