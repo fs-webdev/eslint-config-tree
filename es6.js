@@ -31,9 +31,11 @@ module.exports = {
     'promise/valid-params': 'warn',
 
     'sonarjs/cognitive-complexity': ['warn', 50],
+    // sonarjs/elseif-without-else
     'sonarjs/max-switch-cases': ['warn', 10],
     'sonarjs/no-all-duplicated-branches': 'warn',
     'sonarjs/no-collapsible-if': 'warn',
+    // sonarjs/no-collection-size-mischeck
     'sonarjs/no-duplicate-string': 'warn',
     'sonarjs/no-duplicated-branches': 'warn',
     'sonarjs/no-element-overwrite': 'warn',
@@ -43,6 +45,7 @@ module.exports = {
     'sonarjs/no-identical-conditions': 'warn',
     'sonarjs/no-identical-expressions': 'warn',
     'sonarjs/no-identical-functions': 'warn',
+    // sonarjs/no-ignored-return
     'sonarjs/no-inverted-boolean-check': 'off',
     'sonarjs/no-nested-switch': 'warn',
     'sonarjs/no-nested-template-literals': 'warn',
