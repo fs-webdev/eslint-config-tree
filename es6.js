@@ -98,6 +98,7 @@ module.exports = {
       'always',
       { ignoreDisabled: false, ignoreReadonly: false, testAttribute: dataTestId },
     ],
+    // test-selectors/onSubmit
 
     // Example deprecation rules:
     // 'deprecate/function': ['error',
