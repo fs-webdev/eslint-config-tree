@@ -13,34 +13,12 @@ module.exports = {
   ],
   plugins: ['bestpractices', 'deprecate', 'html', 'import', 'jsdoc', 'promise', 'sonarjs', 'test-selectors'],
   rules: {
-    'consistent-return': 'off', // Annoying in useEffects
-    'promise/always-return': 'off', // This is off in babylon by Rose 2 years ago. I think it should be off too.
-    'promise/avoid-new': 'off', // This has been off in babylon for 15 months already
-
-    'no-template-curly-in-string': 'warn',
+    'no-restrictive-imports': 'off', // We re-export default imports all the time
     'no-console': ['warn', { allow: ['warn', 'error', 'trace', 'time'] }], // Allow warn on top of what eslint-config-frontier-react allows
-
-    'default-case': ['warn'], // frontier has this as error
-    'lines-between-class-members': 'warn', // frontier has this as error
-    'no-case-declarations': 'off', // frontier has this as error
-    'no-else-return': 'off', // frontier has this as error
-    'no-prototype-builtins': 'warn', // frontier has this as error
-    'prefer-const': 'warn', // frontier has this as error
-
-    'no-warning-comments': [
-      'warn',
-      // eslint-disable-next-line no-warning-comments -- I don't want a warning here currently
-      { terms: ['FIXME', 'TODO', 'TO-DO', 'HACK', 'HERE BE DRAGONS'], location: 'anywhere' }, // frontier removed HERE BE DRAGONS and TO-DO
-    ],
-
-    'no-shadow': 'off', // frontier has this as error, tw-blue has this as off, we had it as warn
-
-    'no-undefined': 'off', // frontier has this as off, we had this as warn. I think it really should be off which means removing this line.
-
-    'import/no-absolute-path': 'warn', // frontier has this as error
 
     'bestpractices/no-eslint-disable': 'warn',
 
+    'promise/always-return': 'warn',
     'promise/no-return-wrap': 'warn',
     'promise/param-names': 'warn',
     'promise/catch-or-return': ['warn', { allowFinally: true }],
