@@ -24,7 +24,6 @@ module.exports = {
     'eslint-plugin-test-selectors',
   ],
   rules: {
-    'no-restrictive-imports': 'off', // We re-export default imports all the time
     'no-console': ['warn', { allow: ['warn', 'error', 'trace', 'time'] }], // Allow warn on top of what eslint-config-frontier-react allows
 
     'bestpractices/no-eslint-disable': 'warn',

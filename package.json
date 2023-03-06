@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@babel/eslint-parser": "^7.19.1",
-    "@fs/eslint-config-frontier-react": "^11.0.0-alpha.5",
+    "@fs/eslint-config-frontier-react": "^11.0.0-alpha.6",
     "eslint": "^8.35.0",
     "eslint-plugin-bestpractices": "github:skye2k2/eslint-plugin-bestpractices",
     "eslint-plugin-deprecate": "^0.7.0",
