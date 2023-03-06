@@ -8,27 +8,30 @@ This central configuration is a potential breaking point for _all_ of our code i
 
 **Process:**
 
+1. Run `npm test` (to determine if any significant rules have changed since the last release)
+  - The tests will likely fail. Verify newly-consumed rules against the current [snapshot](/demo/test/snapshots/linting-config.test.js.md) file.
+1. After verifying, run `npm run test:update`.
 1. Make dependency/configuration updates.
-1. Run `npm test`.
+1. Run `npm test` (to determine new changes in linting results or configuration).
   - The tests should likely fail. Verify your expectations against the current [snapshot](/demo/test/snapshots/linting-config.test.js.md) file.
 1. After you have your results how you want them, run `npm run test:update`.
   - The tests should now pass.
-1. If you want see how your changes would impact a codebase, you can either `npm link` or copy+paste the contents of `local-linting-final-config.json` temporarily into the target `.eslintrc` file.
 
-> TODO: Update the documentation below to be current, and not include things like Code Climate
+<!--1. If you want see how your changes would impact a codebase, you can either `npm link` or copy+paste the contents of `local-linting-final-config.json` temporarily into the target `.eslintrc` file.
+-->
 
 Why extra rules? Because we believe in linting, and we have become converted to the additional rules enforced by the following plugins:
 
  - [eslint-plugin-bestpractices](https://github.com/skye2k2/eslint-plugin-bestpractices)
  - [eslint-plugin-deprecate](https://github.com/AlexMost/eslint-plugin-deprecate)
  - [eslint-plugin-html](https://github.com/BenoitZugmeyer/eslint-plugin-html)
+ - [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import) (implemented by Frontier)
  - [eslint-plugin-jsdoc](https://github.com/gajus/eslint-plugin-jsdoc)
- - [eslint-plugin-json](https://github.com/azeemba/eslint-plugin-json)
+ - [eslint-plugin-json](https://github.com/azeemba/eslint-plugin-json) (adopted by Frontier)
  - [eslint-plugin-promise](https://github.com/xjamundx/eslint-plugin-promise)
  - [eslint-plugin-sonarjs](https://github.com/SonarSource/eslint-plugin-sonarjs)
- - [eslint-config-standard](https://github.com/standard/eslint-config-standard)
 
-> POTENTIALLY WORTH CONSIDERING IN THE FUTURE (MAY NOT WORK BECAUSE OF NEEDING SOMETHING LIKE BABEL?):
+> POTENTIALLY WORTH CONSIDERING IN THE FUTURE (MAY NOT WORK BECAUSE OF NEEDING SOMETHING EXTRA?):
 
 > - 'eslint-plugin-i18next' // SEEMS LIKE TOO MANY FALSE POSITIVES
 > - 'eslint-plugin-json-format' // DOESN'T SEEM TO WORK
@@ -39,50 +42,16 @@ Why extra rules? Because we believe in linting, and we have become converted to 
 
 ## Usage:
 
- 1. Add either `eslint-config-frontier` or `eslint-config-frontier-react` as a devDependency.
-
  1. Add this repository as a package devDependency:
 
-    > "eslint-config-tree": "github:fs-webdev/eslint-config-tree#semver:^4",
+    > "eslint-config-tree": "github:fs-webdev/eslint-config-tree#semver:^6",
 
- 1. In your `eslintrc.js` file, put the following:
+ 1. Add an `eslintrc.js` file, with the following:
 <pre><code>module.exports = {
   extends: [
-    'eslint-config-frontier', // or '@fs/eslint-config-frontier-react'
     'eslint-config-tree'
-  ],
-  plugins: [
-    'eslint-plugin-bestpractices',
-    'eslint-plugin-deprecate',
-    'eslint-plugin-promise',
-    'eslint-plugin-sonarjs',
-    'eslint-plugin-test-selectors'
   ]
 }</code></pre>
-
- 1. Add a `.codeclimate.eslintrc.js`
- <pre><code>module.exports = {
-  extends: [
-    './eslint-config-frontier.js', // or '@fs/eslint-config-frontier-react'
-    './eslint-config-tree.js'
-  ]
-}</code></pre>
-
- 1. Add both `tree` and the frontier eslint configuration of your choice as Code Climate `prepare` resources (see: [extended eslint docs](https://www.familysearch.org/frontier/legacy/ui-components/eslint-config-frontier/)).
-
- 1. Set this simplified eslint configuration as the chosen config in your Code Climate's `plugins`.
- <pre><code>plugins:
-		eslint:
-			enabled: true
-			channel: "eslint-6"
-			config:
-				config: .codeclimate.eslintrc.js
-			extensions:
-				- .html
-				- .js
-				- .json
-			ignore_warnings: true
- </code></pre>
 
  1. Enjoy.
 
@@ -126,7 +95,7 @@ Utilize a file linting config modifier like so:
 
 ```
 
-Note that `--` comments are permitted and a good idea to include.
+Note that `--` comments are permitted and a very good idea to include.
 
 <!--
 DOES NOT CURRENTLY WORK, AND bestpractices/no-eslint-disable SHOULD PROBABLY BE MODIFIED TO TAKE THIS INTO ACCOUNT.
@@ -139,17 +108,13 @@ Or disable BOTH the desired rule and the no-eslint-disable rule:
 
 ### How to deal with `Definition for rule '{RULE}' was not found.` errors:
 
-This is a known state when submitting a new file to Code Climate for the first time, since they do not support all of the linting extensions we wish to use. If you are seeing these warnings when linting locally, you may have `eslint` installed globally, but not the additional dependency. We do not recommend running `eslint` globally for this reason (see: https://github.com/eslint/eslint/issues/6732). All Tree repositories should include all dependencies required to be able to run `eslint` locally in their respective directories.
+If you are seeing these warnings when linting locally, you may have `eslint` installed globally, but not the additional dependency. We do not recommend running `eslint` globally for this reason (see: https://github.com/eslint/eslint/issues/6732). All Tree repositories should include all dependencies required to be able to run `eslint` locally in their respective directories.
 
 If you have recently updated dependencies and see this error locally, then there is a possibility that your editor's linting integration is out-of-sync that can be resolved by restarting your editor.
 
 ### How to not have tons of `jsdoc` warnings:
 
-The `jsdoc` warnings are only triggered for functions that have an jsdoc extended comment block (`/** */`) directly above the function declaration. Omit this, or just use a short comment (`//`) or a standard extended comment (`/* */`) to keep from applying `jsdoc` rules to functions not requiring fastidious documentation. Or follow all of the rules.
-
-### How to do even trickier things with linting configuration:
-
-Just read the manual: https://eslint.org/docs/7.0.0/user-guide/configuring
+The `jsdoc` warnings are only triggered for functions that have an jsdoc extended comment block (`/** */`) directly above the function declaration. Omit this, add an extra space, or just use a short comment (`//`) or a standard extended comment (`/* */`) to keep from applying `jsdoc` rules to functions not requiring fastidious documentation. Or follow all of the rules.
 
 <details>
 <summary>Maintenance Notes</summary>
@@ -162,13 +127,24 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 
 ## Notes
 
+- Why no lockfile? Because we (currently) trust our dependencies, and do not want to constantly have to be verifying and manually releasing new versions of this convenience configuration. We may decide to be more precise in the future.
 - As noted in the `Testing/Updating` section, the only validation we do is to run linting against a file with a set of known failures. So we make sure to run `npm test` via a pre-push hook, and releases are automatically performed by a GitHub webhook.
-- Because this is a public repository, there are complications in adding references to private services and communications channels, so there is no Travis CI build and no Code Climate integration.
+- Because this is a public repository, there are complications in adding references to private services and communications channels, so there is no Travis CI build.
 - Coverage reporting ends up reporting on `lint-output.js`, instead of `index.js`, which is unhelpful, and so is also not used, for now.
 
 </details>
 
 ## Changelog:
+
+<details>
+<summary>Version 6 - ESLint 8</summary>
+
+- Update all linting subdependencies. Remove redundant plugins (eslint-plugin-json adopted by Frontier).
+- Remove Code Climate/Polymer-related configurations and documentation.
+- Add new final configuration test.
+- Inherit more configuration from frontier (finally).
+
+</details>
 
 <details>
 <summary>Version 5 </summary>
@@ -198,5 +174,13 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 <summary>Version 2 - ESLint 6</summary>
 
 - ESLint and dependencies based on version 6.
+
+</details>
+
+<details>
+<summary>Version 1 - ESLint 5</summary>
+
+- ESLint and dependencies based on version 5.
+- Add eslint-plugin-bestpractices, eslint-plugin-deprecate, eslint-plugin-html, eslint-plugin-jsdoc, eslint-plugin-json, eslint-plugin-promise, eslint-plugin-sonarjs, eslint-config-standard
 
 </details>

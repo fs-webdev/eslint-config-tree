@@ -3,8 +3,8 @@
 /* eslint no-console: "off" -- node scripts use the console, so disable for the whole file */
 
 /*
-* Since developers have the ability to disable linting in-line, we keep track of the times where this is done, because if done irresponsibly, this is a significant code smell.
-*/
+ * Since developers have the ability to disable linting in-line, we keep track of the times where this is done, because if done irresponsibly, this is a significant code smell.
+ */
 // eslint-disable-next
 
 // fixMe: Actually make this work
@@ -16,9 +16,9 @@
  * As long as you separate the comment block from the declaration, JSDOC rules will not be applied. But the comment will still show through many IDE's definition hot-linking.
  */
 
-function functionWithoutJSDocWarningsBecauseTheSectionWasCompletelyExcluded () {
-  console.log('ASHLDKFJHASKFJSDHFKJSDHFKLSDJHFLJKSDHFLKSDJFHKSDLJFHLSDKJF');
-  return true;
+function functionWithoutJSDocWarningsBecauseTheSectionWasCompletelyExcluded() {
+  console.log('ASHLDKFJHASKFJSDHFKJSDHFKLSDJHFLJKSDHFLKSDJFHKSDLJFHLSDKJF')
+  return true
 }
 
 /**
@@ -28,93 +28,94 @@ function functionWithoutJSDocWarningsBecauseTheSectionWasCompletelyExcluded () {
  * @param b
  * @returns
  */
-function ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM (params) {
-}
+function ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM(params) {}
 
-const myPromise = new Promise();
+const myPromise = new Promise()
 
 /**
  * @note
  */
 myPromise.then((a) => {
   if (true === false) {
-    return Promise.resolve();
+    return Promise.resolve()
   } else {
-    forgotToDefine();
+    forgotToDefine()
   }
-});
+})
 
-const variable = (true) ? true : true;
+const variable = true ? true : true
 
-if (window === undefined && window === undefined && params === true) {
-  ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM('a', 'b');
-  const deprecatedImport = require('path/to/legacyModule');
-  deprecatedImport.execute();
-  deprecatedFunction();
-  shortFunction();
-  $.each();
-  return;
-  debugger;// Make sure we get in here to set the value correctly
+export function ReturnEarly() {
+  if (window === undefined && window === undefined && params === true) {
+    ONE_FUNCTION_TO_BRING_THEM_ALL_AND_IN_THE_DARKNESS_BIND_THEM('a', 'b')
+    const deprecatedImport = require('path/to/legacyModule')
+    deprecatedImport.execute()
+    deprecatedFunction()
+    shortFunction()
+    $.each()
+    return
+    debugger // Make sure we get in here to set the value correctly
+  }
 }
 
 /* We value sonarjs rules enough to test them, here. Sorry for the mess. */
 
-function shortFunction (arg) {
+function shortFunction(arg) {
   if (arg) {
-    console.log(true);
+    console.log(true)
   }
-  return true;
+  return true
 }
 
 // sonarjs/no-identical-functions checks function bodies of three lines and above
-function duplicateFunction (arg) {
+function duplicateFunction(arg) {
   if (arg) {
-    console.log(true);
+    console.log(true)
   }
-  return true;
+  return true
 }
 
 // sonarjs/no-all-duplicated-branches
 if (true) {
-  shortFunction();
+  shortFunction()
 } else {
-  shortFunction();
+  shortFunction()
 }
 
 // sonarjs/max-switch-cases, sonarjs/no-duplicated-branches
 switch (1) {
   case 1:
-    break;
+    break
   case 2:
     switch (2) {
       case 1:
-        duplicateFunction();
-        duplicateFunction();
-        break;
+        duplicateFunction()
+        duplicateFunction()
+        break
       case 1:
-        duplicateFunction();
-        duplicateFunction();
-        break;
+        duplicateFunction()
+        duplicateFunction()
+        break
     }
-    break;
+    break
   case 3:
-    break;
+    break
   case 4:
-    break;
+    break
   case 5:
-    break;
+    break
   case 6:
-    break;
+    break
   case 7:
-    break;
+    break
   case 8:
-    break;
+    break
   case 9:
-    break;
+    break
   case 10:
-    break;
+    break
   case 11:
-    break;
+    break
   default:
-    break;
+    break
 }
