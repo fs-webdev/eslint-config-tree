@@ -9,6 +9,5 @@
 .vscode/*
 **/node_modules
 /reports/**
-analysis.json
 npm-debug.log
 /demo/test/snapshots/local*

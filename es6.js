@@ -1,7 +1,8 @@
 // We use `data-testid` instead of `data-test-id`, in order to match React Native and Testing Library https://testing-library.com/docs/dom-testing-library/api-queries#bytestid
-const testSelectorsValue = [
+const testSelectorsConfiguration = [
   'warn',
   'always',
+  //  htmlOnly: true will exempt components containing the text "Button" from this rule
   { ignoreDisabled: false, ignoreReadonly: false, testAttribute: 'data-testid' },
 ]
 
@@ -12,7 +13,15 @@ module.exports = {
     '@fs/eslint-config-frontier-react/dont-need-lodash',
     '@fs/eslint-config-frontier-react/typescript',
   ],
-  plugins: ['bestpractices', 'deprecate', 'html', 'jsdoc', 'promise', 'sonarjs', 'test-selectors'],
+  plugins: [
+    'eslint-plugin-bestpractices',
+    'eslint-plugin-deprecate',
+    'eslint-plugin-html',
+    'eslint-plugin-jsdoc',
+    'eslint-plugin-promise',
+    'eslint-plugin-sonarjs',
+    'eslint-plugin-test-selectors',
+  ],
   rules: {
     'no-restrictive-imports': 'off', // We re-export default imports all the time
     'no-console': ['warn', { allow: ['warn', 'error', 'trace', 'time'] }], // Allow warn on top of what eslint-config-frontier-react allows
@@ -64,14 +73,14 @@ module.exports = {
     'sonarjs/prefer-single-boolean-return': 'warn',
     'sonarjs/prefer-while': 'warn',
 
-    'test-selectors/anchor': testSelectorsValue,
-    'test-selectors/button': testSelectorsValue,
-    'test-selectors/input': testSelectorsValue,
-    'test-selectors/onChange': testSelectorsValue,
-    'test-selectors/onClick': testSelectorsValue,
-    'test-selectors/onKeyDown': testSelectorsValue,
-    'test-selectors/onKeyUp': testSelectorsValue,
-    // test-selectors/onSubmit
+    'test-selectors/anchor': testSelectorsConfiguration,
+    'test-selectors/button': testSelectorsConfiguration,
+    'test-selectors/input': testSelectorsConfiguration,
+    'test-selectors/onChange': testSelectorsConfiguration,
+    'test-selectors/onClick': testSelectorsConfiguration,
+    'test-selectors/onKeyDown': testSelectorsConfiguration,
+    'test-selectors/onKeyUp': testSelectorsConfiguration,
+    'test-selectors/onSubmit': testSelectorsConfiguration,
 
     // Example deprecation rules:
     // 'deprecate/function': ['error',
@@ -149,9 +158,14 @@ module.exports = {
         'sonarjs/cognitive-complexity': 'off',
         'sonarjs/no-duplicate-string': 'off',
         'sonarjs/no-identical-functions': 'off',
+        'test-selectors/anchor': 'off',
         'test-selectors/button': 'off',
+        'test-selectors/input': 'off',
         'test-selectors/onChange': 'off',
         'test-selectors/onClick': 'off',
+        'test-selectors/onKeyDown': 'off',
+        'test-selectors/onKeyUp': 'off',
+        'test-selectors/onSubmit': 'off',
         'import/prefer-default-export': 'off',
       },
     },
