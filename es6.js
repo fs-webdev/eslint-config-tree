@@ -100,7 +100,7 @@ module.exports = {
       rules: {
         'no-alert': 'off',
         'no-console': 'off',
-        'sonarjs/cognitive-complexity': 'off',
+        'sonarjs/cognitive-complexity': ['warn', 50],
         'sonarjs/no-duplicate-string': 'off',
         'sonarjs/no-identical-functions': 'off',
         'test-selectors/anchor': 'off',
