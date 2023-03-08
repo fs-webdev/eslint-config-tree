@@ -40,7 +40,7 @@ module.exports = {
     'promise/no-return-in-finally': 'warn',
     'promise/valid-params': 'warn',
 
-    'sonarjs/cognitive-complexity': ['warn', 50],
+    'sonarjs/cognitive-complexity': ['warn', 25],
     // sonarjs/elseif-without-else
     'sonarjs/max-switch-cases': ['warn', 10],
     'sonarjs/no-all-duplicated-branches': 'warn',
@@ -100,7 +100,7 @@ module.exports = {
       rules: {
         'no-alert': 'off',
         'no-console': 'off',
-        'sonarjs/cognitive-complexity': 'off',
+        'sonarjs/cognitive-complexity': ['warn', 50],
         'sonarjs/no-duplicate-string': 'off',
         'sonarjs/no-identical-functions': 'off',
         'test-selectors/anchor': 'off',
