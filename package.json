@@ -1,5 +1,5 @@
 {
-  "name": "eslint-config-tree",
+  "name": "@fs/eslint-config-tree",
   "version": "6.0.0-alpha.2",
   "description": "Shared Tree configuration that contains overrides and enhancements on top of the base frontier configuration.",
   "main": "index.js",
@@ -33,6 +33,7 @@
     "eslint-plugin-test-selectors": "^2.0.4"
   },
   "devDependencies": {
+    "@fs/npm-publisher": "^1.5.1",
     "ava": "^2.4.0",
     "file-manager-js": "^3.1.6",
     "husky": "^3.1.0"
@@ -50,6 +51,7 @@
     "lint:snapshot": "eslint demo --no-color --output-file ./demo/test/snapshots/local-linting-output.txt; eslint --print-config file.js > ./demo/test/snapshots/local-linting-final-config.json; npm run test:format",
     "preinstall": "git config --global url.https://github.com/.insteadOf git://github.com/",
     "postinstall": "npm rebuild husky",
+    "publish": "npmPublish",
     "test": "npm run lint:snapshot; ava",
     "test:format": "node demo/test/snapshots/format-config.js",
     "test:update": "npm run lint:snapshot; ava --update-snapshots"
