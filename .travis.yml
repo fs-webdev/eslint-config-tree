@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - 16
+branches:
+  only:
+    - master
+before_install:
+  - echo "//familysearch.jfrog.io/artifactory/api/npm/fs-npm-prod-virtual/:_authToken=${NPM_PUBLISH_TOKEN}" >> ~/.npmrc
+  - echo "@fs:registry=https://familysearch.jfrog.io/artifactory/api/npm/fs-npm-prod-virtual/" >> ~/.npmrc
+script: npm run lint && npm run test
+deploy:
+  - provider: script
+    edge: true
+    cleanup: false
+    script: npm run publish
+    on:
+      branch: master
