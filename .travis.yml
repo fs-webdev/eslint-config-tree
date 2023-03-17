@@ -10,6 +10,7 @@ before_install:
   - echo "//familysearch.jfrog.io/artifactory/api/npm/fs-npm-prod-virtual/:_authToken=${NPM_PUBLISH_TOKEN}" >> ~/.npmrc
   - echo "@fs:registry=https://familysearch.jfrog.io/artifactory/api/npm/fs-npm-prod-virtual/" >> ~/.npmrc
 script:
+  - npm list --depth=0
   # NOTE: Because we are loosely-pinned to our linting dependencies, there will sometimes be changes to subsets of rules that we did not initiate. This is so that we can manually review when things change, and be certain that we did not lose config we care about.
   # - npm test
 deploy:
