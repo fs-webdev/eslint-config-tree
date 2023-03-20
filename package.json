@@ -27,7 +27,7 @@
     "!.nvmrc",
     "!.travis.yml",
     "!demo/**",
-    "!.eslintrc.js"
+    "!.*"
   ],
   "dependencies": {
     "@babel/eslint-parser": "^7.21.3",
