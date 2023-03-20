@@ -21,6 +21,13 @@
       "demo/test/*.js"
     ]
   },
+  "files": [
+    "**/*.*",
+    "!.github/**",
+    "!.nvmrc",
+    "!.travis.yml",
+    "!demo/**"
+  ],
   "dependencies": {
     "@babel/eslint-parser": "^7.21.3",
     "@fs/eslint-config-frontier-react": "^11.0.0-alpha.6",
