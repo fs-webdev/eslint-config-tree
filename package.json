@@ -48,7 +48,7 @@
     "lint:fix": "eslint demo --fix",
     "lint:quiet": "eslint demo --quiet",
     "lint:report": "eslint demo '**/*.html' --format html --output-file ./reports/linting/linting_report.html & eslint demo --format json --output-file ./reports/linting/linting_report.json",
-    "lint:snapshot": "eslint demo --no-color --output-file ./demo/test/snapshots/local-linting-output.txt; eslint --print-config file.js > ./demo/test/snapshots/local-linting-final-config.json; npm run test:format",
+    "lint:snapshot": "eslint --print-config file.js > ./demo/test/snapshots/local-linting-final-config.json; eslint demo --no-color --output-file ./demo/test/snapshots/local-linting-output.txt; npm run test:format",
     "postinstall": "npm rebuild husky",
     "publish": "npmPublish",
     "test": "npm run lint:snapshot; ava",
