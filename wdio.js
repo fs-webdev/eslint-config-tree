@@ -1,7 +1,7 @@
 module.exports = {
   overrides: [
     {
-      files: ['test/client/**/*.js'],
+      files: ['test/**/*.js'],
       globals: {
         'browser': 'readonly',
         '$': 'readonly',
