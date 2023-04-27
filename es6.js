@@ -95,7 +95,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.stories.*', '*test*', '**/test/**', '**/*mock*/**', '*mock*', '**/setupTests.*'],
+      files: ['*.stories.*', '*test*', '**/test/**', '**/*mock*/**', '*mock*', '**/setupTests.*', '**/fixtures/**'],
       extends: ['@fs/eslint-config-frontier-react/jest'],
       rules: {
         'no-alert': 'off',

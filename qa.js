@@ -1,0 +1,25 @@
+module.exports = {
+  overrides: [
+    {
+      files: ['test/**/*.js'],
+      globals: {
+        'browser': 'readonly',
+        '$': 'readonly',
+        '$$': 'readonly',
+        'element': 'readonly',
+        'by': 'readonly',
+        'after': 'readonly'
+      },
+      rules: {
+        'jest/expect-expect': 'off',
+        'global-require': 'off',
+        'no-console': 'off',
+        'object-shorthand': 'off',
+        'import/no-extraneous-dependencies': ['error', { 'devDependencies': true }],
+        'testing-library/no-await-sync-query': 'off', // All @testing-library/webdriverio queries are async (https://testing-library.com/docs/webdriverio-testing-library/intro/)
+        'testing-library/prefer-screen-queries': 'off', // We use browser instead of screen for @testing-library/webdriverio
+        '@babel/no-unused-expressions': 'off' // to allow expressions like this: tree.expect(await (await $(tree.MBTpageObjects.getBCButton())).isDisplayed()).to.be.true
+      }
+    }
+  ]
+}
