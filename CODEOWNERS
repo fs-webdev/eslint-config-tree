@@ -1,8 +1,10 @@
+
 #########################################################################################
 # Code Ownership for eslint-config-tree
-#   All files owned by tw-gold (but really Clif)
-#
+#   All files owned by tw-webdev
+#   https://familysearch.slack.com/archives/C20UXTK28
 # See https://help.github.com/en/articles/about-code-owners for information on how to use
 #########################################################################################
 
-*   @fs-webdev/tw-gold
+*   @fs-webdev/tw-webdev
+  
