@@ -18,7 +18,8 @@ module.exports = {
         'import/no-extraneous-dependencies': ['error', { 'devDependencies': true }],
         'testing-library/no-await-sync-query': 'off', // All @testing-library/webdriverio queries are async (https://testing-library.com/docs/webdriverio-testing-library/intro/)
         'testing-library/prefer-screen-queries': 'off', // We use browser instead of screen for @testing-library/webdriverio
-        '@babel/no-unused-expressions': 'off' // to allow expressions like this: tree.expect(await (await $(tree.MBTpageObjects.getBCButton())).isDisplayed()).to.be.true
+        '@babel/no-unused-expressions': 'off', // to allow expressions like this: tree.expect(await (await $(tree.MBTpageObjects.getBCButton())).isDisplayed()).to.be.true
+        'func-names': 'off' // to allow for how WDIO does "it" functions: "it('Login', async function () {". We need "this" and we can keep "this" by using "unnamed async function"
       }
     }
   ]
