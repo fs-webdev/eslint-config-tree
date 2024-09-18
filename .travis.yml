@@ -2,7 +2,7 @@ dist: focal
 version: ~> 1.0
 language: node_js
 node_js:
-  - 16
+  - 20
 branches:
   only:
     - master
