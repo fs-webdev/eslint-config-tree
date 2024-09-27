@@ -123,6 +123,7 @@ module.exports = {
         'test-selectors/onKeyUp': 'off',
         'test-selectors/onSubmit': 'off',
         'import/prefer-default-export': 'off',
+        'promise/catch-or-return': 'off',
       },
     },
   ],
