@@ -98,7 +98,16 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.stories.*', '*test*', '**/test/**', '**/*mock*/**', '*mock*', '**/setupTests.*', '**/fixtures/**'],
+      files: [
+        '*.stories.*',
+        '*test*',
+        '**/test/**',
+        '**/*mock*/**',
+        '*mock*',
+        '**/setupTests.*',
+        '**/fixtures/**',
+        '**/*.cy.*',
+      ],
       rules: {
         'no-alert': 'off',
         'no-console': 'off',
