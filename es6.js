@@ -98,7 +98,16 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.stories.*', '*test*', '**/test/**', '**/*mock*/**', '*mock*', '**/setupTests.*', '**/fixtures/**'],
+      files: [
+        '*.stories.*',
+        '*test*',
+        '**/test/**',
+        '**/*mock*/**',
+        '*mock*',
+        '**/setupTests.*',
+        '**/fixtures/**',
+        '**/*.cy.*',
+      ],
       rules: {
         'no-alert': 'off',
         'no-console': 'off',
@@ -114,6 +123,7 @@ module.exports = {
         'test-selectors/onKeyUp': 'off',
         'test-selectors/onSubmit': 'off',
         'import/prefer-default-export': 'off',
+        'promise/catch-or-return': 'off',
       },
     },
   ],
