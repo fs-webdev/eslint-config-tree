@@ -1,6 +1,6 @@
 {
   "name": "@fs/eslint-config-tree",
-  "version": "6.1.1",
+  "version": "6.2.0",
   "description": "Shared Tree configuration that contains overrides and enhancements on top of the base frontier configuration.",
   "main": "index.js",
   "repository": {
@@ -28,8 +28,8 @@
     "!.*"
   ],
   "dependencies": {
-    "@babel/eslint-parser": "^7.25.1",
-    "@fs/eslint-config-frontier-react": "^11.2.0",
+    "@babel/eslint-parser": "^7.26.10",
+    "@fs/eslint-config-frontier-react": "^11.2.2",
     "eslint": "^8.57.1",
     "eslint-plugin-bestpractices": "github:skye2k2/eslint-plugin-bestpractices",
     "eslint-plugin-deprecate": "^0.7.0",
@@ -42,7 +42,7 @@
     "@fs/npm-publisher": "^1.6.0",
     "ava": "^2.4.0",
     "file-manager-js": "^3.1.6",
-    "husky": "^9.1.6"
+    "husky": "^9.1.7"
   },
   "scripts": {
     "lint": "eslint demo",
