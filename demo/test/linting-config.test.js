@@ -25,3 +25,7 @@ test('Should apply our custom linting rules consistently', async (t) => {
 test('Should apply a consistent overall eslint configuration', async (t) => {
   return processFile(t, 'local-linting-final-config.json') // If this fails, go cry to mommy
 })
+
+test('Should apply a consistent overall eslint configuration for TS', async (t) => {
+  return processFile(t, 'local-linting-final-config-ts.json') // If this fails, go cry to mommy
+})
