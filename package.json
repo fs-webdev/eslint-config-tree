@@ -1,6 +1,6 @@
 {
   "name": "@fs/eslint-config-tree",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "description": "Shared Tree configuration that contains overrides and enhancements on top of the base frontier configuration.",
   "main": "index.js",
   "repository": {
@@ -28,7 +28,7 @@
     "!.*"
   ],
   "dependencies": {
-    "@babel/eslint-parser": "^7.26.10",
+    "@babel/eslint-parser": "^7.27.0",
     "@fs/eslint-config-frontier-react": "^11.2.2",
     "eslint": "^8.57.1",
     "eslint-plugin-bestpractices": "github:skye2k2/eslint-plugin-bestpractices",
@@ -49,7 +49,7 @@
     "lint:fix": "eslint demo --fix",
     "lint:quiet": "eslint demo --quiet",
     "lint:report": "eslint demo '**/*.html' --format html --output-file ./reports/linting/linting_report.html & eslint demo --format json --output-file ./reports/linting/linting_report.json",
-    "lint:snapshot": "eslint --print-config file.js > ./demo/test/snapshots/local-linting-final-config.json; eslint demo --no-color --output-file ./demo/test/snapshots/local-linting-output.txt; npm run test:format",
+    "lint:snapshot": "eslint --print-config file.js > ./demo/test/snapshots/local-linting-final-config.json; eslint --print-config file.ts > ./demo/test/snapshots/local-linting-final-config-ts.json; eslint demo --no-color --output-file ./demo/test/snapshots/local-linting-output.txt; npm run test:format",
     "publish": "npmPublish",
     "test": "npm run lint:snapshot; ava",
     "test:format": "node demo/test/snapshots/format-config.js",

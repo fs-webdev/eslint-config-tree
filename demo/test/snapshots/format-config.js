@@ -5,25 +5,38 @@
 /* eslint no-console: "off" -- node scripts use the console, so disable for the whole file */
 
 const FS = require('fs')
-const finalConfig = require('./local-linting-final-config.json')
+const finalJsConfig = require('./local-linting-final-config.json')
+const finalTsConfig = require('./local-linting-final-config-ts.json')
 
-const formattedRules = Object.fromEntries(
-  Object.entries(finalConfig?.rules ?? {}).sort(([ruleNameA], [ruleNameB]) => {
-    if (ruleNameA > ruleNameB) return 1
-    if (ruleNameB > ruleNameA) return -1
-    return 0
-  })
+const parseConfig = (config) => {
+  return {
+    ...config,
+    rules: Object.fromEntries(
+      Object.entries(config?.rules ?? {}).sort(([ruleNameA], [ruleNameB]) => {
+        if (ruleNameA > ruleNameB) return 1
+        if (ruleNameB > ruleNameA) return -1
+        return 0
+      })
+    ),
+    parser: config?.parser?.split('node_modules')[1],
+  }
+}
+
+const finalJsConfigName = 'local-linting-final-config'
+FS.writeFile(
+  `./demo/test/snapshots/${finalJsConfigName}.json`,
+  JSON.stringify(parseConfig(finalJsConfig), null, 2),
+  (err) => {
+    if (err) console.log(`There was an error writing to ${finalJsConfigName}.json file:`, err)
+  }
 )
 
+const finalTsConfigName = 'local-linting-final-config-ts'
 FS.writeFile(
-  './demo/test/snapshots/local-linting-final-config.json',
-  JSON.stringify(
-    { ...finalConfig, rules: formattedRules, parser: finalConfig.parser?.split('eslint-config-tree')[1] },
-    null,
-    2
-  ),
+  `./demo/test/snapshots/${finalTsConfigName}.json`,
+  JSON.stringify(parseConfig(finalTsConfig), null, 2),
   (err) => {
-    if (err) console.log('There was an error writing to local-linting-final-config.json file:', err)
+    if (err) console.log(`There was an error writing to ${finalTsConfigName}.json file:`, err)
   }
 )
 

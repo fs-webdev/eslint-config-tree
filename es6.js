@@ -99,6 +99,12 @@ module.exports = {
   },
   overrides: [
     {
+      files: ['*.ts?(x)'],
+      rules: {
+        '@typescript-eslint/explicit-module-boundary-types': 'warn',
+      },
+    },
+    {
       files: [
         '*.stories.*',
         '*test*',
