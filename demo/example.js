@@ -5,7 +5,11 @@
 /*
  * Since developers have the ability to disable linting in-line, we keep track of the times where this is done, because if done irresponsibly, this is a significant code smell.
  */
-// eslint-disable-next
+// eslint-disable-next-line
+let unusedVariableThatTriggersLintingRule
+
+// eslint-disable-next-line no-unused-vars -- A comment to remove the warning of "require-description"
+let unusedVariableThatTriggersLintingRule2
 
 // fixMe: Actually make this work
 // todo: Add documentation
