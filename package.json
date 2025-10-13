@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@fs/npm-publisher": "^1.6.0",
-    "ava": "^2.4.0",
+    "ava": "^6.4.1",
     "file-manager-js": "^3.1.6",
     "husky": "^9.1.7"
   },
