@@ -15,20 +15,21 @@ module.exports = {
     '@fs/eslint-config-frontier-react/dont-need-lodash',
     '@fs/eslint-config-frontier-react/typescript',
     '@fs/eslint-config-frontier-react/cypress',
+    "plugin:@eslint-community/eslint-comments/recommended",
     '@fs/eslint-config-frontier-react/prettierSetup', // Always have prettier last so it can override format rules in the extends before it
   ],
   plugins: [
-    'eslint-plugin-bestpractices',
     'eslint-plugin-deprecate',
     'eslint-plugin-html',
     'eslint-plugin-promise',
     'eslint-plugin-sonarjs',
     'eslint-plugin-test-selectors',
+    '@eslint-community/eslint-comments'
   ],
   rules: {
     'no-console': ['warn', { allow: ['warn', 'error', 'trace', 'time'] }], // Allow warn on top of what eslint-config-frontier-react allows
 
-    'bestpractices/no-eslint-disable': 'warn',
+    '@eslint-community/eslint-comments/require-description': 'warn',
 
     'promise/always-return': 'warn',
     'promise/no-return-wrap': 'warn',
