@@ -16,6 +16,7 @@ module.exports = {
         'jest/expect-expect': 'off',
         'global-require': 'off',
         'no-console': 'off',
+        'no-unused-vars': 'warn', // this is common enough that we still want visibility into the issue, but we do not want it to be an error
         'object-shorthand': 'off',
         'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
         'testing-library/no-await-sync-query': 'off', // All @testing-library/webdriverio queries are async (https://testing-library.com/docs/webdriverio-testing-library/intro/)

@@ -1,6 +1,6 @@
 {
   "name": "@fs/eslint-config-tree",
-  "version": "6.6.0",
+  "version": "6.6.1",
   "description": "Shared Tree configuration that contains overrides and enhancements on top of the base frontier configuration.",
   "main": "index.js",
   "repository": {
@@ -18,13 +18,14 @@
   },
   "ava": {
     "files": [
-      "demo/test/*.js"
+      "specs/*.js"
     ]
   },
   "files": [
     "**/*.*",
     "!.github/**",
-    "!demo/**",
+    "!test/**",
+    "!specs/**",
     "!.*"
   ],
   "dependencies": {
@@ -45,14 +46,14 @@
     "husky": "^9.1.7"
   },
   "scripts": {
-    "lint": "eslint demo",
-    "lint:fix": "eslint demo --fix",
-    "lint:quiet": "eslint demo --quiet",
-    "lint:report": "eslint demo '**/*.html' --format html --output-file ./reports/linting/linting_report.html & eslint demo --format json --output-file ./reports/linting/linting_report.json",
-    "lint:snapshot": "eslint --print-config file.js > ./demo/test/snapshots/local-linting-final-config.json; eslint --print-config file.ts > ./demo/test/snapshots/local-linting-final-config-ts.json; eslint demo --no-color --output-file ./demo/test/snapshots/local-linting-output.txt; npm run test:format",
+    "lint": "eslint test",
+    "lint:fix": "eslint test --fix",
+    "lint:quiet": "eslint test --quiet",
+    "lint:report": "eslint test '**/*.html' --format html --output-file ./reports/linting/linting_report.html & eslint test --format json --output-file ./reports/linting/linting_report.json",
+    "lint:snapshot": "eslint --print-config file.js > ./specs/snapshots/local-linting-final-config.json; eslint --print-config file.ts > ./specs/snapshots/local-linting-final-config-ts.json; eslint test --no-color --output-file ./specs/snapshots/local-linting-output.txt; npm run test:format",
     "publish": "npmPublish",
     "test": "npm run lint:snapshot; ava",
-    "test:format": "node demo/test/snapshots/format-config.js",
+    "test:format": "node specs/snapshots/format-config.js",
     "test:update": "npm run lint:snapshot; ava --update-snapshots",
     "prepare": "husky"
   }
