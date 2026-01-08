@@ -9,11 +9,11 @@ This central configuration is a potential breaking point for _all_ of our code i
 **Process:**
 
 1. Run `npm test` (to determine if any significant rules have changed since the last release)
-  - The tests will likely fail. Verify newly-consumed rules against the current [snapshot](/demo/test/snapshots/linting-config.test.js.md) file.
+  - The tests will likely fail. Verify newly-consumed rules against the current [snapshot](/specs/snapshots/linting-config.test.js.md) file.
 1. After verifying, run `npm run test:update`.
 1. Make dependency/configuration updates.
 1. Run `npm test` (to determine new changes in linting results or configuration).
-  - The tests should likely fail. Verify your expectations against the current [snapshot](/demo/test/snapshots/linting-config.test.js.md) file.
+  - The tests should likely fail. Verify your expectations against the current [snapshot](/specs/snapshots/linting-config.test.js.md) file.
 1. After you have your results how you want them, run `npm run test:update`.
   - The tests should now pass.
 
@@ -30,6 +30,7 @@ Why extra rules? Because we believe in linting, and we have become converted to 
  - [eslint-plugin-json](https://github.com/azeemba/eslint-plugin-json) (adopted by Frontier)
  - [eslint-plugin-promise](https://github.com/xjamundx/eslint-plugin-promise)
  - [eslint-plugin-sonarjs](https://github.com/SonarSource/eslint-plugin-sonarjs)
+ - [eslint-plugin-wdio](https://github.com/webdriverio/webdriverio/tree/main/packages/eslint-plugin-wdio)
 
 > POTENTIALLY WORTH CONSIDERING IN THE FUTURE (MAY NOT WORK BECAUSE OF NEEDING SOMETHING EXTRA?):
 
@@ -38,7 +39,7 @@ Why extra rules? Because we believe in linting, and we have become converted to 
 > - 'eslint-plugin-package-json' // undefined TypeErrors while parsing package.json
 > - 'eslint-plugin-sort-keys-fix' // RUINS INDENTATION, DOES NOT BRING JSDOCS ALONG
 
-![alt text](demo/example-eslint-results.png "Example linting infractions for things the Tree team cares about")
+![alt text](test/example-eslint-results.png "Example linting infractions for things the Tree team cares about")
 
 ## Usage:
 

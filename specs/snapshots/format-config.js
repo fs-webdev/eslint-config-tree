@@ -24,7 +24,7 @@ const parseConfig = (config) => {
 
 const finalJsConfigName = 'local-linting-final-config'
 FS.writeFile(
-  `./demo/test/snapshots/${finalJsConfigName}.json`,
+  `./specs/snapshots/${finalJsConfigName}.json`,
   JSON.stringify(parseConfig(finalJsConfig), null, 2),
   (err) => {
     if (err) console.log(`There was an error writing to ${finalJsConfigName}.json file:`, err)
@@ -33,18 +33,18 @@ FS.writeFile(
 
 const finalTsConfigName = 'local-linting-final-config-ts'
 FS.writeFile(
-  `./demo/test/snapshots/${finalTsConfigName}.json`,
+  `./specs/snapshots/${finalTsConfigName}.json`,
   JSON.stringify(parseConfig(finalTsConfig), null, 2),
   (err) => {
     if (err) console.log(`There was an error writing to ${finalTsConfigName}.json file:`, err)
   }
 )
 
-FS.readFile('./demo/test/snapshots/local-linting-output.txt', 'utf8', (err, eslintOutput) => {
+FS.readFile('./specs/snapshots/local-linting-output.txt', 'utf8', (err, eslintOutput) => {
   if (err) {
     console.log('There was an error reading local-linting-output.txt', err)
   } else {
-    FS.writeFile('./demo/test/snapshots/local-linting-output.txt', eslintOutput.replace(/.*demo\//g, ''), (err2) => {
+    FS.writeFile('./specs/snapshots/local-linting-output.txt', eslintOutput.replace(/.*test\//g, ''), (err2) => {
       if (err2) console.log('There was an error writing to local-linting-output.txt file:', err)
     })
   }

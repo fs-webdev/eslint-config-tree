@@ -7,7 +7,7 @@ const fileManager = require('file-manager-js')
 function processFile(t, filename) {
   // Run previously via npm test, save off results, and read output
   return fileManager
-    .readFile(`./demo/test/snapshots/${filename}`)
+    .readFile(`./specs/snapshots/${filename}`)
     .then((content) => {
       const output = content.toString() // content is instance of Buffer, so it needs to be parsed
       return t.snapshot(output)
