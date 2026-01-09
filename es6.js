@@ -15,7 +15,7 @@ module.exports = {
     '@fs/eslint-config-frontier-react/dont-need-lodash',
     '@fs/eslint-config-frontier-react/typescript',
     '@fs/eslint-config-frontier-react/cypress',
-    "plugin:@eslint-community/eslint-comments/recommended",
+    'plugin:@eslint-community/eslint-comments/recommended',
     '@fs/eslint-config-frontier-react/prettierSetup', // Always have prettier last so it can override format rules in the extends before it
   ],
   plugins: [
@@ -24,7 +24,7 @@ module.exports = {
     'eslint-plugin-promise',
     'eslint-plugin-sonarjs',
     'eslint-plugin-test-selectors',
-    '@eslint-community/eslint-comments'
+    '@eslint-community/eslint-comments',
   ],
   rules: {
     'no-console': ['warn', { allow: ['warn', 'error', 'trace', 'time'] }], // Allow warn on top of what eslint-config-frontier-react allows
@@ -60,7 +60,6 @@ module.exports = {
     'sonarjs/no-ignored-return': 'warn', // Inefficient. If you don't use a function's result, don't call it.
     'sonarjs/no-inverted-boolean-check': 'warn', // Complexity. Extra unnecessary cognitive overhead. Usually a result of logic reduction refactors.
     'sonarjs/no-nested-switch': 'warn', // There are a few limited cases where this pattern is preferable to the alternative, but it's mostly a bad idea.
-    'sonarjs/no-one-iteration-loop': 'warn', // Complexity. Single loops are unnecessary complications of synchronous code execution. (ERROR in zion)
     'sonarjs/no-redundant-boolean': 'warn', // Readability.
     'sonarjs/no-redundant-jump': 'warn', // fixable // Redundant. We don't need to tell the flow what it would do anyway. (ERROR in zion)
     'sonarjs/no-same-line-conditional': 'warn', // fixable // Readability. Usually a result of an else-y path being removed/modified. (ERROR in zion)
