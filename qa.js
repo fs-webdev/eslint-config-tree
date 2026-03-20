@@ -22,6 +22,7 @@ module.exports = {
         'testing-library/prefer-screen-queries': 'off', // We use browser instead of screen for @testing-library/webdriverio
         '@babel/no-unused-expressions': 'off', // to allow expressions like this: tree.expect(await (await $(tree.MBTpageObjects.getBCButton())).isDisplayed()).to.be.true
         'func-names': 'off', // to allow for how WDIO does "it" functions: "it('Login', async function () {". We need "this" and we can keep "this" by using "unnamed async function"
+        'import/extensions': 'off', // Test directories use type: module, which for now requires extensions. This may stop being the case once everything we import is ESM.
       },
     },
   ],
