@@ -25,6 +25,15 @@ test('Should apply a consistent overall eslint configuration for TS', async (t) 
   return processFile(t, 'local-linting-final-config-ts.json') // If this fails, go cry to mommy
 })
 
+// The `test/` directory is where WDIO/QA suites live, and those get their own override in qa.js.
+test('Should apply a consistent eslint configuration to QA test files', async (t) => {
+  return processFile(t, 'local-linting-final-config-qa.json')
+})
+
+test('Should apply a consistent eslint configuration to QA test files for TS', async (t) => {
+  return processFile(t, 'local-linting-final-config-qa-ts.json')
+})
+
 test('Should apply our custom linting rules consistently', async (t) => {
   return processFile(t, 'local-linting-output.txt')
 })

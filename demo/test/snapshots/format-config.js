@@ -5,8 +5,14 @@
 /* eslint no-console: "off" -- node scripts use the console, so disable for the whole file */
 
 const FS = require('fs')
-const finalJsConfig = require('./local-linting-final-config.json')
-const finalTsConfig = require('./local-linting-final-config-ts.json')
+
+// One entry per configuration exported by the `lint:snapshot` script.
+const finalConfigNames = [
+  'local-linting-final-config',
+  'local-linting-final-config-ts',
+  'local-linting-final-config-qa',
+  'local-linting-final-config-qa-ts',
+]
 
 const parseConfig = (config) => {
   return {
@@ -18,27 +24,18 @@ const parseConfig = (config) => {
         return 0
       })
     ),
-    parser: config?.parser?.split('node_modules')[1],
+    // Keep this idempotent: re-running against already-formatted output must not drop the parser entirely.
+    parser: config?.parser?.includes('node_modules') ? config.parser.split('node_modules')[1] : config?.parser,
   }
 }
 
-const finalJsConfigName = 'local-linting-final-config'
-FS.writeFile(
-  `./demo/test/snapshots/${finalJsConfigName}.json`,
-  JSON.stringify(parseConfig(finalJsConfig), null, 2),
-  (err) => {
-    if (err) console.log(`There was an error writing to ${finalJsConfigName}.json file:`, err)
-  }
-)
-
-const finalTsConfigName = 'local-linting-final-config-ts'
-FS.writeFile(
-  `./demo/test/snapshots/${finalTsConfigName}.json`,
-  JSON.stringify(parseConfig(finalTsConfig), null, 2),
-  (err) => {
-    if (err) console.log(`There was an error writing to ${finalTsConfigName}.json file:`, err)
-  }
-)
+finalConfigNames.forEach((configName) => {
+  const filePath = `./demo/test/snapshots/${configName}.json`
+  const config = JSON.parse(FS.readFileSync(filePath, 'utf8'))
+  FS.writeFile(filePath, JSON.stringify(parseConfig(config), null, 2), (err) => {
+    if (err) console.log(`There was an error writing to ${configName}.json file:`, err)
+  })
+})
 
 FS.readFile('./demo/test/snapshots/local-linting-output.txt', 'utf8', (err, eslintOutput) => {
   if (err) {

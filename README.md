@@ -57,6 +57,17 @@ Why extra rules? Because we believe in linting, and we have become converted to 
 
 ## HOWTOs:
 
+### How to lint WDIO/QA suites:
+
+Anything under a top-level `test/` directory is treated as WDIO/QA territory. Both `.js` and `.ts` suites pick up
+`eslint-plugin-wdio` and a set of relaxations for patterns that are normal in acceptance tests but not in application
+code (see [qa.js](/qa.js)). Note that Jest-oriented rules such as `jest/expect-expect` are deliberately disabled there,
+since WDIO suites assert through the `browser`/page objects rather than through Jest matchers.
+
+The WDIO globals (`browser`, `$`, `$$`, ...) are declared here for `.js` suites. They have no effect on `.ts` suites,
+where `no-undef` is already disabled in favor of the compiler — TypeScript suites should add `@wdio/globals/types` to
+the `types` array in their `tsconfig.json` instead.
+
 ### How to override linting rules for a directory and all of its contents:
 
 Add an `eslintrc.js` file to that directory with the necessary overrides, like so:

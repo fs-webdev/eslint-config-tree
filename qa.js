@@ -1,7 +1,7 @@
 module.exports = {
   overrides: [
     {
-      files: ['test/**/*.js'],
+      files: ['test/**/*.js', 'test/**/*.ts'],
       plugins: ['wdio'],
       extends: ['plugin:wdio/recommended'],
       globals: {
