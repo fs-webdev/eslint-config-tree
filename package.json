@@ -25,6 +25,7 @@
     "**/*.*",
     "!.github/**",
     "!demo/**",
+    "!test/**",
     "!.*"
   ],
   "dependencies": {
@@ -45,11 +46,11 @@
     "husky": "^9.1.7"
   },
   "scripts": {
-    "lint": "eslint demo",
-    "lint:fix": "eslint demo --fix",
-    "lint:quiet": "eslint demo --quiet",
-    "lint:report": "eslint demo '**/*.html' --format html --output-file ./reports/linting/linting_report.html & eslint demo --format json --output-file ./reports/linting/linting_report.json",
-    "lint:snapshot": "eslint --print-config file.js > ./demo/test/snapshots/local-linting-final-config.json; eslint --print-config file.ts > ./demo/test/snapshots/local-linting-final-config-ts.json; eslint --print-config test/file.js > ./demo/test/snapshots/local-linting-final-config-qa.json; eslint --print-config test/file.ts > ./demo/test/snapshots/local-linting-final-config-qa-ts.json; eslint demo --no-color --output-file ./demo/test/snapshots/local-linting-output.txt; npm run test:format",
+    "lint": "eslint demo test",
+    "lint:fix": "eslint demo test --fix",
+    "lint:quiet": "eslint demo test --quiet",
+    "lint:report": "eslint demo '**/*.html' --format html --output-file ./reports/linting/linting_report.html & eslint demo test --format json --output-file ./reports/linting/linting_report.json",
+    "lint:snapshot": "rm -f ./demo/test/snapshots/local-linting-output.txt; eslint --print-config file.js > ./demo/test/snapshots/local-linting-final-config.json; eslint --print-config file.ts > ./demo/test/snapshots/local-linting-final-config-ts.json; eslint --print-config test/file.js > ./demo/test/snapshots/local-linting-final-config-qa.json; eslint --print-config test/file.ts > ./demo/test/snapshots/local-linting-final-config-qa-ts.json; eslint demo test --no-color --output-file ./demo/test/snapshots/local-linting-output.txt; npm run test:format",
     "publish": "npmPublish",
     "test": "npm run lint:snapshot; ava",
     "test:format": "node demo/test/snapshots/format-config.js",

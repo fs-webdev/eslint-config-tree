@@ -14,6 +14,10 @@ module.exports = {
       },
       rules: {
         'jest/expect-expect': 'off',
+        // WDIO suites assert through chai, whose matchers are accessed properties (`expect(x).to.be.true`) rather
+        // than called methods (`expect(x).toBe(true)`), so this rule reads every chai assertion as a matcher that
+        // was never called.
+        'jest/valid-expect': 'off',
         'global-require': 'off',
         'no-console': 'off',
         'object-shorthand': 'off',

@@ -6,6 +6,10 @@ This is a shared configuration for all Tree repositories. Contains overrides and
 
 This central configuration is a potential breaking point for _all_ of our code if we suddenly break our rules, so we have tests in place that verify that our configuration remains consistent between upgrades (primarily that we _know_ what changed), and that the extended cases that we care about are still caught. We do this by utilizing ava's snapshot ability against exported (and slightly modified) linting output and linting configuration. These files are not committed, as they are re-created on each test run, but the resulting snapshot and summary markdown file are part of version control, to make it easier to see changes.
 
+The fixtures we lint live in two places, because the config treats them differently: [demo/](/demo) covers ordinary
+application code, and [test/](/test) covers the WDIO/QA override in [qa.js](/qa.js), which only applies to a top-level
+`test/` directory. Neither directory is published (see the `files` array in `package.json`).
+
 **Process:**
 
 1. Run `npm test` (to determine if any significant rules have changed since the last release)
