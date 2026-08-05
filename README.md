@@ -7,8 +7,27 @@ This is a shared configuration for all Tree repositories. Contains overrides and
 This central configuration is a potential breaking point for _all_ of our code if we suddenly break our rules, so we have tests in place that verify that our configuration remains consistent between upgrades (primarily that we _know_ what changed), and that the extended cases that we care about are still caught. We do this by utilizing ava's snapshot ability against exported (and slightly modified) linting output and linting configuration. These files are not committed, as they are re-created on each test run, but the resulting snapshot and summary markdown file are part of version control, to make it easier to see changes.
 
 The fixtures we lint live in two places, because the config treats them differently: [demo/](/demo) covers ordinary
-application code, and [test/](/test) covers the WDIO/QA override in [qa.js](/qa.js), which only applies to a top-level
-`test/` directory. Neither directory is published (see the `files` array in `package.json`).
+application code, and [test/](/test) covers the acceptance-test overrides in [qa.js](/qa.js). Neither directory is
+published (see the `files` array in `package.json`).
+
+Three layers make up the suite, and they catch different things:
+
+1. **Resolved-configuration snapshots** — four full `eslint --print-config` dumps. These catch losing configuration
+   we care about, but only prove a rule is _set_; they say nothing about whether it misfires.
+2. **The rule matrix** ([local-rule-matrix.txt](/demo/test/snapshots/config-probes.js) drives it) — a compact,
+   readable table of which jest/mocha/wdio rules resolve for each file shape that exists in a consumer repo. This
+   is the contract for "which files are Jest and which are acceptance tests", and it is the thing to check when
+   changing a selector in `qa.js`. Prefer adding a probe here over adding a fifth full dump: each dump is several
+   thousand lines of unreviewable snapshot.
+3. **Behavioural fixtures** — [test/](/test) contains real mocha + chai + WDIO source that gets linted, so the
+   snapshot records which rules actually _fire_. This layer is what catches a correctly-configured rule that
+   misreads mocha, which is invisible to layers 1 and 2. Each fixture deliberately contains a couple of known
+   violations so that "the override is working" can be told apart from "this file was never linted".
+
+Separately, [published-config.test.js](/demo/test/published-config.test.js) loads the config the way a **consumer**
+gets it, with `useEslintrc: false`. This repo's own `.eslintrc.js` is not published, so anything it supplies is
+something no consumer receives — that gap once hid a crash that made the package unusable for any repo without
+`jest` installed. Those tests keep the fixture environment honest about the real one.
 
 **Process:**
 
@@ -63,14 +82,37 @@ Why extra rules? Because we believe in linting, and we have become converted to 
 
 ### How to lint WDIO/QA suites:
 
-Anything under a top-level `test/` directory is treated as WDIO/QA territory. Both `.js` and `.ts` suites pick up
-`eslint-plugin-wdio` and a set of relaxations for patterns that are normal in acceptance tests but not in application
-code (see [qa.js](/qa.js)). Note that Jest-oriented rules such as `jest/expect-expect` are deliberately disabled there,
-since WDIO suites assert through the `browser`/page objects rather than through Jest matchers.
+**A file is an acceptance test if it lives in an acceptance-test directory, unless it is named `*.test.*`.**
 
-The WDIO globals (`browser`, `$`, `$$`, ...) are declared here for `.js` suites. They have no effect on `.ts` suites,
-where `no-undef` is already disabled in favor of the compiler — TypeScript suites should add `@wdio/globals/types` to
-the `types` array in their `tsconfig.json` instead.
+The acceptance-test directories are `test/`, `tests/` and `ui-tests/` at the repo root, plus the same three one
+level under `packages/`. Files there pick up `eslint-plugin-wdio`, `eslint-plugin-mocha`, the WDIO globals, and a
+set of relaxations for patterns that are normal in acceptance tests but not in application code — see
+[qa.js](/qa.js), which documents each one and why.
+
+`*.test.*` is the exception, and it wins everywhere: a file named `test/helpers.test.js` is a genuine Jest unit
+test that happens to live in an acceptance directory, so it is excluded from all of the above and keeps the normal
+Jest configuration. Note the deliberate asymmetry — a nested `src/**/test/**` directory is **not** an acceptance
+directory, because that is where Jest unit tests live in this org.
+
+**Why mocha rules instead of Jest rules.** WDIO suites are mocha + chai, but the base configuration applies
+`plugin:jest/recommended` to every file in every repo. `eslint-plugin-jest` cannot tell mocha's `describe`/`it`
+from Jest's, so it applies Jest semantics to mocha code and reports things that are not real: chai's matchers are
+accessed properties (`expect(x).to.be.true`) rather than called methods (`expect(x).toBe(true)`), so
+`jest/valid-expect` reads them as a matcher you forgot to call, and `jest/no-done-callback` rejects mocha's
+`function (done)` signature outright. Those rules are therefore switched off for acceptance tests and the mocha
+equivalents enabled in their place — `mocha/no-exclusive-tests` for `jest/no-focused-tests`,
+`mocha/no-skipped-tests` for `jest/no-disabled-tests`, and `mocha/handle-done-callback`, which checks that `done`
+is actually called rather than banning the signature.
+
+**TypeScript suites need a tsconfig, not config here.** The WDIO globals (`browser`, `$`, `$$`, …) are declared for
+`.js` suites, where `no-undef` is on. They have no effect on `.ts` suites, where `no-undef` is disabled in favor of
+the compiler. A TypeScript suite should instead have a `tsconfig.json` in its acceptance directory with:
+
+```json
+{ "compilerOptions": { "types": ["node", "mocha", "@wdio/globals/types"] } }
+```
+
+`ancestors-r9`'s `test/client/tsconfig.json` is the working reference.
 
 ### How to override linting rules for a directory and all of its contents:
 
