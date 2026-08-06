@@ -65,13 +65,31 @@ test('Should accept chai assertions in an acceptance test as published', async (
   t.deepEqual(offendingRules, [], 'no jest rule should fire on a mocha + chai acceptance test')
 })
 
+// The test above asserts an absence, which would also pass if the acceptance override stopped applying at all.
+// This one asserts the override is actually present, so the pair cannot both be satisfied by a config that does
+// nothing: `it.only` must be caught, and it must be caught by mocha rather than by jest.
+test('Should apply the mocha rules to an acceptance test as published', async (t) => {
+  const code = 'describe("suite", function () {\n  it.only("focused", function () {})\n})\n'
+  const [result] = await lintAs(code, 'test/client/login-spec.js')
+  const reported = result.messages.map((message) => message.ruleId)
+  t.true(reported.includes('mocha/no-exclusive-tests'), 'mocha rules should be live on acceptance tests')
+  t.false(reported.includes('jest/no-focused-tests'), 'the jest equivalent should be suppressed')
+})
+
 // Guards the publish surface itself. If a load-bearing file stops being published, or something that should stay
 // private starts being published, this fails rather than silently shipping.
+//
+// `--ignore-scripts` matters for two reasons. `npm pack` otherwise runs the `prepare` lifecycle script, which
+// here is `husky` -- so without it a unit test rewrites `.husky/_` and the repo's `core.hooksPath`, which is not
+// something a test should do to somebody's machine. It also keeps stdout clean: anything a lifecycle script
+// prints lands in front of the JSON and turns `JSON.parse` into a confusing failure.
 test('Should publish exactly the config entry points', async (t) => {
-  const { stdout } = await execFileAsync('npm', ['pack', '--dry-run', '--json'], {
+  const { stdout } = await execFileAsync('npm', ['pack', '--dry-run', '--json', '--ignore-scripts'], {
     cwd: new URL('../../', import.meta.url),
     maxBuffer: 10 * 1024 * 1024,
   })
-  const published = JSON.parse(stdout)[0].files.map((file) => file.path).sort()
+  const published = JSON.parse(stdout)[0]
+    .files.map((file) => file.path)
+    .sort()
   t.deepEqual(published, ['README.md', 'es6.js', 'index.js', 'package.json', 'qa.js'])
 })

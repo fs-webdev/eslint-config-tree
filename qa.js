@@ -32,10 +32,11 @@ const acceptanceTestDirectories = [
 
 // Excluded from every override in this file, so a genuine Jest test under an acceptance-test directory keeps the
 // full Jest treatment instead of the WDIO relaxations.
-const jestTestFilenames = ['**/*.test.[tj]s?(x)', '**/*.test.[cm]js']
+const jestTestFilenames = ['**/*.test.[tj]s?(x)', '**/*.test.[cm]js', '**/*.test.[cm]ts']
 
-// Frontier's curated mocha set for `**/*.spec.*` (see @fs/eslint-config-frontier-react/cypress.js), reused
-// verbatim so an acceptance test gets the same linting whichever way it was selected.
+// Frontier's curated mocha set for `**/*.spec.*` (see @fs/eslint-config-frontier-react/cypress.js), so an
+// acceptance test gets the same linting whichever way it was selected. Three entries deviate from frontier --
+// `no-exports`, `no-sibling-hooks` and the added `handle-done-callback` -- each explained where it appears.
 //
 // Deliberately NOT `plugin:mocha/recommended`: that also enables `mocha/no-mocha-arrows`,
 // `mocha/no-setup-in-describe`, `mocha/max-top-level-suites`, `mocha/no-global-tests` and
@@ -43,7 +44,7 @@ const jestTestFilenames = ['**/*.test.[tj]s?(x)', '**/*.test.[cm]js']
 // would flag 427 `it`/`describe` arrow callbacks across the Tree repos, and ancestors-r9 uses arrows
 // exclusively. Frontier's list omits every one of those, which is the main reason to copy it rather than invent.
 const mochaSuiteRules = {
-  'mocha/consistent-spacing-between-blocks': 'error', // Good for readability and consistence.
+  'mocha/consistent-spacing-between-blocks': 'error', // Good for readability and consistency.
   'mocha/no-async-describe': 'error', // Replaces jest/valid-describe-callback.
   'mocha/no-empty-description': 'error', // Replaces jest/valid-title, without rejecting data-driven titles.
   'mocha/no-exclusive-tests': 'error', // Replaces jest/no-focused-tests.
@@ -53,10 +54,10 @@ const mochaSuiteRules = {
   'mocha/no-skipped-tests': 'error', // Replaces jest/no-disabled-tests and jest/no-test-prefixes.
 
   // `warn`, not `error`, and deliberately out of step with frontier. Two `before` hooks at the same level is
-  // genuinely confusing -- mocha runs both -- but frontier only ever applied this to `*.spec.*`, which no file
-  // in the Tree repos is named, so it has never actually been enforced. Piloting the change against
-  // tree-person-r9, ancestors-r9, sources-r9 and group-management produced 164 violations, and the rule is not
-  // auto-fixable, so shipping it at `error` would simply block four repos. Raise it once they are clean.
+  // genuinely confusing -- mocha runs both -- but frontier only ever applied this to `*.spec.*`, and no file in
+  // the Tree repos is named that way, so it has never actually been enforced. Measured across the five consumer
+  // acceptance suites it fires 347 times (183 + 120 + 44, the rest zero), and it is not auto-fixable, so
+  // shipping it at `error` would block three repos on a few hundred manual edits. Raise it once they are clean.
   'mocha/no-sibling-hooks': 'warn',
 
   // Not in frontier's set. `function (done)` is ordinary mocha -- roughly 90 files across the Tree repos use it
@@ -117,10 +118,13 @@ module.exports = {
       // acceptance suites stop depending on that accident.
       env: { mocha: true },
       globals: {
-        // `browser`, `$`, `$$`, `driver` and `expect` also come from plugin:wdio/recommended. Declared here as
-        // well on purpose: if that plugin's shipped config ever changes shape, silently losing these would mean
-        // `no-undef` errors across roughly 500 consumer `.js` files. The duplication is cheap insurance.
+        // These five also come from plugin:wdio/recommended. Declared here as well on purpose: if that plugin's
+        // shipped config ever changes shape, silently losing them would mean `no-undef` errors across every
+        // JavaScript acceptance file in every consumer. `expect` is the one that would hurt most, since every
+        // chai assertion depends on it, so the duplication is cheap insurance.
         browser: 'readonly',
+        driver: 'readonly',
+        expect: 'readonly',
         $: 'readonly',
         $$: 'readonly',
         // Protractor holdovers, supplied by nothing else.
@@ -149,13 +153,20 @@ module.exports = {
       // checking to the compiler), so the `globals` block above is inert here by design -- TS suites declare
       // `types: ["node", "mocha", "@wdio/globals/types"]` in their acceptance-directory tsconfig.json instead.
       // See the README.
-      files: acceptanceTestDirectories.map((directory) => directory.replace('/**', '/**/*.ts?(x)')),
+      files: acceptanceTestDirectories.map((directory) => `${directory}/*.ts?(x)`),
       excludedFiles: jestTestFilenames,
       rules: {
         // `type: module` plus TypeScript means a relative import is written `./page.js` while the file on disk
-        // is `page.ts`, which eslint-plugin-import's node resolver cannot follow -- it reports every one as
-        // unresolved. ancestors-r9 already disables this by hand for exactly this reason.
-        'import/no-unresolved': 'off',
+        // is `page.ts`, which eslint-plugin-import's node resolver cannot follow -- it reports every such import
+        // as unresolved. Rather than switch the rule off, ignore only that one specifier shape, so a mistyped or
+        // unlisted PACKAGE import is still caught -- which is most of what this rule is worth.
+        //
+        // Residual gap, accepted knowingly: a relative `.js` import that resolves to nothing at all is no longer
+        // reported either, because it is indistinguishable from the legitimate case by specifier alone. The
+        // proper fix is `eslint-import-resolver-typescript`, which maps `.js` back to `.ts` and would catch both.
+        // Deliberately not added here: it would be a new runtime dependency for every consumer of this config,
+        // none of them currently has it, and it needs a tsconfig per acceptance directory to work well.
+        'import/no-unresolved': ['error', { ignore: ['^\\.{1,2}/.*\\.js$'] }],
       },
     },
   ],

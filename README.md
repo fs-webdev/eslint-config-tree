@@ -14,7 +14,7 @@ Three layers make up the suite, and they catch different things:
 
 1. **Resolved-configuration snapshots** — four full `eslint --print-config` dumps. These catch losing configuration
    we care about, but only prove a rule is _set_; they say nothing about whether it misfires.
-2. **The rule matrix** ([local-rule-matrix.txt](/demo/test/snapshots/config-probes.js) drives it) — a compact,
+2. **The rule matrix** — generated into `local-rule-matrix.txt` from [config-probes.js](/demo/test/snapshots/config-probes.js) — a compact,
    readable table of which jest/mocha/wdio rules resolve for each file shape that exists in a consumer repo. This
    is the contract for "which files are Jest and which are acceptance tests", and it is the thing to check when
    changing a selector in `qa.js`. Prefer adding a probe here over adding a fifth full dump: each dump is several
@@ -109,10 +109,19 @@ is actually called rather than banning the signature.
 the compiler. A TypeScript suite should instead have a `tsconfig.json` in its acceptance directory with:
 
 ```json
-{ "compilerOptions": { "types": ["node", "mocha", "@wdio/globals/types"] } }
+{
+  "extends": "@fs/qa-ts-config/tsconfig.test.json",
+  "compilerOptions": { "types": ["node", "mocha", "@wdio/globals/types"] },
+  "include": ["**/*.ts", "**/*.js"],
+  "exclude": ["node_modules"]
+}
 ```
 
-`ancestors-r9`'s `test/client/tsconfig.json` is the working reference.
+Two details matter more than they look. The `include` has to reach the suites themselves — a tsconfig that only
+covers a runner script leaves them outside the project, so the globals never arrive. And overriding `types` is
+deliberate: `@fs/qa-ts-config/tsconfig.test.json` ships `jest` in that array, while a WDIO suite wants `mocha`.
+
+`zion`'s `test/tsconfig.json` is a working example of the same shape, and additionally puts `chai` in `types`.
 
 ### How to override linting rules for a directory and all of its contents:
 

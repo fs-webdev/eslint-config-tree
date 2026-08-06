@@ -53,7 +53,7 @@ FS.readFile('./demo/test/snapshots/local-linting-output.txt', 'utf8', (err, esli
       .replace(new RegExp(`^${escapeForRegExp(process.cwd())}/`, 'gm'), '')
       .replace(/^demo\/(?!test\/)/gm, '')
     FS.writeFile('./demo/test/snapshots/local-linting-output.txt', relativeOutput, (err2) => {
-      if (err2) console.log('There was an error writing to local-linting-output.txt file:', err)
+      if (err2) console.log('There was an error writing to local-linting-output.txt file:', err2)
     })
   }
 })

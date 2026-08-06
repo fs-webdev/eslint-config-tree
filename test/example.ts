@@ -31,9 +31,9 @@ describe('WDIO suite fixture', () => {
   })
 })
 
-// Known gaps this fixture does not close:
-// 1. The `globals` block in qa.js is inert for TypeScript, because `no-undef` is off for `.ts` (see the README).
-//    `browser`/`$`/`$$` above would lint clean even with that block deleted. Only a `.js` fixture can pin it down,
-//    and that would also cover the `test/**/*.js` half of the override, which today has no lint-level coverage.
-// 2. No fixture or --print-config snapshot covers `test/*.spec.ts`, which is how WDIO suites are conventionally
-//    named and which resolves to a different (mocha, no jest plugin) branch of the configuration.
+// Known gap this fixture does not close: the `globals` block in qa.js is inert for TypeScript, because
+// `no-undef` is off for `.ts` (see the README). `browser`/`$`/`$$` above would lint clean even with that block
+// deleted, so only `test/example.js` can pin it down -- which is why that fixture exists alongside this one.
+//
+// The `*.spec.ts` branch, where frontier unloads the jest plugin entirely, is covered by the rule matrix rather
+// than by a fixture here (see demo/test/snapshots/config-probes.js).

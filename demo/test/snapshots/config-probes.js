@@ -32,7 +32,7 @@ module.exports = [
   },
   {
     path: 'test/file.ts',
-    why: 'TypeScript acceptance test. Only ancestors-r9 is TS-first today, but it is the direction of travel.',
+    why: 'TypeScript acceptance test. Verified against a real in-flight conversion of a consumer suite, which lints clean against this configuration.',
   },
   {
     path: 'test/client/login-spec.js',
@@ -40,7 +40,7 @@ module.exports = [
   },
   {
     path: 'test/client/login-spec.ts',
-    why: 'TypeScript variant of the same, as used by ancestors-r9.',
+    why: 'TypeScript variant of the deeper-nested shape, which is how a converted suite is laid out: test/client/suites/**/*-spec.ts.',
   },
   {
     path: 'test/client/login.spec.js',
