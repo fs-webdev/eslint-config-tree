@@ -32,7 +32,7 @@ module.exports = [
   },
   {
     path: 'test/file.ts',
-    why: 'TypeScript acceptance test. Verified against a real in-flight conversion of a consumer suite, which lints clean against this configuration.',
+    why: 'TypeScript acceptance test: top-level `test/`, TypeScript. Pins the TS branch of the config, which resolves a different parser and is otherwise easy to break without noticing.',
   },
   {
     path: 'test/client/login-spec.js',
