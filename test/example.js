@@ -37,3 +37,23 @@ describe('WDIO suite fixture', () => {
     const unusedVar = 3 // no-unused-vars -- proves ordinary rules still apply
   })
 })
+
+// The two mocha rules with the widest blast radius across consumer repos get their own suite, so the assertions
+// above stay readable. Nothing else pins these two, and `mocha/no-sibling-hooks` in particular is deliberately
+// shipped at `warn` with the intent of raising it to `error` once repos are clean -- without this, it could stop
+// firing entirely and no test would notice.
+describe('the mocha rules with real blast radius', () => {
+  beforeEach(async () => {
+    await browser.url('/tree/find')
+  })
+
+  // mocha/no-sibling-hooks fires on the hook below -- a second beforeEach at the same level, which mocha runs
+  // in addition to the first. mocha/consistent-spacing-between-blocks fires on the `it` after it, which is
+  // deliberately not separated by a blank line. (A comment counts as separation, so there cannot be one here.)
+  beforeEach(async () => {
+    await browser.url('/tree/search')
+  })
+  it('is preceded by no blank line, on purpose', async () => {
+    await browser.url('/tree/find')
+  })
+})
