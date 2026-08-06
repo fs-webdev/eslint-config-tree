@@ -203,6 +203,17 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 ## Changelog:
 
 <details>
+<summary>Version 7 </summary>
+
+- QA/WDIO suites are linted as mocha instead of jest. Chai assertions and `function (done)` are no longer misreported, and ten `mocha/*` rules replace the jest ones.
+- TypeScript QA suites are now linted. The override previously matched `test/**/*.js` only.
+- `tests/`, `ui-tests/` and `packages/*/{test,tests,ui-tests}/` now count as QA directories.
+- A file named `*.test.*` inside a QA directory keeps its Jest configuration.
+- Fixed a crash for consumers without jest installed (`jest/no-deprecated-functions` threw on every file).
+
+</details>
+
+<details>
 <summary>Version 6 - ESLint 8</summary>
 
 - Update all linting subdependencies. Remove redundant plugins (eslint-plugin-json adopted by Frontier).
