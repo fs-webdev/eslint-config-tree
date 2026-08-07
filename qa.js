@@ -4,35 +4,16 @@
 // `*.test.*` -- the org-wide Jest convention, which always wins and is excluded from every override below so
 // those files keep frontier's untouched `plugin:jest/recommended` treatment.
 //
-// Why the rules below are a list of `off`s rather than a clean swap: `@fs/eslint-config-frontier-react/jest.js`
-// applies `plugin:jest/recommended` to `files: ['*']` -- every file in every repo -- excluding only
-// `cypress/**/*`, `**/*.spec.*` and `**/*.cy.*`. A downstream eslintrc config cannot undo that. Two constraints
-// in `@eslint/eslintrc` make it impossible:
-//   * `mergePlugins` is a pure union, so a plugin an inherited override loaded can never be unloaded. Once the
-//     jest plugin is on a file it stays on, and only rule severity can be changed.
-//   * An inherited override's `excludedFiles` cannot be amended -- match criteria are baked at load time -- so
-//     we cannot simply add our directories to frontier's exclusion list.
-// Hence: suppress the jest rules that misread mocha, and enable the mocha equivalents in their place.
+// There are no `jest/*: 'off'` entries here, and that is the point. `es6.js` scopes frontier's Jest
+// configuration so it is never loaded on these files in the first place, which is strictly better than muting
+// its rules: a suppression list has to be extended every time eslint-plugin-jest adds a rule, and nobody
+// notices when it falls behind. What remains below is the positive half -- the mocha and WDIO treatment that
+// acceptance tests should get instead.
 //
-// Note that these directory patterns resolve against the CONSUMING repo's `.eslintrc.*` directory, not against
-// this file. `@eslint/eslintrc` threads `matchBasePath` down from the root config and never recomputes it for
-// extended shareable configs, which is what makes directory-based selection possible from inside a shared
-// config at all.
+// One consequence worth knowing: `jest/no-commented-out-tests` and `jest/no-jasmine-globals` are framework
+// agnostic and were mildly useful here, and they go away too. That is the price of not owning a rule list.
 
-const acceptanceTestDirectories = [
-  'test/**',
-  'tests/**',
-  'ui-tests/**',
-  // Monorepo packages. Deliberately NOT `**/test/**`: that also matches `src/**/test/**`, which is where Jest
-  // unit tests live in this org, and `demo/test/**` in this repo.
-  'packages/*/test/**',
-  'packages/*/tests/**',
-  'packages/*/ui-tests/**',
-]
-
-// Excluded from every override in this file, so a genuine Jest test under an acceptance-test directory keeps the
-// full Jest treatment instead of the WDIO relaxations.
-const jestTestFilenames = ['**/*.test.[tj]s?(x)', '**/*.test.[cm]js', '**/*.test.[cm]ts']
+const { acceptanceTestDirectories, jestTestFilenames } = require('./acceptance-test-files')
 
 // Frontier's curated mocha set for `**/*.spec.*` (see @fs/eslint-config-frontier-react/cypress.js), so an
 // acceptance test gets the same linting whichever way it was selected. Three entries deviate from frontier --
@@ -70,41 +51,6 @@ const mochaSuiteRules = {
   'mocha/no-exports': 'off',
 }
 
-// Each of these is either a Jest matcher-grammar rule that misreads chai, or a Jest-runner concept that has no
-// mocha equivalent, or has a mocha replacement enabled above.
-//
-// Deliberately LEFT ON: `jest/no-commented-out-tests` and `jest/no-jasmine-globals`. Both are framework-agnostic
-// -- the first is a regex over comments, and the second flags `spyOn`/`jasmine.*`/`fail`, none of which exist
-// under WDIO. `jest/no-deprecated-functions` is off globally in index.js because it crashes; see the note there.
-const jestRulesThatDoNotApply = {
-  // Assertion grammar. Jest matchers are called methods (`expect(x).toBe(true)`); chai's are accessed
-  // properties (`expect(x).to.be.true`), which these rules read as a matcher that was never called.
-  'jest/expect-expect': 'off',
-  'jest/valid-expect': 'off',
-  'jest/valid-expect-in-promise': 'off',
-  // Silent under chai but live under expect-webdriverio, where asserting in a helper or inside a
-  // retry/branching flow is normal.
-  'jest/no-standalone-expect': 'off',
-  'jest/no-conditional-expect': 'off',
-
-  // Runner semantics that differ between mocha and Jest.
-  'jest/no-done-callback': 'off', // Rejects mocha's `function (done)`; see mocha/handle-done-callback.
-  'jest/no-disabled-tests': 'off', // Frontier raises this to error; it flags mocha pending tests, `it('todo')`.
-  'jest/no-test-prefixes': 'off', // `xit`/`xdescribe` are legitimate mocha.
-  'jest/valid-title': 'off', // Rejects titles built from fixture data.
-  'jest/no-export': 'off', // Page objects and helpers under an acceptance-test directory export on purpose.
-
-  // Superseded by the mocha rules above.
-  'jest/no-focused-tests': 'off',
-  'jest/no-identical-title': 'off',
-  'jest/valid-describe-callback': 'off',
-
-  // Jest-API-specific and meaningless here.
-  'jest/no-alias-methods': 'off',
-  'jest/no-mocks-import': 'off',
-  'jest/no-interpolation-in-snapshots': 'off',
-}
-
 module.exports = {
   overrides: [
     {
@@ -132,7 +78,6 @@ module.exports = {
         by: 'readonly',
       },
       rules: {
-        ...jestRulesThatDoNotApply,
         ...mochaSuiteRules,
 
         'global-require': 'off',

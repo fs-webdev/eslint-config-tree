@@ -42,9 +42,13 @@
   },
   "devDependencies": {
     "@fs/npm-publisher": "^1.6.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^26.1.2",
+    "@wdio/globals": "^9.29.1",
     "ava": "^7.0.0",
     "file-manager-js": "^3.1.6",
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "typescript": "^5.9.3"
   },
   "scripts": {
     "lint": "eslint demo test",

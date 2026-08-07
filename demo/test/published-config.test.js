@@ -91,5 +91,5 @@ test('Should publish exactly the config entry points', async (t) => {
   const published = JSON.parse(stdout)[0]
     .files.map((file) => file.path)
     .sort()
-  t.deepEqual(published, ['README.md', 'es6.js', 'index.js', 'package.json', 'qa.js'])
+  t.deepEqual(published, ['README.md', 'acceptance-test-files.js', 'es6.js', 'index.js', 'package.json', 'qa.js'])
 })

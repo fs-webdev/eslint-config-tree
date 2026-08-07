@@ -6,12 +6,13 @@ const testSelectorsConfiguration = [
   { ignoreDisabled: false, ignoreReadonly: false, testAttribute: 'data-testid' },
 ]
 
+const { acceptanceTestDirectories, jestTestFilesInAcceptanceDirectories } = require('./acceptance-test-files')
+
 module.exports = {
   extends: [
     '@fs/eslint-config-frontier-react/es6',
     '@fs/eslint-config-frontier-react/json',
     '@fs/eslint-config-frontier-react/jsdoc',
-    '@fs/eslint-config-frontier-react/jest',
     '@fs/eslint-config-frontier-react/dont-need-lodash',
     '@fs/eslint-config-frontier-react/typescript',
     '@fs/eslint-config-frontier-react/cypress',
@@ -98,6 +99,24 @@ module.exports = {
     // ]
   },
   overrides: [
+    // Frontier applies `plugin:jest/recommended` to `files: ['*']` -- every file in every repo. Extending it
+    // here inside an override scopes it instead: `@eslint/eslintrc` ANDs this entry's criteria with the ones
+    // inside the config being extended, so the Jest plugin is simply never loaded on acceptance tests.
+    //
+    // This is why qa.js does not carry a list of `jest/*: 'off'` entries. Suppressing rules one at a time only
+    // works until eslint-plugin-jest adds another one; not loading the plugin cannot rot the same way.
+    {
+      files: ['*'],
+      excludedFiles: acceptanceTestDirectories,
+      extends: ['@fs/eslint-config-frontier-react/jest'],
+    },
+    // ...but a `*.test.*` file inside an acceptance-test directory is a genuine Jest test, so hand those back.
+    // `excludedFiles` above cannot express "this directory AND NOT this filename", hence the second entry.
+    {
+      files: jestTestFilesInAcceptanceDirectories,
+      extends: ['@fs/eslint-config-frontier-react/jest'],
+    },
+
     {
       files: ['*.ts?(x)'],
       rules: {

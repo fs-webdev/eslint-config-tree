@@ -84,10 +84,14 @@ Why extra rules? Because we believe in linting, and we have become converted to 
 
 **A file is an acceptance test if it lives in an acceptance-test directory, unless it is named `*.test.*`.**
 
-The acceptance-test directories are `test/`, `tests/` and `ui-tests/` at the repo root, plus the same three one
-level under `packages/`. Files there pick up `eslint-plugin-wdio`, `eslint-plugin-mocha`, the WDIO globals, and a
-set of relaxations for patterns that are normal in acceptance tests but not in application code — see
-[qa.js](/qa.js), which documents each one and why.
+The acceptance-test directories are `test/` and `tests/`, resolved relative to your `.eslintrc` rather than the
+repo root — so a suite whose eslintrc sits inside `ui-tests/` is matched as `tests/` from there. Files in them
+pick up `eslint-plugin-wdio`, `eslint-plugin-mocha`, the WDIO globals, and a set of relaxations for patterns that
+are normal in acceptance tests but not in application code — see [qa.js](/qa.js), which documents each one.
+
+The Jest configuration is not merely relaxed for these files, it is never loaded on them: [es6.js](/es6.js)
+scopes it so `eslint-plugin-jest` never sees an acceptance test. That is why `qa.js` carries no list of
+`jest/*: 'off'` entries to keep up to date.
 
 `*.test.*` is the exception, and it wins everywhere: a file named `test/helpers.test.js` is a genuine Jest unit
 test that happens to live in an acceptance directory, so it is excluded from all of the above and keeps the normal
@@ -121,7 +125,20 @@ Two details matter more than they look. The `include` has to reach the suites th
 covers a runner script leaves them outside the project, so the globals never arrive. And overriding `types` is
 deliberate: `@fs/qa-ts-config/tsconfig.test.json` ships `jest` in that array, while a WDIO suite wants `mocha`.
 
-`zion`'s `test/tsconfig.json` is a working example of the same shape, and additionally puts `chai` in `types`.
+This package applies that exact configuration to its own fixtures — see [test/tsconfig.json](/test/tsconfig.json)
+— so the advice is exercised rather than just written down.
+
+**One trap worth knowing before you convert a suite.** `@wdio/globals/types` declares a global `expect` typed as
+expect-webdriverio, and it shadows chai's. A chai-style `expect(x).to.be.true` therefore will not type-check,
+and adding `chai` to the `types` array does not change that — verified. Suites asserting with chai should import
+it explicitly:
+
+```ts
+import { expect } from 'chai'
+```
+
+which is already how most existing suites are written. ESLint is happy either way; this is purely a
+type-checking concern.
 
 ### How to override linting rules for a directory and all of its contents:
 
