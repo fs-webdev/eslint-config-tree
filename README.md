@@ -32,27 +32,32 @@ something no consumer receives — that gap once hid a crash that made the packa
 **Process:**
 
 1. Run `npm test` (to determine if any significant rules have changed since the last release)
-  - The tests will likely fail. Verify newly-consumed rules against the current [snapshot](/demo/test/snapshots/linting-config.test.js.md) file.
+
+- The tests will likely fail. Verify newly-consumed rules against the current [snapshot](/demo/test/snapshots/linting-config.test.js.md) file.
+
 1. After verifying, run `npm run test:update`.
 1. Make dependency/configuration updates.
 1. Run `npm test` (to determine new changes in linting results or configuration).
-  - The tests should likely fail. Verify your expectations against the current [snapshot](/demo/test/snapshots/linting-config.test.js.md) file.
+
+- The tests should likely fail. Verify your expectations against the current [snapshot](/demo/test/snapshots/linting-config.test.js.md) file.
+
 1. After you have your results how you want them, run `npm run test:update`.
-  - The tests should now pass.
+
+- The tests should now pass.
 
 <!--1. If you want see how your changes would impact a codebase, you can either `npm link` or copy+paste the contents of `local-linting-final-config.json` temporarily into the target `.eslintrc` file.
 -->
 
 Why extra rules? Because we believe in linting, and we have become converted to the additional rules enforced by the following plugins:
 
- - [eslint-plugin-bestpractices](https://github.com/skye2k2/eslint-plugin-bestpractices)
- - [eslint-plugin-deprecate](https://github.com/AlexMost/eslint-plugin-deprecate)
- - [eslint-plugin-html](https://github.com/BenoitZugmeyer/eslint-plugin-html)
- - [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import) (implemented by Frontier)
- - [eslint-plugin-jsdoc](https://github.com/gajus/eslint-plugin-jsdoc)
- - [eslint-plugin-json](https://github.com/azeemba/eslint-plugin-json) (adopted by Frontier)
- - [eslint-plugin-promise](https://github.com/xjamundx/eslint-plugin-promise)
- - [eslint-plugin-sonarjs](https://github.com/SonarSource/eslint-plugin-sonarjs)
+- [eslint-plugin-bestpractices](https://github.com/skye2k2/eslint-plugin-bestpractices)
+- [eslint-plugin-deprecate](https://github.com/AlexMost/eslint-plugin-deprecate)
+- [eslint-plugin-html](https://github.com/BenoitZugmeyer/eslint-plugin-html)
+- [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import) (implemented by Frontier)
+- [eslint-plugin-jsdoc](https://github.com/gajus/eslint-plugin-jsdoc)
+- [eslint-plugin-json](https://github.com/azeemba/eslint-plugin-json) (adopted by Frontier)
+- [eslint-plugin-promise](https://github.com/xjamundx/eslint-plugin-promise)
+- [eslint-plugin-sonarjs](https://github.com/SonarSource/eslint-plugin-sonarjs)
 
 > POTENTIALLY WORTH CONSIDERING IN THE FUTURE (MAY NOT WORK BECAUSE OF NEEDING SOMETHING EXTRA?):
 
@@ -61,22 +66,22 @@ Why extra rules? Because we believe in linting, and we have become converted to 
 > - 'eslint-plugin-package-json' // undefined TypeErrors while parsing package.json
 > - 'eslint-plugin-sort-keys-fix' // RUINS INDENTATION, DOES NOT BRING JSDOCS ALONG
 
-![alt text](demo/example-eslint-results.png "Example linting infractions for things the Tree team cares about")
+![alt text](demo/example-eslint-results.png 'Example linting infractions for things the Tree team cares about')
 
 ## Usage:
 
- 1. Add this repository as a package devDependency:
+1.  Add this repository as a package devDependency:
 
     > "eslint-config-tree": "github:fs-webdev/eslint-config-tree#semver:^6",
 
- 1. Add an `eslintrc.js` file, with the following:
+1.  Add an `eslintrc.js` file, with the following:
 <pre><code>module.exports = {
   extends: [
     'eslint-config-tree'
   ]
 }</code></pre>
 
- 1. Enjoy.
+1.  Enjoy.
 
 ## HOWTOs:
 
@@ -222,11 +227,13 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 <details>
 <summary>Version 7 </summary>
 
-- QA/WDIO suites are linted as mocha instead of jest. Chai assertions and `function (done)` are no longer misreported, and ten `mocha/*` rules replace the jest ones.
+- QA/WDIO suites are linted as mocha instead of jest. Chai assertions and `function (done)` are no longer misreported, and ten `mocha/*` rules take the place of the jest ones. The jest plugin is no longer loaded on them at all.
 - TypeScript QA suites are now linted. The override previously matched `test/**/*.js` only.
-- `tests/`, `ui-tests/` and `packages/*/{test,tests,ui-tests}/` now count as QA directories.
+- `tests/` now counts as a QA directory alongside `test/`. Both are matched relative to your `.eslintrc`, not the repo root, so a suite whose eslintrc sits inside `ui-tests/` is matched as `tests/` from there.
 - A file named `*.test.*` inside a QA directory keeps its Jest configuration.
-- Fixed a crash for consumers without jest installed (`jest/no-deprecated-functions` threw on every file).
+- Fixed a crash for consumers without jest installed (`jest/no-deprecated-functions` threw on every file). If you worked around this by disabling the jest rules yourself, you can drop that.
+- `eslint-plugin-mocha` is now a dependency of this package rather than something you happened to get via hoisting.
+- Deliberately given up, all on QA files only: `jest/no-commented-out-tests` and `jest/no-jasmine-globals` (the price of not loading the plugin), and `import/no-unresolved` no longer flags a relative `./x.js` import in a TypeScript suite that resolves to nothing — it cannot be told apart from the legitimate `.js`-means-`.ts` case. Package imports are still checked.
 
 </details>
 
