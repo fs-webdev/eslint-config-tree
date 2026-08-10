@@ -70,18 +70,21 @@ Why extra rules? Because we believe in linting, and we have become converted to 
 
 ## Usage:
 
-1.  Add this repository as a package devDependency:
+1.  Add the package as a devDependency:
 
-    > "eslint-config-tree": "github:fs-webdev/eslint-config-tree#semver:^6",
+    > "@fs/eslint-config-tree": "^7.0.0",
 
 1.  Add an `eslintrc.js` file, with the following:
 <pre><code>module.exports = {
   extends: [
-    'eslint-config-tree'
+    '@fs/eslint-config-tree'
   ]
 }</code></pre>
 
 1.  Enjoy.
+
+> Installing from a git URL (`github:fs-webdev/eslint-config-tree#semver:^6`) still works and is what older
+> instructions described, but every current consumer uses the registry package above.
 
 ## HOWTOs:
 
