@@ -12,11 +12,14 @@
 // Deliberately NOT `**/test/**`: that also matches `src/**/test/**`, which is where Jest unit tests live in this
 // org, and `demo/test/**` in this repo.
 //
-// Only these two, because only these two are real. No consumer has a top-level `packages/` directory, and the
-// two repos with a `ui-tests/` directory keep their eslintrc inside it, so their suites resolve as `tests/**`
-// anyway. Speculative entries are not free: each one is a directory name we have silently promised to treat as
-// acceptance tests.
-const acceptanceTestDirectories = ['test/**', 'tests/**']
+// Just `test/`, because a census of every consumer found nothing else in use. No repo this package supports has
+// a top-level `packages/` or `tests/` directory; the `tests/` (plural) layouts belong to repos outside the Tree
+// team's support boundary, whose suites were never covered by the v6 selector either.
+//
+// Speculative entries are not free. Each one is a directory name we have silently promised to treat as an
+// acceptance test, and taking one back later is a breaking change -- the relaxations stop applying and come back
+// as errors. Cheaper to add one when a repo actually needs it.
+const acceptanceTestDirectories = ['test/**']
 
 // `*.test.*` is the org-wide Jest convention and always wins, even inside an acceptance-test directory.
 const jestTestFilenames = ['**/*.test.[tj]s?(x)', '**/*.test.[cm]js', '**/*.test.[cm]ts']

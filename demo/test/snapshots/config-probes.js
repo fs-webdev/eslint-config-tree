@@ -56,14 +56,14 @@ module.exports = [
   },
   {
     path: 'tests/login-spec.js',
-    why: 'newspapers, public-dev-portal and the qa-campaign repos use `tests/` (plural). Before widening, the acceptance override silently never applied to any of them.',
+    why: 'NEGATIVE CASE. `tests/` (plural) is NOT an acceptance directory -- no supported consumer uses it, and adding a directory name is a promise that is breaking to take back. This probe exists so that adding one is a visible decision rather than a silent one.',
   },
   {
     path: 'ui-tests/tests/login-spec.ts',
-    why: 'ade-abbie-hints and ade-abbie-ws put their WDIO suite in `ui-tests/` beside a Python backend.',
+    why: 'NEGATIVE CASE. A repo keeping its suite under `ui-tests/` is covered only if its own eslintrc sits inside that directory, which makes the suite `test/` from the config\'s point of view. Resolved from the repo root, as here, it is ordinary source.',
   },
   {
     path: 'packages/app/test/login-spec.js',
-    why: 'Monorepo nesting one level under `packages/`, which zion-style layouts need.',
+    why: 'NEGATIVE CASE. Monorepo nesting is NOT covered -- no consumer has a top-level `packages/` directory. A monorepo package needing this should put an eslintrc in the package, where its `test/` is matched relative to that.',
   },
 ]

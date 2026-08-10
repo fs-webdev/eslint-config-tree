@@ -92,9 +92,10 @@ Why extra rules? Because we believe in linting, and we have become converted to 
 
 **A file is an acceptance test if it lives in an acceptance-test directory, unless it is named `*.test.*`.**
 
-The acceptance-test directories are `test/` and `tests/`, resolved relative to your `.eslintrc` rather than the
-repo root — so a suite whose eslintrc sits inside `ui-tests/` is matched as `tests/` from there. Files in them
-pick up `eslint-plugin-wdio`, `eslint-plugin-mocha`, the WDIO globals, and a set of relaxations for patterns that
+The acceptance-test directory is `test/`, resolved relative to your `.eslintrc` rather than the repo root. That
+distinction matters for a repo whose suite lives somewhere else — say `ui-tests/` — but keeps its own eslintrc
+inside it: what counts is the path from that config file, so `ui-tests/test/` is matched while a root-level
+`ui-tests/` is not. Files in it pick up `eslint-plugin-wdio`, `eslint-plugin-mocha`, the WDIO globals, and a set of relaxations for patterns that
 are normal in acceptance tests but not in application code — see [qa.js](/qa.js), which documents each one.
 
 The Jest configuration is not merely relaxed for these files, it is never loaded on them: [es6.js](/es6.js)
@@ -232,7 +233,7 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 
 - QA/WDIO suites are linted as mocha instead of jest. Chai assertions and `function (done)` are no longer misreported, and ten `mocha/*` rules take the place of the jest ones. The jest plugin is no longer loaded on them at all.
 - TypeScript QA suites are now linted. The override previously matched `test/**/*.js` only.
-- `tests/` now counts as a QA directory alongside `test/`. Both are matched relative to your `.eslintrc`, not the repo root, so a suite whose eslintrc sits inside `ui-tests/` is matched as `tests/` from there.
+- QA directories are matched relative to your `.eslintrc` rather than the repo root, so a suite whose eslintrc sits inside its own directory is matched from there.
 - A file named `*.test.*` inside a QA directory keeps its Jest configuration.
 - Fixed a crash for consumers without jest installed (`jest/no-deprecated-functions` threw on every file). If you worked around this by disabling the jest rules yourself, you can drop that.
 - `eslint-plugin-mocha` is now a dependency of this package rather than something you happened to get via hoisting.
