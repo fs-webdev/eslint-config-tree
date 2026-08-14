@@ -102,7 +102,8 @@ The Jest configuration is not merely relaxed for these files, it is never loaded
 scopes it so `eslint-plugin-jest` never sees an acceptance test. That is why `qa.js` carries no list of
 `jest/*: 'off'` entries to keep up to date. (`jest.js` is its own entry point, composed into the default
 `index`; a repo with no Jest at all — vitest, say — can extend `@fs/eslint-config-tree/es6` directly and get a
-configuration with no `jest/*` rules anywhere.)
+configuration with no `jest/*` rules anywhere. Extending the jest half without jest installed requires
+`settings: { jest: { version: <n> } }`, or `jest/no-deprecated-functions` throws on every file it reaches.)
 
 The `*.test.*` naming convention buys no exception: `test/helpers.test.js` gets the mocha/WDIO treatment like
 any other file in the directory, so a genuine Jest unit test should not live there — no supported consumer keeps
@@ -239,7 +240,7 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 - QA directories are matched relative to your `.eslintrc` rather than the repo root, so a suite whose eslintrc sits inside its own directory is matched from there.
 - A file inside a QA directory is an acceptance test regardless of its name — the previous `*.test.*` Jest carve-out is gone. No supported consumer has such a file; if you do, move it out of the QA directory (or rename the directory's role), because it will now be linted as mocha.
 - The Jest configuration moved into its own `jest.js` entry point (composed into the default `index`), so extending `@fs/eslint-config-tree/es6` directly now yields a configuration with no `jest/*` rules at all. Vitest repos that disabled every jest rule by hand can delete that workaround.
-- Fixed a crash for consumers without jest installed (`jest/no-deprecated-functions` threw on every file).
+- The default `index` assumes a detectable jest version: `jest/no-deprecated-functions` throws on every file it reaches otherwise (unchanged from v6, where jest-less repos crashed with no way out). The outs are now supported and tested: extend `/es6` if you are not a jest repo, or declare `settings: { jest: { version: <n> } }` in your eslintrc if you are one without jest installed.
 - `eslint-plugin-mocha` is now a dependency of this package rather than something you happened to get via hoisting.
 - Deliberately given up, all on QA files only: `jest/no-commented-out-tests` and `jest/no-jasmine-globals` (the price of not loading the plugin), and `import/no-unresolved` no longer flags a relative `./x.js` import in a TypeScript suite that resolves to nothing — it cannot be told apart from the legitimate `.js`-means-`.ts` case. Package imports are still checked.
 

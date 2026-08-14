@@ -1,11 +1,12 @@
 // Tests the configuration as a CONSUMER receives it, which is not what the rest of this suite tests.
 //
 // Everything else here runs through this repo's own `.eslintrc.js`. That file is excluded from the published
-// tarball (`files: ["!.*"]` in package.json), so anything it contributes is something no consumer ever gets --
-// and for a long time it contributed `settings: { jest: { version: 29 } }`, which single-handedly hid a crash
-// that made the published package unusable for any repo without jest installed. These tests exist so that class
-// of bug cannot come back: they load the published entry points with `useEslintrc: false`, so this repo's own
-// config cannot participate.
+// tarball (`files: ["!.*"]` in package.json), so anything it contributes is something no consumer ever gets.
+// It contributes `settings: { jest: { version: 29 } }` -- deliberately, so the fixtures can exercise the jest
+// rules without jest installed -- and in v6 exactly that setting single-handedly hid a crash that made the
+// published package unusable for any repo without jest. These tests exist so that class of bug cannot come
+// back: they load the published entry points with `useEslintrc: false`, so this repo's own config cannot
+// participate, and the crash scenario is pinned explicitly below.
 //
 // Note that `jest` is deliberately NOT a dependency of this package, so when these tests run, `jest` is not
 // resolvable -- which is exactly the situation of a consumer on vitest (prerender-service, prerender-deliver)
@@ -22,11 +23,11 @@ const execFileAsync = promisify(execFile)
 
 const publishedConfigPath = require.resolve('../../index.js')
 
-const lintAs = async (code, filePath) => {
+const lintAs = async (code, filePath, baseConfigExtras = {}) => {
   const eslint = new ESLint({
     // The whole point: do not let this repo's unpublished .eslintrc.js contribute anything.
     useEslintrc: false,
-    baseConfig: { extends: [publishedConfigPath] },
+    baseConfig: { extends: [publishedConfigPath], ...baseConfigExtras },
   })
   return eslint.lintText(code, { filePath })
 }
@@ -38,21 +39,46 @@ test('jest should not be resolvable, so these tests reflect a consumer without i
   })
 })
 
-// Regression test for the crash: `jest/no-deprecated-functions` calls detectJestVersion() eagerly in create()
-// and throws when jest is unresolvable. Because frontier applies plugin:jest/recommended to `files: ['*']`, it
-// fired on every file -- not just tests -- so an affected consumer could not lint anything at all.
-test('Should lint ordinary source without a resolvable jest', async (t) => {
-  await t.notThrowsAsync(() => lintAs('const answer = 42\nexport default answer\n', 'src/answer.js'))
+// The contract for repos without jest: the default `index` composes `./jest` and therefore assumes a jest
+// version is detectable. `jest/no-deprecated-functions` calls detectJestVersion() eagerly in create() and
+// throws when `jest/package.json` is unresolvable, and frontier applies plugin:jest/recommended broadly, so
+// this is a crash on ordinary source, not just on tests. A jest-less repo has two supported outs, each pinned
+// below: extend `/es6` (no jest configuration at all) or declare `settings.jest.version`. This test pins the
+// sharp edge itself so a change to it is a decision rather than an accident -- in v6 this same crash was
+// unavoidable and undocumented.
+test('Should require a detectable jest version to lint through index', async (t) => {
+  await t.throwsAsync(() => lintAs('const answer = 42\nexport default answer\n', 'src/answer.js'), {
+    message: /Unable to detect Jest version/,
+  })
 })
 
+// ...out number one: settings.jest.version makes index fully usable without jest installed. This repo's own
+// .eslintrc.js does exactly this, but that file is unpublished, so the consumer path is proven here.
+test('Should lint through index without a resolvable jest given settings.jest.version', async (t) => {
+  const settings = { settings: { jest: { version: 29 } } }
+  await t.notThrowsAsync(() => lintAs('const answer = 42\nexport default answer\n', 'src/answer.js', settings))
+  const code = 'describe("suite", () => {\n  it("works", () => {\n    expect(1).toBe(1)\n  })\n})\n'
+  await t.notThrowsAsync(() => lintAs(code, 'src/answer.test.js', settings))
+})
+
+// ...out number two: /es6 never loads the jest plugin, so it needs neither jest nor the setting.
+test('Should lint through /es6 without a resolvable jest and no settings', async (t) => {
+  const eslint = new ESLint({
+    useEslintrc: false,
+    baseConfig: { extends: [require.resolve('../../es6.js')] },
+  })
+  await t.notThrowsAsync(() =>
+    eslint.lintText('const answer = 42\nexport default answer\n', { filePath: 'src/answer.js' })
+  )
+  const code = 'describe("suite", () => {\n  it("works", () => {\n    expect(1).toBe(1)\n  })\n})\n'
+  await t.notThrowsAsync(() => eslint.lintText(code, { filePath: 'src/answer.test.js' }))
+})
+
+// Acceptance tests are excluded from the jest override entirely, so they lint through index even with no jest
+// and no settings -- the plugin is never loaded for them.
 test('Should lint an acceptance test without a resolvable jest', async (t) => {
   const code = 'describe("suite", function () {\n  it("works", function () {})\n})\n'
   await t.notThrowsAsync(() => lintAs(code, 'test/client/login-spec.js'))
-})
-
-test('Should lint a jest unit test without a resolvable jest', async (t) => {
-  const code = 'describe("suite", () => {\n  it("works", () => {\n    expect(1).toBe(1)\n  })\n})\n'
-  await t.notThrowsAsync(() => lintAs(code, 'src/answer.test.js'))
 })
 
 // The `/es6` entry point must stay genuinely jest-free: prerender-service and prerender-deliver (vitest) extend

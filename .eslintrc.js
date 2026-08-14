@@ -1,9 +1,14 @@
-// NOTE: deliberately no `settings: { jest: { version: 29 } }` here. This file is not published
-// (`files: ["!.*"]` in package.json), so anything it supplies is something consumers never receive --
-// and that gap is exactly what hid the `jest/no-deprecated-functions` crash from this repo's own test
-// suite. Keeping this file as close as possible to what a consumer gets keeps the suite honest.
 module.exports = {
   extends: ['./index.js'],
+  // jest is deliberately NOT a dependency of this package, but `./index` composes `./jest`, whose
+  // `jest/no-deprecated-functions` needs a version to work at all -- without one it throws on every file it
+  // reaches. Declaring the version here is what any jest-less repo extending the full `index` must do, and it
+  // lets the demo fixtures actually exercise the rule (see demo/example.test.js).
+  //
+  // This file is not published (`files: ["!.*"]` in package.json), so nothing here reaches a consumer. That gap
+  // once hid the v6 crash from this repo's own suite -- which is why published-config.test.js loads the entry
+  // points with `useEslintrc: false` and pins the consumer experience, with and without this setting.
+  settings: { jest: { version: 29 } },
   overrides: [
     {
       files: ['demo/test/**/*.js'],

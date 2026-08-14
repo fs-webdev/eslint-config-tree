@@ -2,6 +2,13 @@
 // `index.js` composes this alongside `./es6` and `./qa`; a consumer that extends `/es6` directly gets no Jest
 // configuration at all -- which is the point for vitest repos (prerender-service, prerender-deliver) that
 // previously had to switch every `jest/*` rule off by hand.
+//
+// Extending this entry point is a statement that the repo is a Jest repo. In particular,
+// `jest/no-deprecated-functions` calls `detectJestVersion()` eagerly in `create()` and THROWS on every file
+// when `jest/package.json` cannot be resolved -- so a repo without jest installed must either not extend this
+// (use `/es6`) or declare `settings: { jest: { version: <n> } }` in its own eslintrc. This repo does the
+// latter for its own fixtures, since jest is deliberately not one of its dependencies. The v6 behavior --
+// jest configuration forced on every consumer, crashing the jest-less ones -- is the thing the split fixes.
 
 const { acceptanceTestDirectories } = require('./acceptance-test-files')
 
@@ -22,22 +29,6 @@ module.exports = {
       files: ['*'],
       excludedFiles: acceptanceTestDirectories,
       extends: ['@fs/eslint-config-frontier-react/jest'],
-      rules: {
-        // Must live HERE, in this override's own `rules`, not at this file's top level: `@eslint/eslintrc`
-        // flattens an extended config AFTER the extending file's top-level entries, so a top-level 'off' here
-        // would be overwritten by the `error` that `plugin:jest/recommended` sets inside frontier's override.
-        // This block is the last element flattened for every file the frontier config reaches, so it wins.
-        //
-        // Why off at all: the rule calls `detectJestVersion()` eagerly in `create()`, which THROWS "Unable to
-        // detect Jest version" when `jest/package.json` cannot be resolved. Consumers on vitest, or with no
-        // unit-test runner at all, therefore cannot lint a single file. The rule only flags APIs that were
-        // deprecated in Jest 15-26, so it is not worth that blast radius.
-        //
-        // Do NOT "fix" this by publishing `settings.jest.version` instead: there is no single true value
-        // across consumers, and this package's own `.eslintrc.js` is excluded from the tarball by
-        // `files: ["!.*"]`, which is precisely how the bug stayed hidden.
-        'jest/no-deprecated-functions': 'off',
-      },
     },
   ],
 }
