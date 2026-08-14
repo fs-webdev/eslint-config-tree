@@ -5,8 +5,17 @@
 /* eslint no-console: "off" -- node scripts use the console, so disable for the whole file */
 
 const FS = require('fs')
-const finalJsConfig = require('./local-linting-final-config.json')
-const finalTsConfig = require('./local-linting-final-config-ts.json')
+
+// A checkout path can legally contain regex metacharacters (`+`, `(`, ...), so escape before interpolating.
+const escapeForRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+// One entry per configuration exported by the `lint:snapshot` script.
+const finalConfigNames = [
+  'local-linting-final-config',
+  'local-linting-final-config-ts',
+  'local-linting-final-config-qa',
+  'local-linting-final-config-qa-ts',
+]
 
 const parseConfig = (config) => {
   return {
@@ -18,34 +27,33 @@ const parseConfig = (config) => {
         return 0
       })
     ),
-    parser: config?.parser?.split('node_modules')[1],
+    // Keep this idempotent: re-running against already-formatted output must not drop the parser entirely.
+    parser: config?.parser?.includes('node_modules') ? config.parser.split('node_modules')[1] : config?.parser,
   }
 }
 
-const finalJsConfigName = 'local-linting-final-config'
-FS.writeFile(
-  `./demo/test/snapshots/${finalJsConfigName}.json`,
-  JSON.stringify(parseConfig(finalJsConfig), null, 2),
-  (err) => {
-    if (err) console.log(`There was an error writing to ${finalJsConfigName}.json file:`, err)
-  }
-)
-
-const finalTsConfigName = 'local-linting-final-config-ts'
-FS.writeFile(
-  `./demo/test/snapshots/${finalTsConfigName}.json`,
-  JSON.stringify(parseConfig(finalTsConfig), null, 2),
-  (err) => {
-    if (err) console.log(`There was an error writing to ${finalTsConfigName}.json file:`, err)
-  }
-)
+finalConfigNames.forEach((configName) => {
+  const filePath = `./demo/test/snapshots/${configName}.json`
+  const config = JSON.parse(FS.readFileSync(filePath, 'utf8'))
+  FS.writeFile(filePath, JSON.stringify(parseConfig(config), null, 2), (err) => {
+    if (err) console.log(`There was an error writing to ${configName}.json file:`, err)
+  })
+})
 
 FS.readFile('./demo/test/snapshots/local-linting-output.txt', 'utf8', (err, eslintOutput) => {
   if (err) {
     console.log('There was an error reading local-linting-output.txt', err)
   } else {
-    FS.writeFile('./demo/test/snapshots/local-linting-output.txt', eslintOutput.replace(/.*demo\//g, ''), (err2) => {
-      if (err2) console.log('There was an error writing to local-linting-output.txt file:', err)
+    // Drop the developer-specific path up to the repo root, then the `demo/` prefix, so demo files stay bare
+    // (`example.js`) while fixtures outside demo keep the directory that selects their override (`test/example.ts`
+    // is only a QA/WDIO file because of where it lives). Both replacements are anchored to the start of a line,
+    // which is where eslint's stylish formatter puts the file path -- an unanchored replace could rewrite text
+    // inside a rule message. `demo/test/` is left alone so it cannot collapse onto the real top-level `test/`.
+    const relativeOutput = eslintOutput
+      .replace(new RegExp(`^${escapeForRegExp(process.cwd())}/`, 'gm'), '')
+      .replace(/^demo\/(?!test\/)/gm, '')
+    FS.writeFile('./demo/test/snapshots/local-linting-output.txt', relativeOutput, (err2) => {
+      if (err2) console.log('There was an error writing to local-linting-output.txt file:', err2)
     })
   }
 })

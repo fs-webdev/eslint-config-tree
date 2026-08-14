@@ -1,0 +1,27 @@
+{
+  "//": [
+    "demo/ holds ordinary application-code fixtures (the jest/React world) plus the ava test infrastructure --",
+    "the opposite of test/, which is the acceptance-suite world. So unlike test/tsconfig.json there are no",
+    "mocha or @wdio/globals types here: their absence is part of what makes these fixtures ordinary.",
+    "",
+    "jest's types are not named either, deliberately: jest is not a dependency of this package (the lint-side",
+    "version comes from `settings.jest.version` in the root .eslintrc.js), so `types: [\"jest\"]` would not",
+    "resolve. The only ambient types the demo world needs are node's, for the ava infrastructure under",
+    "demo/test/.",
+    "",
+    "Nothing runs `tsc -p demo` in the build, and it would not pass if something did: example.ts deliberately",
+    "violates rules (implicit anys, unused locals) to exercise the ESLint side. This file exists so an editor",
+    "opens the demo fixtures with honest compiler assumptions instead of inheriting none at all."
+  ],
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": ["node"]
+  },
+  "include": ["**/*.ts", "**/*.js"],
+  "exclude": ["node_modules"]
+}

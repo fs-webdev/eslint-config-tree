@@ -1,0 +1,28 @@
+{
+  "//": [
+    "The configuration this package tells consumers to use for a TypeScript acceptance suite, applied to our own",
+    "fixtures so the advice is exercised rather than just documented. See the 'How to lint WDIO/QA suites'",
+    "section of the README.",
+    "",
+    "Two details matter. `types` names mocha rather than jest, because these are WDIO suites. And `include`",
+    "reaches the suite files themselves -- a tsconfig that only covers a runner script leaves them outside the",
+    "project, so the globals never arrive and every `describe` is an error.",
+    "",
+    "Known limitation, verified here: `@wdio/globals/types` declares a global `expect` typed as",
+    "expect-webdriverio, which shadows chai's. So a chai-style `expect(x).to.be.true` does not type-check even",
+    "with `chai` added to `types`. Suites that assert with chai should import it -- `import { expect } from",
+    "'chai'` -- which is already what most of them do. The fixtures here deliberately use the global form to",
+    "exercise the ESLint relaxation, so `tsc` reports two errors on example.ts by design."
+  ],
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "types": ["node", "mocha", "@wdio/globals/types"]
+  },
+  "include": ["**/*.ts", "**/*.js"],
+  "exclude": ["node_modules"]
+}

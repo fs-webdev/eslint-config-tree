@@ -1,6 +1,6 @@
 {
   "name": "@fs/eslint-config-tree",
-  "version": "6.7.3",
+  "version": "7.0.0",
   "description": "Shared Tree configuration that contains overrides and enhancements on top of the base frontier configuration.",
   "main": "index.js",
   "repository": {
@@ -25,6 +25,7 @@
     "**/*.*",
     "!.github/**",
     "!demo/**",
+    "!test/**",
     "!.*"
   ],
   "dependencies": {
@@ -33,6 +34,7 @@
     "@fs/eslint-config-frontier-react": "^11.5.0",
     "eslint": "^8.57.1",
     "eslint-plugin-deprecate": "^0.9.0",
+    "eslint-plugin-mocha": "^10.5.0",
     "eslint-plugin-promise": "^7.2.1",
     "eslint-plugin-sonarjs": "^4.0.2",
     "eslint-plugin-test-selectors": "^2.2.0",
@@ -40,19 +42,24 @@
   },
   "devDependencies": {
     "@fs/npm-publisher": "^1.6.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^26.1.2",
+    "@wdio/globals": "^9.29.1",
     "ava": "^7.0.0",
     "file-manager-js": "^3.1.6",
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "typescript": "^5.9.3"
   },
   "scripts": {
-    "lint": "eslint demo",
-    "lint:fix": "eslint demo --fix",
-    "lint:quiet": "eslint demo --quiet",
-    "lint:report": "eslint demo '**/*.html' --format html --output-file ./reports/linting/linting_report.html & eslint demo --format json --output-file ./reports/linting/linting_report.json",
-    "lint:snapshot": "eslint --print-config file.js > ./demo/test/snapshots/local-linting-final-config.json; eslint --print-config file.ts > ./demo/test/snapshots/local-linting-final-config-ts.json; eslint demo --no-color --output-file ./demo/test/snapshots/local-linting-output.txt; npm run test:format",
+    "lint": "eslint demo test",
+    "lint:fix": "eslint demo test --fix",
+    "lint:quiet": "eslint demo test --quiet",
+    "lint:report": "eslint demo '**/*.html' --format html --output-file ./reports/linting/linting_report.html & eslint demo test --format json --output-file ./reports/linting/linting_report.json",
+    "lint:snapshot": "rm -f ./demo/test/snapshots/local-linting-output.txt ./demo/test/snapshots/local-rule-matrix.txt; eslint --print-config file.js > ./demo/test/snapshots/local-linting-final-config.json; eslint --print-config file.ts > ./demo/test/snapshots/local-linting-final-config-ts.json; eslint --print-config test/file.js > ./demo/test/snapshots/local-linting-final-config-qa.json; eslint --print-config test/file.ts > ./demo/test/snapshots/local-linting-final-config-qa-ts.json; eslint demo test --no-color --output-file ./demo/test/snapshots/local-linting-output.txt; npm run test:matrix; npm run test:format",
     "publish": "npmPublish",
     "test": "npm run lint:snapshot; ava",
     "test:format": "node demo/test/snapshots/format-config.js",
+    "test:matrix": "node demo/test/snapshots/rule-matrix.js",
     "test:update": "npm run lint:snapshot; ava --update-snapshots",
     "prepare": "husky"
   }

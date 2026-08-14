@@ -1,0 +1,126 @@
+// Generate a compact, human-readable matrix of how each probe path resolves.
+//
+// This exists because a full `eslint --print-config` dump is several thousand lines, so a snapshot of one is
+// unreviewable and churns on any unrelated dependency bump. This file emits only the part that encodes a
+// decision -- which test-framework plugins are loaded, which parser is chosen, and the severity of every
+// jest/mocha/wdio/testing-library rule -- so the whole contract fits on a screen and a diff is readable.
+//
+// Nothing here contains an absolute path, so unlike the full dumps this output needs no path scrubbing.
+
+/* eslint no-console: "off" -- node scripts use the console, so disable for the whole file */
+
+const FS = require('fs')
+const { ESLint } = require('eslint')
+
+const probes = require('./config-probes')
+
+const OUTPUT_PATH = './demo/test/snapshots/local-rule-matrix.txt'
+
+// Only the plugins whose presence is a decision this configuration makes. Others (react, import, sonarjs...)
+// are constant across every probe and would just be noise.
+const TRACKED_PLUGINS = ['jest', 'mocha', 'wdio', 'testing-library', 'jest-dom']
+
+// Rules we list by name, because which of these is on IS the contract qa.js defines.
+const NAMED_RULE_PREFIXES = ['jest/', 'mocha/', 'wdio/']
+
+// Rules we only count. These come from frontier's `*.test.*` override wholesale and we make no per-rule
+// decision about them, so listing all 31 twice would bury the parts that matter. A count still moves if the
+// upstream set changes.
+const COUNTED_RULE_PREFIXES = ['testing-library/', 'jest-dom/']
+
+// `parser` resolves to an absolute path inside node_modules, which is machine-specific. Reduce it to the
+// package name so the snapshot is portable: `.../node_modules/@typescript-eslint/parser/dist/index.js` ->
+// `@typescript-eslint/parser`.
+const parserPackageName = (parserPath) => {
+  if (!parserPath) return '(default)'
+  // Normalize separators first: on Windows the path uses backslashes, and splitting on a forward slash would
+  // leave the whole machine-specific absolute path in the snapshot.
+  const afterNodeModules = parserPath.replaceAll('\\', '/').split('node_modules/').pop()
+  const segments = afterNodeModules.split('/')
+  return segments[0].startsWith('@') ? `${segments[0]}/${segments[1]}` : segments[0]
+}
+
+const severityOf = (setting) => {
+  const value = Array.isArray(setting) ? setting[0] : setting
+  if (value === 0) return 'off'
+  if (value === 1) return 'warn'
+  if (value === 2) return 'error'
+  return String(value)
+}
+
+const isEnabled = (setting) => severityOf(setting) !== 'off'
+
+async function buildMatrix() {
+  const eslint = new ESLint()
+
+  // Resolved in parallel, but rendered in declaration order: `Promise.all` preserves the order of its input, so
+  // the output stays deterministic without an await inside a loop.
+  const resolved = await Promise.all(
+    probes.map(async (probe) => ({ probe, config: await eslint.calculateConfigForFile(probe.path) }))
+  )
+
+  const sections = resolved.map(({ probe, config }) => {
+    const plugins = TRACKED_PLUGINS.filter((plugin) => (config.plugins || []).includes(plugin))
+    // Keep the severity alongside the name: whether a rule is `warn` or `error` is a deliberate decision in
+    // qa.js, not an implementation detail, so the matrix has to move when it changes.
+    const enabledRules = Object.entries(config.rules || {})
+      .filter(([, setting]) => isEnabled(setting))
+      .map(([name, setting]) => ({ name, severity: severityOf(setting) }))
+      // Explicit comparator rather than localeCompare, which would make the output locale-dependent.
+      .sort((a, b) => {
+        if (a.name > b.name) return 1
+        if (b.name > a.name) return -1
+        return 0
+      })
+
+    const lines = [
+      `## ${probe.path}`,
+      `   why      : ${probe.why}`,
+      `   parser   : ${parserPackageName(config.parser)}`,
+      `   plugins  : ${plugins.join(', ') || '(none tracked)'}`,
+    ]
+
+    // Group by plugin so a reviewer can see "10 mocha rules on, 2 jest rules on" at a glance.
+    let namedAny = false
+    NAMED_RULE_PREFIXES.forEach((prefix) => {
+      const matching = enabledRules.filter((rule) => rule.name.startsWith(prefix))
+      if (matching.length === 0) return
+      namedAny = true
+      lines.push(`   ${prefix.replace('/', '')} enabled (${matching.length}):`)
+      matching.forEach((rule) => lines.push(`     - ${rule.name} = ${rule.severity}`))
+    })
+
+    if (!namedAny) lines.push('   jest/mocha/wdio enabled: none')
+
+    const counted = COUNTED_RULE_PREFIXES.map((prefix) => {
+      const count = enabledRules.filter((rule) => rule.name.startsWith(prefix)).length
+      return `${prefix.replace('/', '')}=${count}`
+    }).join(' ')
+    lines.push(`   counted  : ${counted}`)
+
+    return lines.join('\n')
+  })
+
+  return `${[
+    '# Resolved test-framework configuration per file shape.',
+    '# Generated by demo/test/snapshots/rule-matrix.js -- do not edit by hand.',
+    '# jest/mocha/wdio rules are listed by name and severity when ENABLED -- which of those is on, and at what',
+    '# severity, is the contract qa.js defines. testing-library/jest-dom come from frontier wholesale, so they',
+    '# are only counted.',
+    '',
+    sections.join('\n\n'),
+  ].join('\n')}\n`
+}
+
+async function main() {
+  try {
+    FS.writeFileSync(OUTPUT_PATH, await buildMatrix())
+  } catch (err) {
+    // Fail loudly. `lint:snapshot` deletes this file before regenerating it, so a silent failure here would leave
+    // no output at all and the ava snapshot test would report the missing file rather than a stale pass.
+    console.log('There was an error building the rule matrix:', err)
+    process.exitCode = 1
+  }
+}
+
+main()

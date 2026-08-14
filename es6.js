@@ -11,7 +11,6 @@ module.exports = {
     '@fs/eslint-config-frontier-react/es6',
     '@fs/eslint-config-frontier-react/json',
     '@fs/eslint-config-frontier-react/jsdoc',
-    '@fs/eslint-config-frontier-react/jest',
     '@fs/eslint-config-frontier-react/dont-need-lodash',
     '@fs/eslint-config-frontier-react/typescript',
     '@fs/eslint-config-frontier-react/cypress',
@@ -98,6 +97,9 @@ module.exports = {
     // ]
   },
   overrides: [
+    // Deliberately NO Jest configuration anywhere in this file: it lives in `./jest`, which `index.js`
+    // composes alongside this one. Extending `/es6` directly therefore gets you a genuinely jest-free
+    // configuration -- what a vitest repo wants.
     {
       files: ['*.ts?(x)'],
       rules: {
