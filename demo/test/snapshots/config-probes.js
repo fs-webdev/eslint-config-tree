@@ -52,7 +52,7 @@ module.exports = [
   },
   {
     path: 'test/component.test.js',
-    why: 'THE CARVE-OUT. A genuine Jest test inside an acceptance dir must fall through to the full Jest treatment and must NOT get the WDIO globals or relaxations.',
+    why: 'NEGATIVE CASE for the name convention. A `*.test.*` file inside an acceptance dir gets the mocha/WDIO treatment like any other file there -- the carve-out that once handed these back to Jest was removed in v7 because zero supported consumers have such a file.',
   },
   {
     path: 'tests/login-spec.js',

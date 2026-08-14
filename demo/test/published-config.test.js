@@ -55,6 +55,19 @@ test('Should lint a jest unit test without a resolvable jest', async (t) => {
   await t.notThrowsAsync(() => lintAs(code, 'src/answer.test.js'))
 })
 
+// The `/es6` entry point must stay genuinely jest-free: prerender-service and prerender-deliver (vitest) extend
+// it directly, and the whole point of splitting `./jest` out of it is that they no longer need to hand-disable
+// every `jest/*` rule. A single jest rule reappearing in the resolved config here means the split regressed.
+test('Should resolve no jest rules at all through the /es6 entry point', async (t) => {
+  const eslint = new ESLint({
+    useEslintrc: false,
+    baseConfig: { extends: [require.resolve('../../es6.js')] },
+  })
+  const config = await eslint.calculateConfigForFile('src/answer.test.ts')
+  const jestRules = Object.keys(config.rules).filter((rule) => rule.startsWith('jest/'))
+  t.deepEqual(jestRules, [], 'extending /es6 directly must not configure any jest rule')
+})
+
 // The acceptance-test relaxations must survive into the published package too, not just work locally. A chai
 // assertion is the sharpest case: its matchers are properties rather than called methods, so jest/valid-expect
 // reads `to.be.true` as a matcher that was never called.
@@ -91,5 +104,13 @@ test('Should publish exactly the config entry points', async (t) => {
   const published = JSON.parse(stdout)[0]
     .files.map((file) => file.path)
     .sort()
-  t.deepEqual(published, ['README.md', 'acceptance-test-files.js', 'es6.js', 'index.js', 'package.json', 'qa.js'])
+  t.deepEqual(published, [
+    'README.md',
+    'acceptance-test-files.js',
+    'es6.js',
+    'index.js',
+    'jest.js',
+    'package.json',
+    'qa.js',
+  ])
 })

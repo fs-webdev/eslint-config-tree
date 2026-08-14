@@ -1,10 +1,10 @@
 // How this configuration tells acceptance tests (WDIO + mocha + chai) apart from unit tests (Jest).
 //
-// A file is treated as an acceptance test when it lives in an acceptance-test directory, UNLESS it is named
-// `*.test.*` -- the org-wide Jest convention, which always wins and is excluded from every override below so
-// those files keep frontier's untouched `plugin:jest/recommended` treatment.
+// A file is treated as an acceptance test when it lives in an acceptance-test directory, period -- even when
+// named `*.test.*`. No supported consumer keeps Jest tests inside an acceptance directory, so the name buys
+// no exception (see acceptance-test-files.js).
 //
-// There are no `jest/*: 'off'` entries here, and that is the point. `es6.js` scopes frontier's Jest
+// There are no `jest/*: 'off'` entries here, and that is the point. `jest.js` scopes frontier's Jest
 // configuration so it is never loaded on these files in the first place, which is strictly better than muting
 // its rules: a suppression list has to be extended every time eslint-plugin-jest adds a rule, and nobody
 // notices when it falls behind. What remains below is the positive half -- the mocha and WDIO treatment that
@@ -13,7 +13,7 @@
 // One consequence worth knowing: `jest/no-commented-out-tests` and `jest/no-jasmine-globals` are framework
 // agnostic and were mildly useful here, and they go away too. That is the price of not owning a rule list.
 
-const { acceptanceTestDirectories, jestTestFilenames } = require('./acceptance-test-files')
+const { acceptanceTestDirectories } = require('./acceptance-test-files')
 
 // Frontier's curated mocha set for `**/*.spec.*` (see @fs/eslint-config-frontier-react/cypress.js), so an
 // acceptance test gets the same linting whichever way it was selected. Three entries deviate from frontier --
@@ -55,7 +55,6 @@ module.exports = {
   overrides: [
     {
       files: acceptanceTestDirectories,
-      excludedFiles: jestTestFilenames,
       plugins: ['mocha', 'wdio'],
       extends: ['plugin:wdio/recommended'], // wdio/await-expect, wdio/no-debug, wdio/no-pause, and wdio globals
       // `describe`, `it`, `before`, `after`, `beforeEach`, `afterEach`, `xit`, `specify` and `context` all come
@@ -99,7 +98,6 @@ module.exports = {
       // `types: ["node", "mocha", "@wdio/globals/types"]` in their acceptance-directory tsconfig.json instead.
       // See the README.
       files: acceptanceTestDirectories.map((directory) => `${directory}/*.ts?(x)`),
-      excludedFiles: jestTestFilenames,
       rules: {
         // `type: module` plus TypeScript means a relative import is written `./page.js` while the file on disk
         // is `page.ts`, which eslint-plugin-import's node resolver cannot follow -- it reports every such import

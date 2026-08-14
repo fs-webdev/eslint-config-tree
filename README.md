@@ -90,7 +90,7 @@ Why extra rules? Because we believe in linting, and we have become converted to 
 
 ### How to lint WDIO/QA suites:
 
-**A file is an acceptance test if it lives in an acceptance-test directory, unless it is named `*.test.*`.**
+**A file is an acceptance test if it lives in an acceptance-test directory. Period — the name does not matter.**
 
 The acceptance-test directory is `test/`, resolved relative to your `.eslintrc` rather than the repo root. That
 distinction matters for a repo whose suite lives somewhere else — say `ui-tests/` — but keeps its own eslintrc
@@ -98,13 +98,15 @@ inside it: what counts is the path from that config file, so `ui-tests/test/` is
 `ui-tests/` is not. Files in it pick up `eslint-plugin-wdio`, `eslint-plugin-mocha`, the WDIO globals, and a set of relaxations for patterns that
 are normal in acceptance tests but not in application code — see [qa.js](/qa.js), which documents each one.
 
-The Jest configuration is not merely relaxed for these files, it is never loaded on them: [es6.js](/es6.js)
+The Jest configuration is not merely relaxed for these files, it is never loaded on them: [jest.js](/jest.js)
 scopes it so `eslint-plugin-jest` never sees an acceptance test. That is why `qa.js` carries no list of
-`jest/*: 'off'` entries to keep up to date.
+`jest/*: 'off'` entries to keep up to date. (`jest.js` is its own entry point, composed into the default
+`index`; a repo with no Jest at all — vitest, say — can extend `@fs/eslint-config-tree/es6` directly and get a
+configuration with no `jest/*` rules anywhere.)
 
-`*.test.*` is the exception, and it wins everywhere: a file named `test/helpers.test.js` is a genuine Jest unit
-test that happens to live in an acceptance directory, so it is excluded from all of the above and keeps the normal
-Jest configuration. Note the deliberate asymmetry — a nested `src/**/test/**` directory is **not** an acceptance
+The `*.test.*` naming convention buys no exception: `test/helpers.test.js` gets the mocha/WDIO treatment like
+any other file in the directory, so a genuine Jest unit test should not live there — no supported consumer keeps
+one there today. Note the deliberate asymmetry — a nested `src/**/test/**` directory is **not** an acceptance
 directory, because that is where Jest unit tests live in this org.
 
 **Why mocha rules instead of Jest rules.** WDIO suites are mocha + chai, but the base configuration applies
@@ -134,8 +136,9 @@ Two details matter more than they look. The `include` has to reach the suites th
 covers a runner script leaves them outside the project, so the globals never arrive. And overriding `types` is
 deliberate: `@fs/qa-ts-config/tsconfig.test.json` ships `jest` in that array, while a WDIO suite wants `mocha`.
 
-This package applies that exact configuration to its own fixtures — see [test/tsconfig.json](/test/tsconfig.json)
-— so the advice is exercised rather than just written down.
+This package applies the equivalent configuration to its own fixtures — see
+[test/tsconfig.json](/test/tsconfig.json), which inlines the same compiler options rather than extending
+`@fs/qa-ts-config` — so the advice is exercised rather than just written down.
 
 **One trap worth knowing before you convert a suite.** `@wdio/globals/types` declares a global `expect` typed as
 expect-webdriverio, and it shadows chai's. A chai-style `expect(x).to.be.true` therefore will not type-check,
@@ -234,8 +237,9 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 - QA/WDIO suites are linted as mocha instead of jest. Chai assertions and `function (done)` are no longer misreported, and ten `mocha/*` rules take the place of the jest ones. The jest plugin is no longer loaded on them at all.
 - TypeScript QA suites are now linted. The override previously matched `test/**/*.js` only.
 - QA directories are matched relative to your `.eslintrc` rather than the repo root, so a suite whose eslintrc sits inside its own directory is matched from there.
-- A file named `*.test.*` inside a QA directory keeps its Jest configuration.
-- Fixed a crash for consumers without jest installed (`jest/no-deprecated-functions` threw on every file). If you worked around this by disabling the jest rules yourself, you can drop that.
+- A file inside a QA directory is an acceptance test regardless of its name — the previous `*.test.*` Jest carve-out is gone. No supported consumer has such a file; if you do, move it out of the QA directory (or rename the directory's role), because it will now be linted as mocha.
+- The Jest configuration moved into its own `jest.js` entry point (composed into the default `index`), so extending `@fs/eslint-config-tree/es6` directly now yields a configuration with no `jest/*` rules at all. Vitest repos that disabled every jest rule by hand can delete that workaround.
+- Fixed a crash for consumers without jest installed (`jest/no-deprecated-functions` threw on every file).
 - `eslint-plugin-mocha` is now a dependency of this package rather than something you happened to get via hoisting.
 - Deliberately given up, all on QA files only: `jest/no-commented-out-tests` and `jest/no-jasmine-globals` (the price of not loading the plugin), and `import/no-unresolved` no longer flags a relative `./x.js` import in a TypeScript suite that resolves to nothing — it cannot be told apart from the legitimate `.js`-means-`.ts` case. Package imports are still checked.
 

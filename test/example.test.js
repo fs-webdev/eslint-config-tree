@@ -1,19 +1,19 @@
-// NOTE: A fixture, not a real suite. A `*.test.*` file inside an acceptance-test directory is a genuine Jest
-// unit test, not a WDIO suite, so `qa.js` excludes it from every acceptance override via `excludedFiles`. This
-// file proves that carve-out at lint level rather than only in the resolved-config snapshots.
+// NOTE: A fixture, not a real suite. A file in an acceptance-test directory is an acceptance test, period --
+// the `*.test.*` Jest naming convention buys no exception (see acceptance-test-files.js). This file proves that
+// at lint level rather than only in the resolved-config snapshots: despite the name, the mocha rules fire here
+// and the WDIO globals resolve.
 //
-// Both violations below are intentional, and each one proves a different half of the carve-out.
+// The violation below is intentional; the absence of `no-undef` on `browser` is the other half of the proof.
 
-describe('Jest carve-out fixture', () => {
-  it('keeps the Jest assertion checks', () => {
-    // jest/valid-expect -- a matcher that is never called asserts nothing. It is switched off for acceptance
-    // suites because chai's property-style matchers look identical to this; it must stay ON here.
-    expect(1).toBe
+describe('No Jest carve-out fixture', function () {
+  // mocha/no-exclusive-tests -- fires despite the `.test.` filename, proving the mocha treatment applies. Its
+  // jest equivalent (jest/no-focused-tests) must NOT be the one reporting it.
+  it.only('gets the mocha rules despite its name', function () {
+    expect(true).to.be.true
   })
 
-  it('does not receive the WDIO globals', async () => {
-    // no-undef -- `browser` is only declared for acceptance tests. Its absence here is the point: this file did
-    // not pick up the WDIO override.
+  it('receives the WDIO globals', async function () {
+    // `browser` resolves without a `no-undef` error only because this file picked up the acceptance override.
     await browser.url('/tree/find')
   })
 })

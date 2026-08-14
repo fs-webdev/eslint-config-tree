@@ -1,8 +1,13 @@
 // Which files are acceptance tests (WDIO + mocha + chai) rather than unit tests (Jest).
 //
-// This lives in its own module because two configurations need the same answer and must not drift: `es6.js`
+// This lives in its own module because two configurations need the same answer and must not drift: `jest.js`
 // uses it to keep frontier's Jest configuration away from acceptance tests, and `qa.js` uses it to apply the
 // WDIO and mocha treatment to exactly the same set.
+//
+// A file in an acceptance-test directory is an acceptance test, period -- there is no carve-out for the
+// org-wide `*.test.*` Jest naming convention. A census of every consumer found zero supported repos with a
+// `*.test.*` file inside an acceptance directory, so the exception defended a case that does not exist, at the
+// cost of a second override and this module having three exports instead of one.
 //
 // Note these patterns resolve against the CONSUMING repo's `.eslintrc.*` directory, not against this file.
 // `@eslint/eslintrc` threads `matchBasePath` down from the root config and never recomputes it for extended
@@ -21,18 +26,6 @@
 // as errors. Cheaper to add one when a repo actually needs it.
 const acceptanceTestDirectories = ['test/**']
 
-// `*.test.*` is the org-wide Jest convention and always wins, even inside an acceptance-test directory.
-const jestTestFilenames = ['**/*.test.[tj]s?(x)', '**/*.test.[cm]js', '**/*.test.[cm]ts']
-
-// The same exception expressed positively -- the Jest files that live inside an acceptance-test directory.
-// `es6.js` needs this to hand those files back to frontier's Jest configuration after excluding the directory
-// as a whole, which `excludedFiles` alone cannot express (it cannot say "this directory AND NOT this name").
-const jestTestFilesInAcceptanceDirectories = acceptanceTestDirectories.flatMap((directory) =>
-  jestTestFilenames.map((filename) => `${directory}/${filename.replace('**/', '')}`)
-)
-
 module.exports = {
   acceptanceTestDirectories,
-  jestTestFilenames,
-  jestTestFilesInAcceptanceDirectories,
 }
