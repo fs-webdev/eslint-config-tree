@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  # Cancel superseded PR runs, but let a master run finish -- it may be mid-publish.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      # `scope: '@fs'` matches the `@fs:registry=` line Travis hand-wrote into ~/.npmrc.
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          registry-url: https://familysearch.jfrog.io/artifactory/api/npm/fs-npm-prod-virtual/
+          scope: '@fs'
+
+      # NODE_AUTH_TOKEN must be step-level env on every step that hits the registry.
+      # setup-node writes `_authToken=${NODE_AUTH_TOKEN}` into the npmrc as a literal
+      # placeholder that npm expands from the environment at run time, so setting it
+      # only on the setup-node step means npm sends the unexpanded placeholder and
+      # jfrog answers E401.
+      - name: Install
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+
+      # NOTE: Because we are loosely-pinned to our linting dependencies, there will
+      # sometimes be changes to subsets of rules that we did not initiate. This is so
+      # that we can manually review when things change, and be certain that we did not
+      # lose config we care about.
+      #
+      # This is the whole gate, exactly as on Travis. Do not add a `npm run lint` step:
+      # the demo/ and test/ fixtures carry deliberate violations, so `npm run lint`
+      # always exits 1. `npm test` regenerates the gitignored local-* snapshots and ava
+      # diffs them against the committed ones.
+      - name: Test
+        run: npm test
+
+      # Replaces the `deploy: provider: script` entry. Travis only ran deploy after a
+      # green `script:`; here that ordering is just step order.
+      - name: Publish
+        if: github.event_name == 'push'
+        run: npm run publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}

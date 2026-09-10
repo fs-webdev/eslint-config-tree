@@ -223,9 +223,7 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 
 ## Notes
 
-- Why no lockfile? Because we (currently) trust our dependencies, and do not want to constantly have to be verifying and manually releasing new versions of this convenience configuration. We may decide to be more precise in the future.
 - As noted in the `Testing/Updating` section, the only validation we do is to run linting against a file with a set of known failures. So we make sure to run `npm test` via a pre-push hook, and releases are automatically performed by a GitHub webhook.
-- Because this is a public repository, there are complications in adding references to private services and communications channels, so there is no Travis CI build.
 - Coverage reporting ends up reporting on `lint-output.js`, instead of `index.js`, which is unhelpful, and so is also not used, for now.
 
 </details>
