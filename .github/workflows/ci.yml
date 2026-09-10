@@ -22,13 +22,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # `scope: '@fs'` matches the `@fs:registry=` line Travis hand-wrote into ~/.npmrc.
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: npm
           registry-url: https://familysearch.jfrog.io/artifactory/api/npm/fs-npm-prod-virtual/
-          scope: '@fs'
 
       # NODE_AUTH_TOKEN must be step-level env on every step that hits the registry.
       # setup-node writes `_authToken=${NODE_AUTH_TOKEN}` into the npmrc as a literal
