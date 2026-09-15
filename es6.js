@@ -29,6 +29,12 @@ module.exports = {
     'no-console': ['warn', { allow: ['warn', 'error', 'trace', 'time'] }], // Allow warn on top of what eslint-config-frontier-react allows
 
     '@eslint-community/eslint-comments/require-description': 'warn',
+    // The recommended preset demands a matching `eslint-enable` for every `eslint-disable`. A whole-file disable
+    // (`/* eslint-disable no-console -- node scripts use the console */` at the top of a script) is the idiom we
+    // actually want, and closing it on the last line adds nothing. `allowWholeFile` keeps the pairing check for a
+    // disable that starts mid-file, where a forgotten enable really does silence the rest of the file. Rule names
+    // (no-unlimited-disable) and a `--` reason (require-description) are still required.
+    '@eslint-community/eslint-comments/disable-enable-pair': ['error', { allowWholeFile: true }],
 
     'promise/always-return': 'warn',
     'promise/no-return-wrap': 'warn',

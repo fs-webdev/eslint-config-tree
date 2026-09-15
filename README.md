@@ -50,7 +50,7 @@ something no consumer receives — that gap once hid a crash that made the packa
 
 Why extra rules? Because we believe in linting, and we have become converted to the additional rules enforced by the following plugins:
 
-- [eslint-plugin-bestpractices](https://github.com/skye2k2/eslint-plugin-bestpractices)
+- [@eslint-community/eslint-plugin-eslint-comments](https://github.com/eslint-community/eslint-plugin-eslint-comments)
 - [eslint-plugin-deprecate](https://github.com/AlexMost/eslint-plugin-deprecate)
 - [eslint-plugin-html](https://github.com/BenoitZugmeyer/eslint-plugin-html)
 - [eslint-plugin-import](https://github.com/import-js/eslint-plugin-import) (implemented by Frontier)
@@ -160,7 +160,7 @@ Add an `eslintrc.js` file to that directory with the necessary overrides, like s
 ```
 module.exports = {
   rules: {
-    'bestpractices/no-eslint-disable': 'off|warn|error',
+    '@eslint-community/eslint-comments/require-description': 'off|warn|error',
   }
 }
 ```
@@ -182,25 +182,21 @@ overrides: [
 ],
 ```
 
-### How to disable a linting rule inline without triggering the `no-eslint-disable` rule:
+### How to disable a linting rule for a whole file, or inline:
 
-Utilize a file linting config modifier like so:
+A whole-file disable at the top of the file is allowed and needs no matching `eslint-enable` (`disable-enable-pair` runs with `allowWholeFile`):
+
+```
+/* eslint-disable no-console -- node scripts use the console */
+```
+
+The config-comment form works too, and is not a disable directive at all:
 
 ```
 /* eslint no-console: "off" -- node scripts use the console */
-
 ```
 
-Note that `--` comments are permitted and a very good idea to include.
-
-<!--
-DOES NOT CURRENTLY WORK, AND bestpractices/no-eslint-disable SHOULD PROBABLY BE MODIFIED TO TAKE THIS INTO ACCOUNT.
-Or disable BOTH the desired rule and the no-eslint-disable rule:
-
-```
-// eslint-disable-next-line bestpractices/no-eslint-disable, no-console
-```
--->
+Three things are still enforced by `@eslint-community/eslint-plugin-eslint-comments`: name the rule (a bare `eslint-disable` is an error, `no-unlimited-disable`), give a `--` reason (`require-description`, a warning), and pair any disable that starts mid-file with an `eslint-enable` (`disable-enable-pair`), because a forgotten enable there silences the rest of the file.
 
 ### How to deal with `Definition for rule '{RULE}' was not found.` errors:
 
@@ -243,6 +239,7 @@ If there has been a change (say you added a new rule, or there is a new valid vi
 - The default `index` assumes a detectable jest version: `jest/no-deprecated-functions` throws on every file it reaches otherwise (unchanged from v6, where jest-less repos crashed with no way out). The outs are now supported and tested: extend `/es6` if you are not a jest repo, or declare `settings: { jest: { version: <n> } }` in your eslintrc if you are one without jest installed.
 - `eslint-plugin-mocha` is now a dependency of this package rather than something you happened to get via hoisting.
 - Deliberately given up, all on QA files only: `jest/no-commented-out-tests` and `jest/no-jasmine-globals` (the price of not loading the plugin), and `import/no-unresolved` no longer flags a relative `./x.js` import in a TypeScript suite that resolves to nothing — it cannot be told apart from the legitimate `.js`-means-`.ts` case. Package imports are still checked.
+- 7.1.0: `@eslint-community/eslint-comments/disable-enable-pair` now allows a whole-file `eslint-disable` (`allowWholeFile`). The pairing check remains for a disable that starts mid-file; rule names and a `--` reason are still required. The README's leftover `eslint-plugin-bestpractices` guidance is replaced with the current plugin's.
 
 </details>
 
