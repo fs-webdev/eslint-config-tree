@@ -1,6 +1,6 @@
 /* Example of a broken JS file that should trigger the additional rules contained in ./index.js */
 
-/* eslint no-console: "off" -- node scripts use the console, so disable for the whole file */
+/* eslint-disable no-console -- node scripts use the console; a whole-file disable (before the first code token) needs no matching enable because disable-enable-pair runs with allowWholeFile */
 
 /*
  * Since developers have the ability to disable linting in-line, we keep track of the times where this is done, because if done irresponsibly, this is a significant code smell.
@@ -134,3 +134,11 @@ switch (1) {
   default:
     break
 }
+
+/*
+ * A disable that starts mid-file must still be paired with an eslint-enable, because a forgotten enable here would
+ * silence the rule for the rest of the file. This one is deliberately unpaired so disable-enable-pair fires exactly
+ * once — that is how we tell "allowWholeFile is working" apart from "the pairing check was switched off".
+ */
+/* eslint-disable no-unused-vars -- intentional violation: a scoped disable that is never re-enabled */
+const silencedForTheRestOfTheFile = true
